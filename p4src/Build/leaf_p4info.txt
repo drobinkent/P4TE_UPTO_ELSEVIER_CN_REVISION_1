@@ -114,9 +114,7 @@ tables {
     id: 17085122
   }
   action_refs {
-    id: 21257015
-    annotations: "@defaultonly"
-    scope: DEFAULT_ONLY
+    id: 31677373
   }
   direct_resource_ids: 321323137
   size: 1024
@@ -327,6 +325,13 @@ actions {
     id: 1
     name: "target_mac"
     bitwidth: 48
+  }
+}
+actions {
+  preamble {
+    id: 31677373
+    name: "IngressPipeImpl.ndp_processing_control_block.ndp_default_action"
+    alias: "ndp_default_action"
   }
 }
 actions {
@@ -839,21 +844,6 @@ registers {
     id: 382266878
     name: "egress_queue_rate_value_map"
     alias: "egress_queue_rate_value_map"
-  }
-  type_spec {
-    bitstring {
-      bit {
-        bitwidth: 48
-      }
-    }
-  }
-  size: 256
-}
-registers {
-  preamble {
-    id: 375809919
-    name: "egress_queue_rate_last_update_time_map"
-    alias: "egress_queue_rate_last_update_time_map"
   }
   type_spec {
     bitstring {

@@ -26,7 +26,12 @@ control ndp_processing(inout parsed_headers_t    hdr,
        hdr.ndp.length = 1;
        hdr.ndp.target_mac_addr = target_mac;
        standard_metadata.egress_spec = standard_metadata.ingress_port;
+       local_metadata.flag_hdr.do_l3_l2 = false;
+       local_metadata.flag_hdr.is_pkt_toward_host = true;
    }
+   action ndp_default_action() {
+          local_metadata.flag_hdr.do_l3_l2 = true;
+      }
 
    table ndp_reply_table {
        key = {
@@ -34,18 +39,21 @@ control ndp_processing(inout parsed_headers_t    hdr,
        }
        actions = {
            ndp_ns_to_na;
+           ndp_default_action;
        }
        @name("ndp_reply_table_counter")
        counters = direct_counter(CounterType.packets_and_bytes);
+       default_action = ndp_default_action;
    }
    apply {
-        if (ndp_reply_table.apply().hit) {
+        /*if (ndp_reply_table.apply().hit) {
             local_metadata.flag_hdr.do_l3_l2 = false;
             local_metadata.flag_hdr.is_pkt_toward_host = true;
 
         }else{
             local_metadata.flag_hdr.do_l3_l2 = true;
-        }
+        }*/
+        ndp_reply_table.apply();
    }
 }
 #endif

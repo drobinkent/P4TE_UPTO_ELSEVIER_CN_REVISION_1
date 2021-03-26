@@ -78,7 +78,7 @@ control IngressPipeImpl (inout parsed_headers_t    hdr,
       @name("egress_queue_depth_value_map")register<bit<48>>(MAX_PORTS_IN_SWITCH) egress_queue_depth_value_map;
           @name("egress_queue_depth_last_update_time_map")register<bit<48>>(MAX_PORTS_IN_SWITCH) egress_queue_depth_last_update_time_map;
           @name("egress_queue_rate_value_map")register<bit<48>>(MAX_PORTS_IN_SWITCH) egress_queue_rate_value_map;
-          @name("egress_queue_rate_last_update_time_map")register<bit<48>>(MAX_PORTS_IN_SWITCH) egress_queue_rate_last_update_time_map;
+          //@name("egress_queue_rate_last_update_time_map")register<bit<48>>(MAX_PORTS_IN_SWITCH) egress_queue_rate_last_update_time_map;
           @name("port_to_port_delay_value_map")register<bit<48>>(MAX_PORTS_IN_SWITCH) port_to_port_delay_value_map;
           @name("port_to_port_delay_last_update_time_map")register<bit<48>>(MAX_PORTS_IN_SWITCH) port_to_port_delay_last_update_time_map;
     //================================This section will contain all isolated actions=======================================
@@ -189,7 +189,7 @@ control IngressPipeImpl (inout parsed_headers_t    hdr,
         //log_msg("Found a recirculated packet");
         local_metadata.flag_hdr.do_l3_l2 = false; //thie means . this packet doesn;t need normal forwarding processing. It wil only be used for updating the internal routing related information
         egress_queue_rate_value_map.write((bit<32>)hdr.packet_in.path_delay_event_port, (bit<48>)local_metadata.egress_rate_event_hdr.egress_traffic_color );
-        egress_queue_rate_last_update_time_map.write((bit<32>)hdr.packet_in.path_delay_event_port, standard_metadata.ingress_global_timestamp);
+        //egress_queue_rate_last_update_time_map.write((bit<32>)hdr.packet_in.path_delay_event_port, standard_metadata.ingress_global_timestamp);
         mark_to_drop(standard_metadata);
     }else{ //This means these packets are normal packets and they will generate the events
         init_pkt();

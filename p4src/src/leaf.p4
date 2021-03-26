@@ -162,7 +162,7 @@ control IngressPipeImpl (inout parsed_headers_t    hdr,
         //log_msg("Found a recirculated packet");
         local_metadata.flag_hdr.do_l3_l2 = false; //thie means . this packet doesn;t need normal forwarding processing. It wil only be used for updating the internal routing related information
         egress_queue_rate_value_map.write((bit<32>)hdr.packet_in.path_delay_event_port, (bit<48>)local_metadata.egress_rate_event_hdr.egress_traffic_color );
-        egress_queue_rate_last_update_time_map.write((bit<32>)hdr.packet_in.path_delay_event_port, standard_metadata.ingress_global_timestamp);
+        //egress_queue_rate_last_update_time_map.write((bit<32>)hdr.packet_in.path_delay_event_port, standard_metadata.ingress_global_timestamp);
         mark_to_drop(standard_metadata);
    }else{ //This means these packets are normal packets and they will generate the events
         init_pkt();
@@ -436,36 +436,17 @@ control EgressPipeImpl (inout parsed_headers_t hdr,
 
     if(IS_NORMAL(standard_metadata)){
         egressPortCounter.count((bit<32>)standard_metadata.egress_port);
-        if(local_metadata.flag_hdr.is_pkt_toward_host){
-            //log_msg("Egress_log: found packet toward host. Removing all extra headers. In future we may need to control tcp headers here");
-            if(hdr.p2p_feedback.isValid() && hdr.mdn_int.isValid()){ //this is a fake ack
-                //log_msg("A fake ack is being sent to the host");
-                hdr.ipv6.next_hdr = hdr.mdn_int.next_hdr ;
-                hdr.mdn_int.setInvalid();
-                hdr.p2p_feedback.setInvalid();
-            }else if(hdr.mdn_int.isValid()){
-                //log_msg("This is a packet from a switch toward a host.Getting rid of the extra headers");
-                hdr.ipv6.next_hdr = hdr.mdn_int.next_hdr;
-                hdr.mdn_int.setInvalid();
-                //ekhane somehow deklay_hdr valid paccje. j karone ndp ns er reply vull next_hdr soho
-            }else{
-                //log_msg("This is a packet from a host toward a host. So no need to clone E2E for feedback");
-                hdr.mdn_int.setInvalid();  //This is not needed for else part. But no harm in doing extra invalid. NOt optimized obviously
-            }
+        if(local_metadata.flag_hdr.is_pkt_toward_host && hdr.mdn_int.isValid()){
+            hdr.ipv6.next_hdr = hdr.mdn_int.next_hdr ;
+            hdr.mdn_int.setInvalid();
+            hdr.p2p_feedback.setInvalid();
         }else if (standard_metadata.egress_port == PORT_ZERO) {
-             //log_msg("A normal packet has been  decided to be sent on port 0. Which should not be. Debug it");
              recirculate<parsed_headers_t>(hdr);
              mark_to_drop(standard_metadata);
         }else if (standard_metadata.egress_port == CPU_PORT) {
-            //log_msg("This is a p2p feedback received from some neighbour switch. and sending it to CP");
-            // Add packet_in header and set relevant fields, such as the
-            // switch ingress port where the packet was received.
             set_all_header_invalid();
             hdr.packet_in.setValid();
-            //hdr.dp_to_cp_feedback_hdr.setValid();
             hdr.packet_in.ingress_port = standard_metadata.ingress_port;
-            //log_msg("Found msg for CP from created by p2p feedback ingress port {} with delay event type {}",{standard_metadata.ingress_port, local_metadata.delay_info_hdr.path_delay_event_type});
-            //===
             hdr.packet_in.ingress_queue_event = local_metadata.ingress_queue_event_hdr.ingress_queue_event;
             hdr.packet_in.ingress_queue_event_data = local_metadata.ingress_queue_event_hdr.ingress_queue_event_data ;
             hdr.packet_in.ingress_queue_event_port =local_metadata.ingress_queue_event_hdr.ingress_queue_event_port;
