@@ -571,6 +571,7 @@ control EgressPipeImpl (inout parsed_headers_t hdr,
                 }else if (local_metadata.flag_hdr.is_packet_from_upstream_port == true){
                     build_p2p_feedback_with_fake_ack_for_increase();
                 }
+
             }else{
                 if(local_metadata.flag_hdr.is_packet_from_downstream_port == true){
                     mark_to_drop(standard_metadata);
