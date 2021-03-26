@@ -1395,7 +1395,7 @@ def processResults(iPerfResultsFolder1, iPerfResultsFolder2, algorithm1, algorit
     print("\nStandard Deviation: "+str(resultSet1[0].largeFlowPercentileBasedResults.retransmitSTD))
     print("Avg: "+str(resultSet1[0].largeFlowPercentileBasedResults.retransmitAVG))
     print("For :"+algorithm2)
-    print(avgResultSet2.largeFlowPercentileBasedResults.retransmitPercentileList)
+    # print(avgResultSet2.largeFlowPercentileBasedResults.retransmitPercentileList)
     print("\nStandard Deviation: "+str(resultSet2[0].largeFlowPercentileBasedResults.retransmitSTD))
     print("Avg: "+str(resultSet2[0].largeFlowPercentileBasedResults.retransmitAVG))
     # rateofChange = ((resultSet1[0].largeFlowPercentileBasedResults.retransmitSTD - resultSet2[0].largeFlowPercentileBasedResults.retransmitSTD) / resultSet1[0].largeFlowPercentileBasedResults.retransmitSTD) * 100
