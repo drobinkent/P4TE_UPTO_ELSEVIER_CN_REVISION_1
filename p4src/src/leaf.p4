@@ -420,18 +420,10 @@ control EgressPipeImpl (inout parsed_headers_t hdr,
             }else if ( IS_CONTROL_PKT_TO_NEIGHBOUR(local_metadata)) {
                  //log_msg("clone to ingress port for feedback to neighbour");
                  clone3(CloneType.E2E, (bit<32>)(standard_metadata.ingress_port), {standard_metadata, local_metadata});
-            }else{
-                 //log_msg("Unhandled logic in cloning control block");
             }
         }
 
 
-// for handling the fake ACK we need to do 2 things
-// 1) the switch it is generating -- here in egress we ned to build the fake ack based on some flags
-// 2)  in other switches when this pkt is rcvd, it is normal pkt. but we have to make sure that this packet is not generating any other fake ack. so we have to identify if the pkt is a fake ack.
-
-//if the pkt have valid mdn_int && ack_flag==1 && instance_type == e2i && hdr.mdn_int.rate_control_event ==RATE_CONTROL_EVENT_ALREADY_APPLIED -- that means this is a pkt generated for fake ack from egress. we need to forward it
-  //     if this happens then we do not need to build neighbour hood feedback pkt
 
 
     if(IS_NORMAL(standard_metadata)){

@@ -158,13 +158,6 @@ process-linkUtilizationTester:
 	python3 ResultProcessorExecutor.py testAndMeasurement/TEST_RESULTS/ecmp/linkUtilizationTester testAndMeasurement/TEST_RESULTS/P4TE/linkUtilizationTester ECMP P4TE ./ProcessedResultImages/linkUtilizationTester
 
 
-process-l2strideSmallLarge:
-	$(info *** Make sure you configured the FLOW_TYPE_IDENTIFIER_BY_FLOW_VOLUME_IN_KB valus in ConfigConst  for this use case)
-	python3 ResultProcessorExecutor.py testAndMeasurement/TEST_RESULTS/ecmp/l2strideSmallLarge testAndMeasurement/TEST_RESULTS/P4TE/l2strideSmallLarge ECMP P4TE ./ProcessedResultImages/l2strideSmallLarge
-
-process-l2strideSmallLarge-strideCount-4:
-	$(info *** Make sure you configured the FLOW_TYPE_IDENTIFIER_BY_FLOW_VOLUME_IN_KB valus in ConfigConst  for this use case)
-	python3 ResultProcessorExecutor.py testAndMeasurement/TEST_RESULTS/ecmp/l2stride4SmallLarge testAndMeasurement/TEST_RESULTS/P4TE/l2stride4SmallLarge ECMP P4TE ./ProcessedResultImages/l2strideSmallLarge-strideCount-4
 
 
 process-l2highContention:
