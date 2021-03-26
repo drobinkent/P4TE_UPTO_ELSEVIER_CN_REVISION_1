@@ -1,0 +1,82 @@
+{
+  "TESTS": [
+    {
+      "testCaseName": "P4TE/highContention",
+      "src-dst-pairs": [
+
+        {
+          "src": "h0p0l0",
+          "dest": "h0p3l1",
+          "pattern": "one-to-one",
+          "flows": [
+            {
+              "flow_type": "tcp",
+              "flow_traffic_class": "0x10",
+              "flow-volume": "50K",
+              "src-window-size": "4K",
+              "src-data-rate": "4K",
+              "pkt-size": "1400",
+              "repeat": "10",
+              "repeat_interval": "0",
+              "is-interactive": "true"
+            }
+          ]
+        },
+        {
+          "src": "h1p0l0",
+          "dest": "h0p3l1",
+          "pattern": "one-to-one",
+          "flows": [
+            {
+              "flow_type": "tcp",
+              "flow_traffic_class": "0x10",
+              "flow-volume": "50K",
+              "src-window-size": "4K",
+              "src-data-rate": "4K",
+              "pkt-size": "1400",
+              "repeat": "10",
+              "repeat_interval": "0",
+              "is-interactive": "true"
+            }
+          ]
+        },
+        {
+          "src": "h0p0l0",
+          "dest": "h0p3l1",
+          "pattern": "one-to-one",
+          "flows": [
+            {
+              "flow_type": "tcp",
+              "flow_traffic_class": "0x10",
+              "flow-volume": "256K",
+              "src-window-size": "4K",
+              "src-data-rate": "4K",
+              "pkt-size": "1400",
+              "repeat": "5",
+              "repeat_interval": "0",
+              "is-interactive": "true"
+            }
+          ]
+        },
+        {
+          "src": "h1p0l0",
+          "dest": "h0p3l1",
+          "pattern": "one-to-one",
+          "flows": [
+            {
+              "flow_type": "tcp",
+              "flow_traffic_class": "0x10",
+              "flow-volume": "256K",
+              "src-window-size": "4K",
+              "src-data-rate": "4K",
+              "pkt-size": "1400",
+              "repeat": "8",
+              "repeat_interval": "0",
+              "is-interactive": "true"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

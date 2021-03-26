@@ -1,0 +1,1012 @@
+pkg_info {
+  arch: "v1model"
+}
+tables {
+  preamble {
+    id: 43516692
+    name: "IngressPipeImpl.ingress_rate_monitor_control_block.flow_type_based_ingress_stats_table"
+    alias: "flow_type_based_ingress_stats_table"
+  }
+  match_fields {
+    id: 1
+    name: "standard_metadata.ingress_port"
+    bitwidth: 9
+    match_type: EXACT
+  }
+  match_fields {
+    id: 2
+    name: "hdr.ipv6.traffic_class"
+    bitwidth: 6
+    match_type: EXACT
+  }
+  action_refs {
+    id: 26082846
+  }
+  action_refs {
+    id: 25697273
+  }
+  action_refs {
+    id: 21257015
+    annotations: "@defaultonly"
+    scope: DEFAULT_ONLY
+  }
+  size: 1024
+}
+tables {
+  preamble {
+    id: 39368487
+    name: "IngressPipeImpl.spine_downstream_routing_control_block.downstream_routing_table"
+    alias: "spine_downstream_routing_control_block.downstream_routing_table"
+  }
+  match_fields {
+    id: 1
+    name: "hdr.ipv6.dst_addr"
+    bitwidth: 128
+    match_type: LPM
+  }
+  action_refs {
+    id: 24749458
+  }
+  action_refs {
+    id: 21257015
+    annotations: "@defaultonly"
+    scope: DEFAULT_ONLY
+  }
+  direct_resource_ids: 330338703
+  direct_resource_ids: 356827147
+  size: 1024
+}
+tables {
+  preamble {
+    id: 44944015
+    name: "IngressPipeImpl.l2_ternary_processing_control_block.l2_ternary_table"
+    alias: "l2_ternary_table"
+  }
+  match_fields {
+    id: 1
+    name: "hdr.ethernet.dst_addr"
+    bitwidth: 48
+    match_type: TERNARY
+  }
+  action_refs {
+    id: 18898123
+  }
+  action_refs {
+    id: 25252251
+    annotations: "@defaultonly"
+    scope: DEFAULT_ONLY
+  }
+  const_default_action_id: 25252251
+  direct_resource_ids: 319227349
+  size: 1024
+}
+tables {
+  preamble {
+    id: 44899682
+    name: "IngressPipeImpl.ndp_processing_control_block.ndp_reply_table"
+    alias: "ndp_reply_table"
+  }
+  match_fields {
+    id: 1
+    name: "hdr.ipv6.src_addr"
+    bitwidth: 128
+    match_type: EXACT
+  }
+  action_refs {
+    id: 17085122
+  }
+  action_refs {
+    id: 21257015
+    annotations: "@defaultonly"
+    scope: DEFAULT_ONLY
+  }
+  direct_resource_ids: 321323137
+  size: 1024
+}
+tables {
+  preamble {
+    id: 37008825
+    name: "IngressPipeImpl.cp_assisted_multicriteria_upstream_routing_control_block.delay_based_upstream_path_table"
+    alias: "delay_based_upstream_path_table"
+  }
+  match_fields {
+    id: 1
+    name: "hdr.ipv6.dst_addr"
+    bitwidth: 128
+    match_type: LPM
+  }
+  match_fields {
+    id: 2
+    name: "local_metadata.delay_value_range"
+    bitwidth: 10
+    match_type: RANGE
+  }
+  match_fields {
+    id: 3
+    name: "local_metadata.minimum_group_members_requirement"
+    bitwidth: 10
+    match_type: RANGE
+  }
+  action_refs {
+    id: 23253852
+  }
+  action_refs {
+    id: 28613905
+  }
+  implementation_id: 292670824
+  direct_resource_ids: 325182875
+  size: 1024
+}
+tables {
+  preamble {
+    id: 35966780
+    name: "IngressPipeImpl.cp_assisted_multicriteria_upstream_routing_control_block.egr_queue_depth_based_upstream_path_table"
+    alias: "egr_queue_depth_based_upstream_path_table"
+  }
+  match_fields {
+    id: 1
+    name: "hdr.ipv6.dst_addr"
+    bitwidth: 128
+    match_type: LPM
+  }
+  match_fields {
+    id: 2
+    name: "local_metadata.egr_queue_depth_value_range"
+    bitwidth: 10
+    match_type: RANGE
+  }
+  match_fields {
+    id: 3
+    name: "local_metadata.minimum_group_members_requirement"
+    bitwidth: 10
+    match_type: RANGE
+  }
+  action_refs {
+    id: 21352244
+  }
+  action_refs {
+    id: 26909416
+  }
+  implementation_id: 297284887
+  direct_resource_ids: 323523595
+  size: 1024
+}
+tables {
+  preamble {
+    id: 44624230
+    name: "IngressPipeImpl.cp_assisted_multicriteria_upstream_routing_control_block.egr_port_rate_based_upstream_path_table"
+    alias: "egr_port_rate_based_upstream_path_table"
+  }
+  match_fields {
+    id: 1
+    name: "hdr.ipv6.dst_addr"
+    bitwidth: 128
+    match_type: LPM
+  }
+  match_fields {
+    id: 2
+    name: "local_metadata.egr_port_rate_value_range"
+    bitwidth: 10
+    match_type: RANGE
+  }
+  match_fields {
+    id: 3
+    name: "local_metadata.minimum_group_members_requirement"
+    bitwidth: 10
+    match_type: RANGE
+  }
+  action_refs {
+    id: 17159195
+  }
+  action_refs {
+    id: 21694588
+  }
+  implementation_id: 287767970
+  direct_resource_ids: 327341870
+  size: 1024
+}
+tables {
+  preamble {
+    id: 50079068
+    name: "EgressPipeImpl.egress_rate_monitor_control_block.egress_rate_monitor_table"
+    alias: "egress_rate_monitor_table"
+  }
+  match_fields {
+    id: 1
+    name: "standard_metadata.egress_port"
+    bitwidth: 9
+    match_type: EXACT
+  }
+  action_refs {
+    id: 28949872
+  }
+  const_default_action_id: 28949872
+  direct_resource_ids: 359745998
+  size: 1024
+}
+actions {
+  preamble {
+    id: 21257015
+    name: "NoAction"
+    alias: "NoAction"
+    annotations: "@noWarn(\"unused\")"
+  }
+}
+actions {
+  preamble {
+    id: 17072646
+    name: "IngressPipeImpl.init_pkt"
+    alias: "init_pkt"
+  }
+}
+actions {
+  preamble {
+    id: 28396054
+    name: "IngressPipeImpl.drop"
+    alias: "IngressPipeImpl.drop"
+  }
+}
+actions {
+  preamble {
+    id: 26082846
+    name: "IngressPipeImpl.ingress_rate_monitor_control_block.monitor_incoming_flow_based_on_flow_type_for_pkts_rcvd_from_upstream"
+    alias: "monitor_incoming_flow_based_on_flow_type_for_pkts_rcvd_from_upstream"
+  }
+  params {
+    id: 1
+    name: "flow_type_based_meter_idx"
+    bitwidth: 9
+  }
+}
+actions {
+  preamble {
+    id: 25697273
+    name: "IngressPipeImpl.ingress_rate_monitor_control_block.monitor_incoming_flow_based_on_flow_type_for_pkts_rcvd_from_downstream"
+    alias: "monitor_incoming_flow_based_on_flow_type_for_pkts_rcvd_from_downstream"
+  }
+  params {
+    id: 1
+    name: "flow_type_based_meter_idx"
+    bitwidth: 9
+  }
+}
+actions {
+  preamble {
+    id: 24749458
+    name: "IngressPipeImpl.spine_downstream_routing_control_block.set_downstream_egress_port"
+    alias: "set_downstream_egress_port"
+  }
+  params {
+    id: 1
+    name: "port_num"
+    bitwidth: 9
+  }
+  params {
+    id: 2
+    name: "dmac"
+    bitwidth: 48
+  }
+}
+actions {
+  preamble {
+    id: 25252251
+    name: "IngressPipeImpl.l2_ternary_processing_control_block.drop"
+    alias: "l2_ternary_processing_control_block.drop"
+  }
+}
+actions {
+  preamble {
+    id: 18898123
+    name: "IngressPipeImpl.l2_ternary_processing_control_block.set_multicast_group"
+    alias: "set_multicast_group"
+  }
+  params {
+    id: 1
+    name: "gid"
+    bitwidth: 16
+  }
+}
+actions {
+  preamble {
+    id: 17085122
+    name: "IngressPipeImpl.ndp_processing_control_block.ndp_ns_to_na"
+    alias: "ndp_ns_to_na"
+  }
+  params {
+    id: 1
+    name: "target_mac"
+    bitwidth: 48
+  }
+}
+actions {
+  preamble {
+    id: 23253852
+    name: "IngressPipeImpl.cp_assisted_multicriteria_upstream_routing_control_block.delay_based_upstream_path_selector_action_without_param"
+    alias: "delay_based_upstream_path_selector_action_without_param"
+  }
+}
+actions {
+  preamble {
+    id: 28613905
+    name: "IngressPipeImpl.cp_assisted_multicriteria_upstream_routing_control_block.delay_based_upstream_path_selector_action_with_param"
+    alias: "delay_based_upstream_path_selector_action_with_param"
+  }
+  params {
+    id: 1
+    name: "port_num"
+    bitwidth: 9
+  }
+}
+actions {
+  preamble {
+    id: 21352244
+    name: "IngressPipeImpl.cp_assisted_multicriteria_upstream_routing_control_block.egr_queue_depth_based_upstream_path_selector_action_without_param"
+    alias: "egr_queue_depth_based_upstream_path_selector_action_without_param"
+  }
+}
+actions {
+  preamble {
+    id: 26909416
+    name: "IngressPipeImpl.cp_assisted_multicriteria_upstream_routing_control_block.egr_queue_depth_based_upstream_path_selector_action_with_param"
+    alias: "egr_queue_depth_based_upstream_path_selector_action_with_param"
+  }
+  params {
+    id: 1
+    name: "port_num"
+    bitwidth: 9
+  }
+}
+actions {
+  preamble {
+    id: 17159195
+    name: "IngressPipeImpl.cp_assisted_multicriteria_upstream_routing_control_block.egr_port_rate_based_upstream_path_selector_action_without_param"
+    alias: "egr_port_rate_based_upstream_path_selector_action_without_param"
+  }
+}
+actions {
+  preamble {
+    id: 21694588
+    name: "IngressPipeImpl.cp_assisted_multicriteria_upstream_routing_control_block.egr_port_rate_based_upstream_path_selector_action_with_param"
+    alias: "egr_port_rate_based_upstream_path_selector_action_with_param"
+  }
+  params {
+    id: 1
+    name: "port_num"
+    bitwidth: 9
+  }
+}
+actions {
+  preamble {
+    id: 21006397
+    name: "IngressPipeImpl.cp_assisted_multicriteria_upstream_policy_routing_control_block.lookup_flowlet_id_map"
+    alias: "lookup_flowlet_id_map"
+  }
+}
+actions {
+  preamble {
+    id: 20893570
+    name: "IngressPipeImpl.cp_assisted_multicriteria_upstream_policy_routing_control_block.update_flowlet_id"
+    alias: "update_flowlet_id"
+  }
+}
+actions {
+  preamble {
+    id: 21612729
+    name: "IngressPipeImpl.cp_assisted_multicriteria_upstream_policy_routing_control_block.use_old_port"
+    alias: "use_old_port"
+  }
+}
+actions {
+  preamble {
+    id: 24919479
+    name: "IngressPipeImpl.cp_assisted_multicriteria_upstream_policy_routing_control_block.use_low_delay_port"
+    alias: "use_low_delay_port"
+  }
+}
+actions {
+  preamble {
+    id: 20123105
+    name: "IngressPipeImpl.cp_assisted_multicriteria_upstream_policy_routing_control_block.use_low_egress_queue_depth_port"
+    alias: "use_low_egress_queue_depth_port"
+  }
+}
+actions {
+  preamble {
+    id: 27391972
+    name: "IngressPipeImpl.cp_assisted_multicriteria_upstream_policy_routing_control_block.use_low_egress_queue_rate_port"
+    alias: "use_low_egress_queue_rate_port"
+  }
+}
+actions {
+  preamble {
+    id: 25757452
+    name: "EgressPipeImpl.set_all_header_invalid"
+    alias: "set_all_header_invalid"
+  }
+}
+actions {
+  preamble {
+    id: 17919062
+    name: "EgressPipeImpl.build_p2p_feedback_only"
+    alias: "build_p2p_feedback_only"
+  }
+}
+actions {
+  preamble {
+    id: 20672791
+    name: "EgressPipeImpl.build_p2p_feedback_with_fake_ack"
+    alias: "build_p2p_feedback_with_fake_ack"
+  }
+}
+actions {
+  preamble {
+    id: 21373656
+    name: "EgressPipeImpl.build_p2p_feedback_with_fake_ack_for_increase"
+    alias: "build_p2p_feedback_with_fake_ack_for_increase"
+  }
+}
+actions {
+  preamble {
+    id: 28949872
+    name: "EgressPipeImpl.egress_rate_monitor_control_block.monitor_outgoing_flow"
+    alias: "monitor_outgoing_flow"
+  }
+}
+action_profiles {
+  preamble {
+    id: 292670824
+    name: "IngressPipeImpl.cp_assisted_multicriteria_upstream_routing_control_block.delay_based_upstream_path_selector"
+    alias: "delay_based_upstream_path_selector"
+  }
+  table_ids: 37008825
+  with_selector: true
+  size: 128
+}
+action_profiles {
+  preamble {
+    id: 297284887
+    name: "IngressPipeImpl.cp_assisted_multicriteria_upstream_routing_control_block.egr_queue_depth_based_upstream_path_selector"
+    alias: "egr_queue_depth_based_upstream_path_selector"
+  }
+  table_ids: 35966780
+  with_selector: true
+  size: 128
+}
+action_profiles {
+  preamble {
+    id: 287767970
+    name: "IngressPipeImpl.cp_assisted_multicriteria_upstream_routing_control_block.egr_port_rate_based_upstream_path_selector"
+    alias: "egr_port_rate_based_upstream_path_selector"
+  }
+  table_ids: 44624230
+  with_selector: true
+  size: 128
+}
+counters {
+  preamble {
+    id: 312468779
+    name: "egressPortCounter"
+    alias: "egressPortCounter"
+  }
+  spec {
+    unit: PACKETS
+  }
+  size: 256
+}
+counters {
+  preamble {
+    id: 312275258
+    name: "ingressPortCounter"
+    alias: "ingressPortCounter"
+  }
+  spec {
+    unit: PACKETS
+  }
+  size: 256
+}
+counters {
+  preamble {
+    id: 303907780
+    name: "ctrlPktToCPCounter"
+    alias: "ctrlPktToCPCounter"
+  }
+  spec {
+    unit: PACKETS
+  }
+  size: 256
+}
+counters {
+  preamble {
+    id: 313087433
+    name: "p2pFeedbackCounter"
+    alias: "p2pFeedbackCounter"
+  }
+  spec {
+    unit: PACKETS
+  }
+  size: 256
+}
+direct_counters {
+  preamble {
+    id: 330338703
+    name: "downstream_routing_table"
+    alias: "downstream_routing_table"
+  }
+  spec {
+    unit: BOTH
+  }
+  direct_table_id: 39368487
+}
+direct_counters {
+  preamble {
+    id: 319227349
+    name: "l2_ternary_table_counter"
+    alias: "l2_ternary_table_counter"
+  }
+  spec {
+    unit: BOTH
+  }
+  direct_table_id: 44944015
+}
+direct_counters {
+  preamble {
+    id: 321323137
+    name: "ndp_reply_table_counter"
+    alias: "ndp_reply_table_counter"
+  }
+  spec {
+    unit: BOTH
+  }
+  direct_table_id: 44899682
+}
+direct_counters {
+  preamble {
+    id: 325182875
+    name: "delay_based_upstream_path_table_counter"
+    alias: "delay_based_upstream_path_table_counter"
+  }
+  spec {
+    unit: BOTH
+  }
+  direct_table_id: 37008825
+}
+direct_counters {
+  preamble {
+    id: 323523595
+    name: "egr_queue_depth_based_upstream_path_table_counter"
+    alias: "egr_queue_depth_based_upstream_path_table_counter"
+  }
+  spec {
+    unit: BOTH
+  }
+  direct_table_id: 35966780
+}
+direct_counters {
+  preamble {
+    id: 327341870
+    name: "egr_port_rate_based_upstream_path_table_counter"
+    alias: "egr_port_rate_based_upstream_path_table_counter"
+  }
+  spec {
+    unit: BOTH
+  }
+  direct_table_id: 44624230
+}
+meters {
+  preamble {
+    id: 337926983
+    name: "egress_port_meters"
+    alias: "egress_port_meters"
+  }
+  spec {
+    unit: PACKETS
+  }
+  size: 256
+}
+meters {
+  preamble {
+    id: 336773184
+    name: "IngressPipeImpl.ingress_rate_monitor_control_block.flow_type_based_ingress_meter_for_upstream"
+    alias: "flow_type_based_ingress_meter_for_upstream"
+  }
+  spec {
+    unit: PACKETS
+  }
+  size: 64
+}
+meters {
+  preamble {
+    id: 340826321
+    name: "IngressPipeImpl.ingress_rate_monitor_control_block.flow_type_based_ingress_meter_for_downstream"
+    alias: "flow_type_based_ingress_meter_for_downstream"
+  }
+  spec {
+    unit: PACKETS
+  }
+  size: 64
+}
+direct_meters {
+  preamble {
+    id: 356827147
+    name: "IngressPipeImpl.spine_downstream_routing_control_block.host_egress_meter"
+    alias: "host_egress_meter"
+  }
+  spec {
+    unit: BYTES
+  }
+  direct_table_id: 39368487
+}
+direct_meters {
+  preamble {
+    id: 359745998
+    name: "EgressPipeImpl.egress_rate_monitor_control_block.egress_meter"
+    alias: "egress_meter"
+  }
+  spec {
+    unit: PACKETS
+  }
+  direct_table_id: 50079068
+}
+controller_packet_metadata {
+  preamble {
+    id: 80671331
+    name: "packet_in"
+    alias: "packet_in"
+    annotations: "@controller_header(\"packet_in\")"
+  }
+  metadata {
+    id: 1
+    name: "ingress_port"
+    bitwidth: 9
+  }
+  metadata {
+    id: 2
+    name: "_pad"
+    bitwidth: 2
+  }
+  metadata {
+    id: 3
+    name: "ingress_queue_event"
+    bitwidth: 8
+  }
+  metadata {
+    id: 4
+    name: "ingress_queue_event_data"
+    bitwidth: 48
+  }
+  metadata {
+    id: 5
+    name: "ingress_queue_event_port"
+    bitwidth: 9
+  }
+  metadata {
+    id: 6
+    name: "egress_queue_event"
+    bitwidth: 8
+  }
+  metadata {
+    id: 7
+    name: "egress_queue_event_data"
+    bitwidth: 48
+  }
+  metadata {
+    id: 8
+    name: "egress_queue_event_port"
+    bitwidth: 9
+  }
+  metadata {
+    id: 9
+    name: "ingress_traffic_color"
+    bitwidth: 32
+  }
+  metadata {
+    id: 10
+    name: "ingress_rate_event_data"
+    bitwidth: 48
+  }
+  metadata {
+    id: 11
+    name: "ingress_rate_event_port"
+    bitwidth: 9
+  }
+  metadata {
+    id: 12
+    name: "egress_traffic_color"
+    bitwidth: 32
+  }
+  metadata {
+    id: 13
+    name: "egress_rate_event_data"
+    bitwidth: 48
+  }
+  metadata {
+    id: 14
+    name: "egress_rate_event_port"
+    bitwidth: 9
+  }
+  metadata {
+    id: 15
+    name: "delay_event_src_type"
+    bitwidth: 8
+  }
+  metadata {
+    id: 16
+    name: "path_delay_event_type"
+    bitwidth: 8
+  }
+  metadata {
+    id: 17
+    name: "path_delay_event_data"
+    bitwidth: 48
+  }
+  metadata {
+    id: 18
+    name: "dst_addr"
+    bitwidth: 128
+  }
+  metadata {
+    id: 19
+    name: "path_delay_event_port"
+    bitwidth: 9
+  }
+}
+controller_packet_metadata {
+  preamble {
+    id: 75327753
+    name: "packet_out"
+    alias: "packet_out"
+    annotations: "@controller_header(\"packet_out\")"
+  }
+  metadata {
+    id: 1
+    name: "egress_port"
+    bitwidth: 9
+  }
+  metadata {
+    id: 2
+    name: "_pad"
+    bitwidth: 7
+  }
+}
+registers {
+  preamble {
+    id: 377773774
+    name: "egress_queue_depth_value_map"
+    alias: "egress_queue_depth_value_map"
+  }
+  type_spec {
+    bitstring {
+      bit {
+        bitwidth: 48
+      }
+    }
+  }
+  size: 256
+}
+registers {
+  preamble {
+    id: 381338123
+    name: "egress_queue_depth_last_update_time_map"
+    alias: "egress_queue_depth_last_update_time_map"
+  }
+  type_spec {
+    bitstring {
+      bit {
+        bitwidth: 48
+      }
+    }
+  }
+  size: 256
+}
+registers {
+  preamble {
+    id: 382266878
+    name: "egress_queue_rate_value_map"
+    alias: "egress_queue_rate_value_map"
+  }
+  type_spec {
+    bitstring {
+      bit {
+        bitwidth: 48
+      }
+    }
+  }
+  size: 256
+}
+registers {
+  preamble {
+    id: 375809919
+    name: "egress_queue_rate_last_update_time_map"
+    alias: "egress_queue_rate_last_update_time_map"
+  }
+  type_spec {
+    bitstring {
+      bit {
+        bitwidth: 48
+      }
+    }
+  }
+  size: 256
+}
+registers {
+  preamble {
+    id: 382937763
+    name: "port_to_port_delay_value_map"
+    alias: "port_to_port_delay_value_map"
+  }
+  type_spec {
+    bitstring {
+      bit {
+        bitwidth: 48
+      }
+    }
+  }
+  size: 256
+}
+registers {
+  preamble {
+    id: 374097328
+    name: "port_to_port_delay_last_update_time_map"
+    alias: "port_to_port_delay_last_update_time_map"
+  }
+  type_spec {
+    bitstring {
+      bit {
+        bitwidth: 48
+      }
+    }
+  }
+  size: 256
+}
+registers {
+  preamble {
+    id: 383313281
+    name: "IngressPipeImpl.egress_queue_depth_value_map"
+    alias: "IngressPipeImpl.egress_queue_depth_value_map"
+  }
+  type_spec {
+    bitstring {
+      bit {
+        bitwidth: 48
+      }
+    }
+  }
+  size: 256
+}
+registers {
+  preamble {
+    id: 370110914
+    name: "IngressPipeImpl.egress_queue_depth_last_update_time_map"
+    alias: "IngressPipeImpl.egress_queue_depth_last_update_time_map"
+  }
+  type_spec {
+    bitstring {
+      bit {
+        bitwidth: 48
+      }
+    }
+  }
+  size: 256
+}
+registers {
+  preamble {
+    id: 375338565
+    name: "IngressPipeImpl.egress_queue_rate_value_map"
+    alias: "IngressPipeImpl.egress_queue_rate_value_map"
+  }
+  type_spec {
+    bitstring {
+      bit {
+        bitwidth: 48
+      }
+    }
+  }
+  size: 256
+}
+registers {
+  preamble {
+    id: 369372461
+    name: "IngressPipeImpl.egress_queue_rate_last_update_time_map"
+    alias: "IngressPipeImpl.egress_queue_rate_last_update_time_map"
+  }
+  type_spec {
+    bitstring {
+      bit {
+        bitwidth: 48
+      }
+    }
+  }
+  size: 256
+}
+registers {
+  preamble {
+    id: 370787408
+    name: "IngressPipeImpl.port_to_port_delay_value_map"
+    alias: "IngressPipeImpl.port_to_port_delay_value_map"
+  }
+  type_spec {
+    bitstring {
+      bit {
+        bitwidth: 48
+      }
+    }
+  }
+  size: 256
+}
+registers {
+  preamble {
+    id: 369169544
+    name: "IngressPipeImpl.port_to_port_delay_last_update_time_map"
+    alias: "IngressPipeImpl.port_to_port_delay_last_update_time_map"
+  }
+  type_spec {
+    bitstring {
+      bit {
+        bitwidth: 48
+      }
+    }
+  }
+  size: 256
+}
+registers {
+  preamble {
+    id: 382694746
+    name: "IngressPipeImpl.cp_assisted_multicriteria_upstream_policy_routing_control_block.flowlet_id_map"
+    alias: "flowlet_id_map"
+  }
+  type_spec {
+    bitstring {
+      bit {
+        bitwidth: 16
+      }
+    }
+  }
+  size: 8192
+}
+registers {
+  preamble {
+    id: 373780740
+    name: "IngressPipeImpl.cp_assisted_multicriteria_upstream_policy_routing_control_block.flowlet_lasttime_map"
+    alias: "flowlet_lasttime_map"
+  }
+  type_spec {
+    bitstring {
+      bit {
+        bitwidth: 48
+      }
+    }
+  }
+  size: 8192
+}
+registers {
+  preamble {
+    id: 373094805
+    name: "IngressPipeImpl.cp_assisted_multicriteria_upstream_policy_routing_control_block.flowlet_last_used_port"
+    alias: "flowlet_last_used_port"
+  }
+  type_spec {
+    bitstring {
+      bit {
+        bitwidth: 9
+      }
+    }
+  }
+  size: 8192
+}
+registers {
+  preamble {
+    id: 381365133
+    name: "EgressPipeImpl.egress_queue_depth_monitor_control_block.port_last_updated_egress_queue_avg_depth"
+    alias: "port_last_updated_egress_queue_avg_depth"
+  }
+  type_spec {
+    bitstring {
+      bit {
+        bitwidth: 19
+      }
+    }
+  }
+  size: 256
+}
+type_info {
+}

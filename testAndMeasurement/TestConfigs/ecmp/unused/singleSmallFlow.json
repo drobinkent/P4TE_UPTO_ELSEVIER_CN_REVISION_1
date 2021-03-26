@@ -1,0 +1,28 @@
+{
+  "TESTS": [
+    {
+      "testCaseName": "ecmp-dctcp-no-fixed-rate/singleSmallFlow",
+      "src-dst-pairs": [
+        {
+          "src": "h0p0l0",
+          "dest": "h0p2l1",
+          "pattern": "one-to-one",
+          "flows": [
+            {
+              "flow_type": "tcp",
+              "flow_traffic_class" : "0x10",
+              "flow-volume": "10K",
+              "src-window-size": "1048K",
+              "src-data-rate": "",
+              "pkt-size":  "1400",
+              "repeat" : "1",
+              "repeat_interval": "0",
+              "is-interactive" : "true"
+            }
+          ]
+        }
+
+      ]
+    }
+  ]
+}

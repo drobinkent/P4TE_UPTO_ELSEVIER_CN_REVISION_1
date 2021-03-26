@@ -1,0 +1,38 @@
+{
+  "TESTS": [
+    {
+      "testCaseName": "cp-assisted-wo-rc/LinkUtilizationChecker/LinkUtilizationCheckerForSmallLargeFlowMixStridePattern.",
+      "src-dst-pairs": [
+        {
+          "src": "h0p0l0",
+          "dest": "h0p0l1",
+          "pattern": "stride",
+          "flows": [
+            {
+              "flow_type": "tcp",
+              "flow_traffic_class" : "0x10",
+              "flow-volume": "50K",
+              "src-window-size": "48K",
+              "src-data-rate": "16K",
+              "pkt-size":  "1400",
+              "repeat" : "5",
+              "repeat_interval": "100",
+              "is-interactive" : "true"
+            },{
+              "flow_type": "tcp",
+              "flow_traffic_class" : "0x08",
+              "flow-volume": "256K",
+              "src-window-size": "48K",
+              "src-data-rate": "16K",
+              "pkt-size":  "1400",
+              "repeat" : "1",
+              "repeat_interval": "100",
+              "is-interactive" : "true"
+            }
+          ]
+        }
+
+      ]
+    }
+  ]
+}

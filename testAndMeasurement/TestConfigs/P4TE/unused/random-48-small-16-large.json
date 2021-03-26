@@ -1,0 +1,46 @@
+{
+  "TESTS": [
+    {
+      "testCaseName": "P4TE/random-48-small-16-large",
+      "src-dst-pairs": [
+        {
+          "src": "h0p0l0",
+          "dest": "h0p2l1",
+          "pattern": "random(16)",
+          "flows": [
+            {
+              "flow_type": "tcp",
+              "flow_traffic_class" : "0x10",
+              "flow-volume": "10K",
+              "src-window-size": "16K",
+              "src-data-rate": "",
+              "pkt-size":  "1400",
+              "repeat" : "3",
+              "repeat_interval": "65",
+              "is-interactive" : "true"
+            }
+          ]
+        },
+        {
+          "src": "h0p0l0",
+          "dest": "h0p2l1",
+          "pattern": "random(4)",
+          "flows": [
+            {
+              "flow_type": "tcp",
+              "flow_traffic_class" : "0x08",
+              "flow-volume": "256K",
+              "src-window-size": "24K",
+              "src-data-rate": "",
+              "pkt-size":  "1400",
+              "repeat" : "4",
+              "repeat_interval": "75",
+              "is-interactive" : "true"
+            }
+          ]
+        }
+
+      ]
+    }
+  ]
+}
