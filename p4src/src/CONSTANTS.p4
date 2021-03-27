@@ -164,7 +164,7 @@ meter((bit<32>)MAX_PORTS_IN_SWITCH, MeterType.packets) egress_port_meters;
  @name("egress_queue_depth_value_map")register<bit<48>>(MAX_PORTS_IN_SWITCH) egress_queue_depth_value_map;
  @name("egress_queue_depth_last_update_time_map")register<bit<48>>(MAX_PORTS_IN_SWITCH) egress_queue_depth_last_update_time_map;
  @name("egress_queue_rate_value_map")register<bit<48>>(MAX_PORTS_IN_SWITCH) egress_queue_rate_value_map;
- //@name("egress_queue_rate_last_update_time_map")register<bit<48>>(MAX_PORTS_IN_SWITCH) egress_queue_rate_last_update_time_map;
+ @name("egress_queue_rate_last_update_time_map")register<bit<48>>(MAX_PORTS_IN_SWITCH) egress_queue_rate_last_update_time_map;
  @name("port_to_port_delay_value_map")register<bit<48>>(MAX_PORTS_IN_SWITCH) port_to_port_delay_value_map;
  @name("port_to_port_delay_last_update_time_map")register<bit<48>>(MAX_PORTS_IN_SWITCH) port_to_port_delay_last_update_time_map;
 
