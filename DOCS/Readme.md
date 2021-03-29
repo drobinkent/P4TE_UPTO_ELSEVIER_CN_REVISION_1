@@ -113,8 +113,29 @@
         Yo ucan easily guess that from the IperfOutput files.
         ---- All the IPerf results used in our P4TE papers are inside folder ""/home/deba/Desktop/P4TE/testAndMeasurement/TEST_RESULTS"
         
-        
+
+
+
+# Test configurations and results used in our paper are following. For each of the follwing scenarios we have tested both under 
+ECMP and P4TE. The configuration for both the cases are same. only results are saved in different folders to compare the results
+
+    1) Stride pattern low load:
+        a) config  file: testAndMeasurement/TestConfigs/ecmp/l2strideSmallLarge-16k-sc8.json and testAndMeasurement/TestConfigs/P4TE/l2strideSmallLarge-16k-sc8.json
+        b) To use this test configuration make the "STRIDE_COUNT = 8" in ConfigCost.py
+    2) Stride pattern high load:
+        a) config  file: testAndMeasurement/TestConfigs/ecmp/l2strideSmallLarge-16k-sc16.json and testAndMeasurement/TestConfigs/P4TE/l2strideSmallLarge-16k-sc16.json
+        b) To use this test configuration make the "STRIDE_COUNT = 16" in ConfigCost.py
+    3) TCP incast: 
+        a) config file: testAndMeasurement/TestConfigs/ecmp/l2-incast.json and testAndMeasurement/TestConfigs/P4TE/l2-incast.json
+    4) TCP congestion: 
+        a) config file: testAndMeasurement/TestConfigs/ecmp/l2-congestion.json and testAndMeasurement/TestConfigs/P4TE/l2-congestion.json
+    5) Link Utilization Test: 
+        a) config file: testAndMeasurement/TestConfigs/ecmp/linkUtilizationTester.json and testAndMeasurement/TestConfigs/P4TE/linkUtilizationTester.json
  
 
+## Finally results from  these test cases are processed and  relevant grpahs can be accessed from folder "ProcessedResultImages"
+    This folder also contains a summary result of the test cases in file "Resultsummary.md"
+
+## The Makefile contains commands to run the program for processing the test case results. 
 
     

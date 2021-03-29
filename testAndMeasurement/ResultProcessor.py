@@ -1325,9 +1325,9 @@ def processResults(iPerfResultsFolder1, iPerfResultsFolder2, algorithm1, algorit
     print("\nStandard Deviation: "+str(resultSet2[0].shortFlowPercentileBasedResults.fctSTD))
     print("Average: "+str(resultSet2[0].shortFlowPercentileBasedResults.fctAVG))
     rateofChange = ((resultSet1[0].shortFlowPercentileBasedResults.fctSTD - resultSet2[0].shortFlowPercentileBasedResults.fctSTD) / resultSet1[0].shortFlowPercentileBasedResults.fctSTD) * 100
-    print("P4TE's gain in SD of # FCT is "+str(rateofChange))
+    # print("P4TE's gain in SD of # FCT is "+str(rateofChange))
     rateofChange = ((resultSet1[0].shortFlowPercentileBasedResults.fctAVG - resultSet2[0].shortFlowPercentileBasedResults.fctAVG) / resultSet1[0].shortFlowPercentileBasedResults.fctAVG) * 100
-    print("P4TE's gain in avg of FCT is "+str(rateofChange))
+    # print("P4TE's gain in avg of FCT is "+str(rateofChange))
     print("FCT of large flows ")
     print("For :"+algorithm1)
     # print(avgResultSet1.largeFlowPercentileBasedResults.fctPercentileList)
@@ -1338,9 +1338,9 @@ def processResults(iPerfResultsFolder1, iPerfResultsFolder2, algorithm1, algorit
     print("\nStandard Deviation: "+str(resultSet2[0].largeFlowPercentileBasedResults.fctSTD))
     print("Average: "+str(resultSet2[0].largeFlowPercentileBasedResults.fctAVG))
     rateofChange = ((resultSet1[0].largeFlowPercentileBasedResults.fctSTD - resultSet2[0].largeFlowPercentileBasedResults.fctSTD) / resultSet1[0].largeFlowPercentileBasedResults.fctSTD) * 100
-    print("P4TE's gain in SD of FCT is "+str(rateofChange))
+    # print("P4TE's gain in SD of FCT is "+str(rateofChange))
     rateofChange = ((resultSet1[0].largeFlowPercentileBasedResults.fctAVG - resultSet2[0].largeFlowPercentileBasedResults.fctAVG) / resultSet1[0].largeFlowPercentileBasedResults.fctAVG) * 100
-    print("P4TE's gain in Avg of FCT is "+str(rateofChange))
+    # print("P4TE's gain in Avg of FCT is "+str(rateofChange))
 
     # print("\n\n====================================================================================")
     # print("Total Data Loss of short flows ")
