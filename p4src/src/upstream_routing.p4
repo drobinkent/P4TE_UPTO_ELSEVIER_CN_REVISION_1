@@ -118,7 +118,7 @@ control upstream_routing(inout parsed_headers_t    hdr,
         lookup_flowlet_map();
         if (local_metadata.flow_inter_packet_gap  > FLOWLET_INTER_PACKET_GAP_THRESHOLD)
              update_flowlet_id();
-        upstream_routing_table.apply();
+             upstream_routing_table.apply();
     }
 }
 #endif
