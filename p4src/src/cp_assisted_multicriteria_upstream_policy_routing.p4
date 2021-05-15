@@ -24,7 +24,7 @@ control cp_assisted_multicriteria_upstream_policy_routing(inout parsed_headers_t
         flowlet_lasttime_map.read(local_metadata.flowlet_last_pkt_seen_time, (bit<32>)local_metadata.flowlet_map_index);
         local_metadata.flow_inter_packet_gap = local_metadata.flow_inter_packet_gap - local_metadata.flowlet_last_pkt_seen_time;
         flowlet_lasttime_map.write((bit<32>)local_metadata.flowlet_map_index, standard_metadata.ingress_global_timestamp);
-        flowlet_last_used_port.read(local_metadata.flowlet_last_used_path,(bit<32>)local_metadata.flowlet_map_index);  //TODO We may not need thsi here
+        //flowlet_last_used_port.read(local_metadata.flowlet_last_used_path,(bit<32>)local_metadata.flowlet_map_index);  //TODO We may not need thsi here
     }
     @name("update_flowlet_id") action update_flowlet_id_map() {
         //local_metadata.flowlet_id = local_metadata.flowlet_id + 16w1;
@@ -32,6 +32,7 @@ control cp_assisted_multicriteria_upstream_policy_routing(inout parsed_headers_t
         flowlet_last_used_port.write((bit<32>)local_metadata.flowlet_map_index,(bit<9>)standard_metadata.egress_spec );
     }
     action use_old_port() {
+        flowlet_last_used_port.read(local_metadata.flowlet_last_used_path,(bit<32>)local_metadata.flowlet_map_index);
         standard_metadata.egress_spec = local_metadata.flowlet_last_used_path;
         // Decrement TTL
         hdr.ipv6.hop_limit = hdr.ipv6.hop_limit - 1;
@@ -90,7 +91,6 @@ control cp_assisted_multicriteria_upstream_policy_routing(inout parsed_headers_t
                  }else if((low_delay_path_rate_status == (bit<48>)RED ) ){ // use safe rate port
                      use_low_egress_queue_depth_port();
                  }
-
                  update_flowlet_id_map();
             }else{
                 use_old_port();

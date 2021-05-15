@@ -15,14 +15,14 @@
         ["tmp_7", 32, false],
         ["tmp_8", 32, false],
         ["tmp_9", 32, false],
-        ["tmp_10", 48, false],
-        ["tmp_11", 32, false],
+        ["tmp_10", 32, false],
+        ["tmp_11", 48, false],
         ["tmp_12", 32, false],
         ["tmp_13", 32, false],
+        ["tmp_14", 32, false],
         ["ndp_processing_control_block_host_ipv6_tmp", 128, false],
         ["cp_assisted_multicriteria_upstream_policy_routing_control_block_low_delay_path_rate_status", 48, false],
         ["cp_assisted_multicriteria_upstream_policy_routing_control_block_low_utilization_path_rate_status", 48, false],
-        ["tmp_14", 32, false],
         ["tmp_15", 32, false],
         ["tmp_16", 32, false],
         ["tmp_17", 32, false],
@@ -31,6 +31,7 @@
         ["tmp_20", 32, false],
         ["tmp_21", 32, false],
         ["tmp_22", 32, false],
+        ["tmp_23", 32, false],
         ["temp_next_hdr_0", 8, false],
         ["temp_src_addr_0", 128, false],
         ["temp_src_port_0", 16, false],
@@ -5870,61 +5871,6 @@
             "column" : 8,
             "source_fragment" : "flowlet_lasttime_map.write((bit<32>)local_metadata.flowlet_map_index, standard_metadata.ingress_global_timestamp)"
           }
-        },
-        {
-          "op" : "assign",
-          "parameters" : [
-            {
-              "type" : "field",
-              "value" : ["scalars", "tmp_4"]
-            },
-            {
-              "type" : "expression",
-              "value" : {
-                "type" : "expression",
-                "value" : {
-                  "op" : "&",
-                  "left" : {
-                    "type" : "field",
-                    "value" : ["scalars", "userMetadata.flowlet_map_index"]
-                  },
-                  "right" : {
-                    "type" : "hexstr",
-                    "value" : "0xffffffff"
-                  }
-                }
-              }
-            }
-          ],
-          "source_info" : {
-            "filename" : "p4src/src/cp_assisted_multicriteria_upstream_policy_routing.p4",
-            "line" : 27,
-            "column" : 74,
-            "source_fragment" : "(bit<32>)local_metadata.flowlet_map_index"
-          }
-        },
-        {
-          "op" : "register_read",
-          "parameters" : [
-            {
-              "type" : "field",
-              "value" : ["scalars", "userMetadata.flowlet_last_used_path"]
-            },
-            {
-              "type" : "register_array",
-              "value" : "IngressPipeImpl.cp_assisted_multicriteria_upstream_policy_routing_control_block.flowlet_last_used_port"
-            },
-            {
-              "type" : "field",
-              "value" : ["scalars", "tmp_4"]
-            }
-          ],
-          "source_info" : {
-            "filename" : "p4src/src/cp_assisted_multicriteria_upstream_policy_routing.p4",
-            "line" : 27,
-            "column" : 8,
-            "source_fragment" : "flowlet_last_used_port.read(local_metadata.flowlet_last_used_path,(bit<32>)local_metadata.flowlet_map_index)"
-          }
         }
       ]
     },
@@ -5938,7 +5884,7 @@
           "parameters" : [
             {
               "type" : "field",
-              "value" : ["scalars", "tmp_5"]
+              "value" : ["scalars", "tmp_4"]
             },
             {
               "type" : "expression",
@@ -5974,7 +5920,7 @@
             },
             {
               "type" : "field",
-              "value" : ["scalars", "tmp_5"]
+              "value" : ["scalars", "tmp_4"]
             },
             {
               "type" : "field",
@@ -6000,7 +5946,7 @@
           "parameters" : [
             {
               "type" : "field",
-              "value" : ["scalars", "tmp_6"]
+              "value" : ["scalars", "tmp_5"]
             },
             {
               "type" : "expression",
@@ -6036,7 +5982,7 @@
             },
             {
               "type" : "field",
-              "value" : ["scalars", "tmp_6"]
+              "value" : ["scalars", "tmp_5"]
             },
             {
               "type" : "field",
@@ -6062,7 +6008,7 @@
           "parameters" : [
             {
               "type" : "field",
-              "value" : ["scalars", "tmp_7"]
+              "value" : ["scalars", "tmp_6"]
             },
             {
               "type" : "expression",
@@ -6098,7 +6044,7 @@
             },
             {
               "type" : "field",
-              "value" : ["scalars", "tmp_7"]
+              "value" : ["scalars", "tmp_6"]
             },
             {
               "type" : "field",
@@ -6124,7 +6070,7 @@
           "parameters" : [
             {
               "type" : "field",
-              "value" : ["scalars", "tmp_8"]
+              "value" : ["scalars", "tmp_7"]
             },
             {
               "type" : "expression",
@@ -6160,7 +6106,7 @@
             },
             {
               "type" : "field",
-              "value" : ["scalars", "tmp_8"]
+              "value" : ["scalars", "tmp_7"]
             },
             {
               "type" : "field",
@@ -6186,6 +6132,61 @@
           "parameters" : [
             {
               "type" : "field",
+              "value" : ["scalars", "tmp_8"]
+            },
+            {
+              "type" : "expression",
+              "value" : {
+                "type" : "expression",
+                "value" : {
+                  "op" : "&",
+                  "left" : {
+                    "type" : "field",
+                    "value" : ["scalars", "userMetadata.flowlet_map_index"]
+                  },
+                  "right" : {
+                    "type" : "hexstr",
+                    "value" : "0xffffffff"
+                  }
+                }
+              }
+            }
+          ],
+          "source_info" : {
+            "filename" : "p4src/src/cp_assisted_multicriteria_upstream_policy_routing.p4",
+            "line" : 35,
+            "column" : 74,
+            "source_fragment" : "(bit<32>)local_metadata.flowlet_map_index"
+          }
+        },
+        {
+          "op" : "register_read",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["scalars", "userMetadata.flowlet_last_used_path"]
+            },
+            {
+              "type" : "register_array",
+              "value" : "IngressPipeImpl.cp_assisted_multicriteria_upstream_policy_routing_control_block.flowlet_last_used_port"
+            },
+            {
+              "type" : "field",
+              "value" : ["scalars", "tmp_8"]
+            }
+          ],
+          "source_info" : {
+            "filename" : "p4src/src/cp_assisted_multicriteria_upstream_policy_routing.p4",
+            "line" : 35,
+            "column" : 8,
+            "source_fragment" : "flowlet_last_used_port.read(local_metadata.flowlet_last_used_path,(bit<32>)local_metadata.flowlet_map_index)"
+          }
+        },
+        {
+          "op" : "assign",
+          "parameters" : [
+            {
+              "type" : "field",
               "value" : ["standard_metadata", "egress_spec"]
             },
             {
@@ -6195,7 +6196,7 @@
           ],
           "source_info" : {
             "filename" : "p4src/src/cp_assisted_multicriteria_upstream_policy_routing.p4",
-            "line" : 35,
+            "line" : 36,
             "column" : 8,
             "source_fragment" : "standard_metadata.egress_spec = local_metadata.flowlet_last_used_path"
           }
@@ -6237,7 +6238,7 @@
           ],
           "source_info" : {
             "filename" : "p4src/src/cp_assisted_multicriteria_upstream_policy_routing.p4",
-            "line" : 37,
+            "line" : 38,
             "column" : 8,
             "source_fragment" : "hdr.ipv6.hop_limit = hdr.ipv6.hop_limit - 1"
           }
@@ -6254,6 +6255,61 @@
           "parameters" : [
             {
               "type" : "field",
+              "value" : ["scalars", "tmp_9"]
+            },
+            {
+              "type" : "expression",
+              "value" : {
+                "type" : "expression",
+                "value" : {
+                  "op" : "&",
+                  "left" : {
+                    "type" : "field",
+                    "value" : ["scalars", "userMetadata.flowlet_map_index"]
+                  },
+                  "right" : {
+                    "type" : "hexstr",
+                    "value" : "0xffffffff"
+                  }
+                }
+              }
+            }
+          ],
+          "source_info" : {
+            "filename" : "p4src/src/cp_assisted_multicriteria_upstream_policy_routing.p4",
+            "line" : 35,
+            "column" : 74,
+            "source_fragment" : "(bit<32>)local_metadata.flowlet_map_index"
+          }
+        },
+        {
+          "op" : "register_read",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["scalars", "userMetadata.flowlet_last_used_path"]
+            },
+            {
+              "type" : "register_array",
+              "value" : "IngressPipeImpl.cp_assisted_multicriteria_upstream_policy_routing_control_block.flowlet_last_used_port"
+            },
+            {
+              "type" : "field",
+              "value" : ["scalars", "tmp_9"]
+            }
+          ],
+          "source_info" : {
+            "filename" : "p4src/src/cp_assisted_multicriteria_upstream_policy_routing.p4",
+            "line" : 35,
+            "column" : 8,
+            "source_fragment" : "flowlet_last_used_port.read(local_metadata.flowlet_last_used_path,(bit<32>)local_metadata.flowlet_map_index)"
+          }
+        },
+        {
+          "op" : "assign",
+          "parameters" : [
+            {
+              "type" : "field",
               "value" : ["standard_metadata", "egress_spec"]
             },
             {
@@ -6263,7 +6319,7 @@
           ],
           "source_info" : {
             "filename" : "p4src/src/cp_assisted_multicriteria_upstream_policy_routing.p4",
-            "line" : 35,
+            "line" : 36,
             "column" : 8,
             "source_fragment" : "standard_metadata.egress_spec = local_metadata.flowlet_last_used_path"
           }
@@ -6305,7 +6361,7 @@
           ],
           "source_info" : {
             "filename" : "p4src/src/cp_assisted_multicriteria_upstream_policy_routing.p4",
-            "line" : 37,
+            "line" : 38,
             "column" : 8,
             "source_fragment" : "hdr.ipv6.hop_limit = hdr.ipv6.hop_limit - 1"
           }
@@ -6331,7 +6387,7 @@
           ],
           "source_info" : {
             "filename" : "p4src/src/cp_assisted_multicriteria_upstream_policy_routing.p4",
-            "line" : 40,
+            "line" : 41,
             "column" : 8,
             "source_fragment" : "standard_metadata.egress_spec = local_metadata.delay_based_path"
           }
@@ -6373,7 +6429,7 @@
           ],
           "source_info" : {
             "filename" : "p4src/src/cp_assisted_multicriteria_upstream_policy_routing.p4",
-            "line" : 42,
+            "line" : 43,
             "column" : 8,
             "source_fragment" : "hdr.ipv6.hop_limit = hdr.ipv6.hop_limit - 1"
           }
@@ -6399,7 +6455,7 @@
           ],
           "source_info" : {
             "filename" : "p4src/src/cp_assisted_multicriteria_upstream_policy_routing.p4",
-            "line" : 40,
+            "line" : 41,
             "column" : 8,
             "source_fragment" : "standard_metadata.egress_spec = local_metadata.delay_based_path"
           }
@@ -6441,7 +6497,7 @@
           ],
           "source_info" : {
             "filename" : "p4src/src/cp_assisted_multicriteria_upstream_policy_routing.p4",
-            "line" : 42,
+            "line" : 43,
             "column" : 8,
             "source_fragment" : "hdr.ipv6.hop_limit = hdr.ipv6.hop_limit - 1"
           }
@@ -6467,7 +6523,7 @@
           ],
           "source_info" : {
             "filename" : "p4src/src/cp_assisted_multicriteria_upstream_policy_routing.p4",
-            "line" : 40,
+            "line" : 41,
             "column" : 8,
             "source_fragment" : "standard_metadata.egress_spec = local_metadata.delay_based_path"
           }
@@ -6509,7 +6565,7 @@
           ],
           "source_info" : {
             "filename" : "p4src/src/cp_assisted_multicriteria_upstream_policy_routing.p4",
-            "line" : 42,
+            "line" : 43,
             "column" : 8,
             "source_fragment" : "hdr.ipv6.hop_limit = hdr.ipv6.hop_limit - 1"
           }
@@ -6535,7 +6591,7 @@
           ],
           "source_info" : {
             "filename" : "p4src/src/cp_assisted_multicriteria_upstream_policy_routing.p4",
-            "line" : 45,
+            "line" : 46,
             "column" : 9,
             "source_fragment" : "standard_metadata.egress_spec = local_metadata.egr_queue_based_path"
           }
@@ -6577,7 +6633,7 @@
           ],
           "source_info" : {
             "filename" : "p4src/src/cp_assisted_multicriteria_upstream_policy_routing.p4",
-            "line" : 47,
+            "line" : 48,
             "column" : 9,
             "source_fragment" : "hdr.ipv6.hop_limit = hdr.ipv6.hop_limit - 1"
           }
@@ -6603,7 +6659,7 @@
           ],
           "source_info" : {
             "filename" : "p4src/src/cp_assisted_multicriteria_upstream_policy_routing.p4",
-            "line" : 45,
+            "line" : 46,
             "column" : 9,
             "source_fragment" : "standard_metadata.egress_spec = local_metadata.egr_queue_based_path"
           }
@@ -6645,7 +6701,7 @@
           ],
           "source_info" : {
             "filename" : "p4src/src/cp_assisted_multicriteria_upstream_policy_routing.p4",
-            "line" : 47,
+            "line" : 48,
             "column" : 9,
             "source_fragment" : "hdr.ipv6.hop_limit = hdr.ipv6.hop_limit - 1"
           }
@@ -6671,7 +6727,7 @@
           ],
           "source_info" : {
             "filename" : "p4src/src/cp_assisted_multicriteria_upstream_policy_routing.p4",
-            "line" : 50,
+            "line" : 51,
             "column" : 10,
             "source_fragment" : "standard_metadata.egress_spec =local_metadata.egr_rate_based_path"
           }
@@ -6713,7 +6769,7 @@
           ],
           "source_info" : {
             "filename" : "p4src/src/cp_assisted_multicriteria_upstream_policy_routing.p4",
-            "line" : 52,
+            "line" : 53,
             "column" : 10,
             "source_fragment" : "hdr.ipv6.hop_limit = hdr.ipv6.hop_limit - 1"
           }
@@ -6739,7 +6795,7 @@
           ],
           "source_info" : {
             "filename" : "p4src/src/cp_assisted_multicriteria_upstream_policy_routing.p4",
-            "line" : 50,
+            "line" : 51,
             "column" : 10,
             "source_fragment" : "standard_metadata.egress_spec =local_metadata.egr_rate_based_path"
           }
@@ -6781,7 +6837,7 @@
           ],
           "source_info" : {
             "filename" : "p4src/src/cp_assisted_multicriteria_upstream_policy_routing.p4",
-            "line" : 52,
+            "line" : 53,
             "column" : 10,
             "source_fragment" : "hdr.ipv6.hop_limit = hdr.ipv6.hop_limit - 1"
           }
@@ -6943,7 +6999,7 @@
           "parameters" : [
             {
               "type" : "field",
-              "value" : ["scalars", "tmp_9"]
+              "value" : ["scalars", "tmp_10"]
             },
             {
               "type" : "expression",
@@ -6975,7 +7031,7 @@
           "parameters" : [
             {
               "type" : "field",
-              "value" : ["scalars", "tmp_10"]
+              "value" : ["scalars", "tmp_11"]
             },
             {
               "type" : "expression",
@@ -7011,11 +7067,11 @@
             },
             {
               "type" : "field",
-              "value" : ["scalars", "tmp_9"]
+              "value" : ["scalars", "tmp_10"]
             },
             {
               "type" : "field",
-              "value" : ["scalars", "tmp_10"]
+              "value" : ["scalars", "tmp_11"]
             }
           ],
           "source_info" : {
@@ -7030,7 +7086,7 @@
           "parameters" : [
             {
               "type" : "field",
-              "value" : ["scalars", "tmp_11"]
+              "value" : ["scalars", "tmp_12"]
             },
             {
               "type" : "expression",
@@ -7066,7 +7122,7 @@
             },
             {
               "type" : "field",
-              "value" : ["scalars", "tmp_11"]
+              "value" : ["scalars", "tmp_12"]
             },
             {
               "type" : "field",
@@ -7249,7 +7305,7 @@
       ]
     },
     {
-      "name" : "cp_assisted_multicriteria_upstream_policy_routing84",
+      "name" : "cp_assisted_multicriteria_upstream_policy_routing85",
       "id" : 39,
       "runtime_data" : [],
       "primitives" : [
@@ -7258,7 +7314,7 @@
           "parameters" : [
             {
               "type" : "field",
-              "value" : ["scalars", "tmp_12"]
+              "value" : ["scalars", "tmp_13"]
             },
             {
               "type" : "expression",
@@ -7280,7 +7336,7 @@
           ],
           "source_info" : {
             "filename" : "p4src/src/cp_assisted_multicriteria_upstream_policy_routing.p4",
-            "line" : 84,
+            "line" : 85,
             "column" : 79,
             "source_fragment" : "(bit<32>)local_metadata.delay_based_path"
           }
@@ -7298,12 +7354,12 @@
             },
             {
               "type" : "field",
-              "value" : ["scalars", "tmp_12"]
+              "value" : ["scalars", "tmp_13"]
             }
           ],
           "source_info" : {
             "filename" : "p4src/src/cp_assisted_multicriteria_upstream_policy_routing.p4",
-            "line" : 84,
+            "line" : 85,
             "column" : 18,
             "source_fragment" : "egress_queue_rate_value_map.read(low_delay_path_rate_status, (bit<32>)local_metadata.delay_based_path)"
           }
@@ -7320,7 +7376,7 @@
           "parameters" : [
             {
               "type" : "field",
-              "value" : ["scalars", "tmp_13"]
+              "value" : ["scalars", "tmp_14"]
             },
             {
               "type" : "expression",
@@ -7360,7 +7416,7 @@
             },
             {
               "type" : "field",
-              "value" : ["scalars", "tmp_13"]
+              "value" : ["scalars", "tmp_14"]
             }
           ],
           "source_info" : {
@@ -9148,7 +9204,7 @@
           "parameters" : [
             {
               "type" : "field",
-              "value" : ["scalars", "tmp_14"]
+              "value" : ["scalars", "tmp_15"]
             },
             {
               "type" : "expression",
@@ -9184,7 +9240,7 @@
             },
             {
               "type" : "field",
-              "value" : ["scalars", "tmp_14"]
+              "value" : ["scalars", "tmp_15"]
             },
             {
               "type" : "field",
@@ -9309,7 +9365,7 @@
           "parameters" : [
             {
               "type" : "field",
-              "value" : ["scalars", "tmp_15"]
+              "value" : ["scalars", "tmp_16"]
             },
             {
               "type" : "expression",
@@ -9345,7 +9401,7 @@
             },
             {
               "type" : "field",
-              "value" : ["scalars", "tmp_15"]
+              "value" : ["scalars", "tmp_16"]
             },
             {
               "type" : "field",
@@ -9455,7 +9511,7 @@
           "parameters" : [
             {
               "type" : "field",
-              "value" : ["scalars", "tmp_16"]
+              "value" : ["scalars", "tmp_17"]
             },
             {
               "type" : "expression",
@@ -9495,7 +9551,7 @@
             },
             {
               "type" : "field",
-              "value" : ["scalars", "tmp_16"]
+              "value" : ["scalars", "tmp_17"]
             }
           ],
           "source_info" : {
@@ -9715,7 +9771,7 @@
           "parameters" : [
             {
               "type" : "field",
-              "value" : ["scalars", "tmp_17"]
+              "value" : ["scalars", "tmp_18"]
             },
             {
               "type" : "expression",
@@ -9767,7 +9823,7 @@
           "parameters" : [
             {
               "type" : "field",
-              "value" : ["scalars", "tmp_17"]
+              "value" : ["scalars", "tmp_18"]
             },
             {
               "type" : "hexstr",
@@ -9793,7 +9849,7 @@
           "parameters" : [
             {
               "type" : "field",
-              "value" : ["scalars", "tmp_18"]
+              "value" : ["scalars", "tmp_19"]
             },
             {
               "type" : "expression",
@@ -9845,7 +9901,7 @@
           "parameters" : [
             {
               "type" : "field",
-              "value" : ["scalars", "tmp_18"]
+              "value" : ["scalars", "tmp_19"]
             },
             {
               "type" : "hexstr",
@@ -9897,7 +9953,7 @@
           "parameters" : [
             {
               "type" : "field",
-              "value" : ["scalars", "tmp_19"]
+              "value" : ["scalars", "tmp_20"]
             },
             {
               "type" : "expression",
@@ -9929,7 +9985,7 @@
           "parameters" : [
             {
               "type" : "field",
-              "value" : ["scalars", "tmp_19"]
+              "value" : ["scalars", "tmp_20"]
             },
             {
               "type" : "hexstr",
@@ -10366,7 +10422,7 @@
           "parameters" : [
             {
               "type" : "field",
-              "value" : ["scalars", "tmp_20"]
+              "value" : ["scalars", "tmp_21"]
             },
             {
               "type" : "expression",
@@ -10402,7 +10458,7 @@
             },
             {
               "type" : "field",
-              "value" : ["scalars", "tmp_20"]
+              "value" : ["scalars", "tmp_21"]
             }
           ],
           "source_info" : {
@@ -10484,7 +10540,7 @@
           "parameters" : [
             {
               "type" : "field",
-              "value" : ["scalars", "tmp_21"]
+              "value" : ["scalars", "tmp_22"]
             },
             {
               "type" : "expression",
@@ -10520,7 +10576,7 @@
             },
             {
               "type" : "field",
-              "value" : ["scalars", "tmp_21"]
+              "value" : ["scalars", "tmp_22"]
             }
           ],
           "source_info" : {
@@ -11281,7 +11337,7 @@
           "parameters" : [
             {
               "type" : "field",
-              "value" : ["scalars", "tmp_22"]
+              "value" : ["scalars", "tmp_23"]
             },
             {
               "type" : "expression",
@@ -11317,7 +11373,7 @@
             },
             {
               "type" : "field",
-              "value" : ["scalars", "tmp_22"]
+              "value" : ["scalars", "tmp_23"]
             }
           ],
           "source_info" : {
@@ -11924,7 +11980,7 @@
           "id" : 17,
           "source_info" : {
             "filename" : "p4src/src/cp_assisted_multicriteria_upstream_policy_routing.p4",
-            "line" : 76,
+            "line" : 77,
             "column" : 8,
             "source_fragment" : "lookup_flowlet_id_map()"
           },
@@ -11949,11 +12005,11 @@
           }
         },
         {
-          "name" : "tbl_cp_assisted_multicriteria_upstream_policy_routing84",
+          "name" : "tbl_cp_assisted_multicriteria_upstream_policy_routing85",
           "id" : 18,
           "source_info" : {
             "filename" : "p4src/src/cp_assisted_multicriteria_upstream_policy_routing.p4",
-            "line" : 84,
+            "line" : 85,
             "column" : 18,
             "source_fragment" : "egress_queue_rate_value_map.read(low_delay_path_rate_status, (bit<32>)local_metadata.delay_based_path)"
           },
@@ -11965,10 +12021,10 @@
           "support_timeout" : false,
           "direct_meters" : null,
           "action_ids" : [39],
-          "actions" : ["cp_assisted_multicriteria_upstream_policy_routing84"],
+          "actions" : ["cp_assisted_multicriteria_upstream_policy_routing85"],
           "base_default_next" : "node_32",
           "next_tables" : {
-            "cp_assisted_multicriteria_upstream_policy_routing84" : "node_32"
+            "cp_assisted_multicriteria_upstream_policy_routing85" : "node_32"
           },
           "default_entry" : {
             "action_id" : 39,
@@ -11982,7 +12038,7 @@
           "id" : 19,
           "source_info" : {
             "filename" : "p4src/src/cp_assisted_multicriteria_upstream_policy_routing.p4",
-            "line" : 87,
+            "line" : 88,
             "column" : 20,
             "source_fragment" : "use_low_delay_port()"
           },
@@ -12011,7 +12067,7 @@
           "id" : 20,
           "source_info" : {
             "filename" : "p4src/src/cp_assisted_multicriteria_upstream_policy_routing.p4",
-            "line" : 89,
+            "line" : 90,
             "column" : 21,
             "source_fragment" : "use_low_egress_queue_rate_port()"
           },
@@ -12040,7 +12096,7 @@
           "id" : 21,
           "source_info" : {
             "filename" : "p4src/src/cp_assisted_multicriteria_upstream_policy_routing.p4",
-            "line" : 91,
+            "line" : 92,
             "column" : 21,
             "source_fragment" : "use_low_egress_queue_depth_port()"
           },
@@ -12780,7 +12836,7 @@
           "id" : 9,
           "source_info" : {
             "filename" : "p4src/src/cp_assisted_multicriteria_upstream_policy_routing.p4",
-            "line" : 80,
+            "line" : 81,
             "column" : 12,
             "source_fragment" : "hdr.ipv6.traffic_class == TRAFFIC_CLASS_LOW_DELAY"
           },
@@ -12806,7 +12862,7 @@
           "id" : 10,
           "source_info" : {
             "filename" : "p4src/src/cp_assisted_multicriteria_upstream_policy_routing.p4",
-            "line" : 81,
+            "line" : 82,
             "column" : 16,
             "source_fragment" : "local_metadata.flow_inter_packet_gap > FLOWLET_INTER_PACKET_GAP_THRESHOLD"
           },
@@ -12824,7 +12880,7 @@
               }
             }
           },
-          "true_next" : "tbl_cp_assisted_multicriteria_upstream_policy_routing84",
+          "true_next" : "tbl_cp_assisted_multicriteria_upstream_policy_routing85",
           "false_next" : "tbl_cp_assisted_multicriteria_upstream_policy_routing_control_block_use_old_port"
         },
         {
@@ -12832,7 +12888,7 @@
           "id" : 11,
           "source_info" : {
             "filename" : "p4src/src/cp_assisted_multicriteria_upstream_policy_routing.p4",
-            "line" : 85,
+            "line" : 86,
             "column" : 20,
             "source_fragment" : "low_delay_path_rate_status == (bit<48>)GREEN"
           },
@@ -12858,7 +12914,7 @@
           "id" : 12,
           "source_info" : {
             "filename" : "p4src/src/cp_assisted_multicriteria_upstream_policy_routing.p4",
-            "line" : 88,
+            "line" : 89,
             "column" : 26,
             "source_fragment" : "low_delay_path_rate_status == (bit<48>)YELLOW"
           },
@@ -12884,7 +12940,7 @@
           "id" : 13,
           "source_info" : {
             "filename" : "p4src/src/cp_assisted_multicriteria_upstream_policy_routing.p4",
-            "line" : 90,
+            "line" : 91,
             "column" : 27,
             "source_fragment" : "low_delay_path_rate_status == (bit<48>)RED"
           },

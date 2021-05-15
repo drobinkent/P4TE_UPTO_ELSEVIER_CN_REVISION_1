@@ -76,13 +76,13 @@ control upstream_routing(inout parsed_headers_t    hdr,
 
     @name("lookup_flowlet_map") action lookup_flowlet_map() {
         hash(local_metadata.flowlet_map_index, HashAlgorithm.crc16, (bit<13>)0, { hdr.ipv6.src_addr, hdr.ipv6.dst_addr,  local_metadata.temp_8_bit, hdr.tcp.src_port, hdr.tcp.dst_port,local_metadata.flowlet_id }, (bit<13>)8191);
-        ecmp_flowlet_id_map.read(local_metadata.flowlet_id, (bit<32>)local_metadata.flowlet_map_index);
         local_metadata.flow_inter_packet_gap = (bit<48>)standard_metadata.ingress_global_timestamp;
         ecmp_flowlet_lasttime_map.read(local_metadata.flowlet_last_pkt_seen_time, (bit<32>)local_metadata.flowlet_map_index);
         local_metadata.flow_inter_packet_gap = local_metadata.flow_inter_packet_gap - local_metadata.flowlet_last_pkt_seen_time;
         ecmp_flowlet_lasttime_map.write((bit<32>)local_metadata.flowlet_map_index, standard_metadata.ingress_global_timestamp);
     }
     @name("update_flowlet_id") action update_flowlet_id() {
+        ecmp_flowlet_id_map.read(local_metadata.flowlet_id, (bit<32>)local_metadata.flowlet_map_index);
         local_metadata.flowlet_id = local_metadata.flowlet_id + 16w1;
         ecmp_flowlet_id_map.write((bit<32>)local_metadata.flowlet_map_index, (bit<16>)local_metadata.flowlet_id);
     }
@@ -118,7 +118,10 @@ control upstream_routing(inout parsed_headers_t    hdr,
         lookup_flowlet_map();
         if (local_metadata.flow_inter_packet_gap  > FLOWLET_INTER_PACKET_GAP_THRESHOLD)
              update_flowlet_id();
-             upstream_routing_table.apply();
+        else{
+            ecmp_flowlet_id_map.read(local_metadata.flowlet_id, (bit<32>)local_metadata.flowlet_map_index);
+        }
+        upstream_routing_table.apply();
     }
 }
 #endif
