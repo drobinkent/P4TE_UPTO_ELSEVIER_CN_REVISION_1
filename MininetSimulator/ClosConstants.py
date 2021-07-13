@@ -80,9 +80,9 @@ LEAF_SWITCH_SUBNET_PREFIX_LEN = IP_PREFIX_112
 #=================== If you need to configure the link capacity in your emulation then you can change them according to your requirement=================
 # Each Time we need to change the oversubscription ration we neeed to recalculate it
 # Assuming 4 port switch, 2 * 10 Mbps for host to leaf. 2*10 for leaf to spine. Each po have 2 spine switch, each spine connects to 2 super spine. therefor 4 connection. 4*5 = 20
-HOST_TO_LEAF_BW_10Mbps = 1000   #We are intentionally setting them too high. Because we do not want any bottleneck through mininet  link. We have to create bottleneck link through queue rate
-LEAF_TO_SPINE_BW_10Mbps = 1000
-SPINE_TO_SUPER_SPINE_BW_10Mbps = 1000  #1000 is maximum for mininet
+HOST_TO_LEAF_BW_10Mbps = 100000   #We are intentionally setting them too high. Because we do not want any bottleneck through mininet  link. We have to create bottleneck link through queue rate
+LEAF_TO_SPINE_BW_10Mbps = 100000
+SPINE_TO_SUPER_SPINE_BW_10Mbps = 100000  #1000 is maximum for mininet
 
 
 HOST_TO_LEAF_BW= HOST_TO_LEAF_BW_10Mbps
