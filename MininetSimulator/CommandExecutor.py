@@ -38,7 +38,7 @@ class CommandExecutor:
                     line = f.readline()
                     if len(line) != 0:
                         iPerfCommand = line
-                        timeToStart = int(f.readline())
+                        timeToStart = float(f.readline())
                         curTime = time.time()
                         command = "python3  ./MininetSimulator/HostFlowStarter.py \""+ iPerfCommand+ "\" "+str(timeToStart)+ " "+self.hostName
 

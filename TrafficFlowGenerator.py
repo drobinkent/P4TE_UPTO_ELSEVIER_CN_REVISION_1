@@ -148,7 +148,7 @@ class TestCommandDeployer:
         self.testStartDelay = testStartDelay
         self.serverPortStart = serverPortStart
         self.clientPortStart = clientPortStart
-        print("Topology  config path is ", topologyConfigFilePath)
+        # print("Topology  config path is ", topologyConfigFilePath)
         self.nameToHostMap = tc.loadCFG(topologyConfigFilePath,self.clientPortStart, self.serverPortStart )
         self.resultFolder = resultFolder
 
@@ -177,14 +177,14 @@ class TestCommandDeployer:
             # makeDirectory(serverFolderTobecreated, access_rights)
             # clientFolderTobecreated = folderTobecreated  + confConst.TEST_RESULT_FOLDER_CLIENT
             # makeDirectory(clientFolderTobecreated, access_rights)
-            print("folder creation completed")
+            # print("folder creation completed")
             os.umask(original_umask)
         except Exception as e:
             logger.error("Exception occured in creating folder for test case results. ", e)
         finally:
             if(fh != None):
                 fh.close()
-                print("Timer file closed ")
+                # print("Timer file closed ")
 
     def generateTestCommands(self, testCaseNAme,loadFactor,testDuration, maxPortcountInSwitch):
         deploymentPairsAsList = getStrideDeploymentPairs(nameToHostMap = self.nameToHostMap,maxPortcountInSwitch = maxPortcountInSwitch,testCaseName = testCaseNAme,
@@ -196,7 +196,7 @@ class TestCommandDeployer:
             logger.info("Original mask is "+str(original_umask))
             folderTobecreated = confConst.TEST_RESULT_FOLDER+"/"+self.testCaseNAme
 
-            print("folder creation completed")
+            # print("folder creation completed")
             os.umask(original_umask)
         except Exception as e:
             logger.error("Exception occured in creating folder for test case results. ", e)
@@ -239,7 +239,7 @@ class TestCommandDeployer:
             logger.info("Original mask is "+str(original_umask))
             folderTobecreated = confConst.TEST_RESULT_FOLDER+"/"+self.testCaseNAme
 
-            print("folder creation completed")
+            # print("folder creation completed")
             os.umask(original_umask)
         except Exception as e:
             logger.error("Exception occured in creating folder for test case results. ", e)
@@ -261,12 +261,12 @@ class TestCommandDeployer:
                 jsonString = jsonString + indentString +"    {\n"
                 jsonString = jsonString + indentString +"        \"flow_type\": \"tcp\",\n"
                 jsonString = jsonString + indentString +"        \"flow_traffic_class\": \"0x10\",\n"
-                jsonString = jsonString + indentString +"        \"flow-volume\": \""+str(d.flowSizeinPackets)+"\",\n"
+                jsonString = jsonString + indentString +"        \"flow-volume\": \""+str(math.ceil(d.flowSizeinPackets*ConfigConst.PACKET_SIZE/1024))+"K\",\n"
                 jsonString = jsonString + indentString +"        \"src-window-size\": \"8K\",\n"
                 jsonString = jsonString + indentString +"        \"src-data-rate\": \"16K\",\n"
                 jsonString = jsonString + indentString +"        \"pkt-size\": \"1400\",\n"
-                jsonString = jsonString + indentString +"        \"repeat\": \"0\",\n"
-                jsonString = jsonString + indentString +"        \"repeat_interval\": \""+ str(0)+ "\",\n"
+                jsonString = jsonString + indentString +"        \"repeat\": \"1\",\n"
+                jsonString = jsonString + indentString +"        \"repeat_interval\": \""+ str(d.startTime)+ "\",\n"
                 jsonString = jsonString + indentString +"        \"is-interactive\": \"true\"\n"
                 jsonString = jsonString + indentString +"        }\n"
                 jsonString = jsonString + indentString +"        ]\n"
@@ -285,7 +285,7 @@ class TestCommandDeployer:
         finally:
             if(fh != None):
                 fh.close()
-                print("Serverdat file closed ")
+                # print("Serverdat file closed ")
 
 
 if __name__ == "__main__":

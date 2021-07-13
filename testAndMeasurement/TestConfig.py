@@ -410,7 +410,7 @@ class Flow:
     pkt_size: int
     is_interactive: bool
     repeat: int
-    repeat_interval: int
+    repeat_interval: float
     flow_traffic_class : str
 
     @staticmethod
@@ -424,7 +424,7 @@ class Flow:
         flow_traffic_class = (from_str(obj.get("flow_traffic_class")))
         is_interactive = from_stringified_bool(from_str(obj.get("is-interactive")))
         repeat = int(from_str(obj.get("repeat")))
-        repeat_interval = int(from_str(obj.get("repeat_interval")))
+        repeat_interval = float(from_str(obj.get("repeat_interval")))
         return Flow(flow_type, flow_volume, src_window_size, src_data_rate, pkt_size, is_interactive, repeat, repeat_interval, flow_traffic_class)
 
     def to_dict(self) -> dict:
@@ -511,7 +511,7 @@ class SrcDstPair:
                     tempStart = 0
                     for j in range(0, f.repeat):
                         newDeploymentPair = IPerfDeplymentPair(srcList[i], destList[i], srcList[i].getNextIPerf3ClientPort(), destList[i].getNextIPerf3ServerPort(),f,
-                            self.testCaseName,startTime= tempStart)
+                            self.testCaseName,startTime= tempStart+f.repeat_interval)
                         deploymentPairList.append(newDeploymentPair)
                         tempStart = tempStart + f.repeat_interval
 

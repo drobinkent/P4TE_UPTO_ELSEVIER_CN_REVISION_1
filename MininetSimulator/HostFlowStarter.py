@@ -21,19 +21,19 @@ class HostFlowStarter:
         logging.StreamHandler(stream=None)
         logger.setLevel(logging.INFO)
         logger.info(" time to start flwo si "+timeToStartFlow)
-        curTime = int(time.time())
+        curTime = float(time.time())
         # if(curTime>int(timeToStartFlow)):
         #     logger.info("Time to start flow is over")
         #     exit(1)
-        delayVal = int(timeToStartFlow) - curTime
+        delayVal = float(timeToStartFlow) - curTime
         if (delayVal>0):
             time.sleep(delayVal)
         logger.info("Wake up after interval. Will start test flow now")
         access_rights = 0o777
         originalMask = 0
         try:
-            if(curTime<= int(timeToStartFlow)):
-                delayVal = int(timeToStartFlow) - curTime
+            if(curTime<= float(timeToStartFlow)):
+                delayVal = float(timeToStartFlow) - curTime
                 time.sleep(delayVal)
 
                 logger.info("Wake up after interval. Will start test flow now")
