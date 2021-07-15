@@ -1,17 +1,13 @@
-import json
 import logging
 import math
 import os
-import time
 
 import numpy as np
-import scipy.stats
 from scipy.stats import poisson
 
 import ConfigConst
 import ConfigConst as confConst
-import sys
-import TestConfigOld as tc
+import TestConfigForTrafficGeneration as tc
 
 logger = logging.getLogger('SSHDeployer')
 hdlr = logging.FileHandler('./log/TrafficflowGenerator.log')
@@ -308,7 +304,8 @@ class TestCommandDeployer:
                 jsonString = jsonString + indentString +"        \"flow_traffic_class\": \""+str(d.trafficClassTag)+"\",\n"
                 jsonString = jsonString + indentString +"        \"flow-volume\": \""+str(math.ceil(d.flowSizeinPackets*ConfigConst.PACKET_SIZE/1024))+"K\",\n"
                 jsonString = jsonString + indentString +"        \"src-window-size\": \"16K\",\n"
-                jsonString = jsonString + indentString +"        \"src-data-rate\": \"48K\",\n"
+                # jsonString = jsonString + indentString +"        \"src-data-rate\": \"48K\",\n"
+                jsonString = jsonString + indentString +"        \"src-data-rate\": \"\",\n"
                 jsonString = jsonString + indentString +"        \"pkt-size\": \"1400\",\n"
                 jsonString = jsonString + indentString +"        \"repeat\": \"1\",\n"
                 jsonString = jsonString + indentString +"        \"repeat_interval\": \""+ str(d.startTime)+ "\",\n"

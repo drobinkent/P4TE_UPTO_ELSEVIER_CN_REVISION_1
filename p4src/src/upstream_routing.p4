@@ -104,7 +104,7 @@ control upstream_routing(inout parsed_headers_t    hdr,
             //the exact behavior of ECMP
             local_metadata.l4_src_port: selector;
             local_metadata.l4_dst_port: selector;
-            local_metadata.flowlet_id : selector;
+
         }
         actions = {
             set_upstream_egress_port;
@@ -115,12 +115,6 @@ control upstream_routing(inout parsed_headers_t    hdr,
     }
     apply {
         local_metadata.temp_8_bit = IP_PROTO_TCP;
-        lookup_flowlet_map();
-        if (local_metadata.flow_inter_packet_gap  > FLOWLET_INTER_PACKET_GAP_THRESHOLD)
-             update_flowlet_id();
-        else{
-            ecmp_flowlet_id_map.read(local_metadata.flowlet_id, (bit<32>)local_metadata.flowlet_map_index);
-        }
         upstream_routing_table.apply();
     }
 }
