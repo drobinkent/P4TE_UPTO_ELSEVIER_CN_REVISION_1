@@ -63,7 +63,7 @@ RESULT_PROCESSOR_LOG_FILE_PATH = "./log/RESULT_PROCESSOR_LOG.log"
 
 #------------Usually  buffer size should be Delay *  bandwidth . for bmv2 based testing this have to be represented and configured through Queue depth.
 # ------ So we will multiply port bandwidth by a factor to estimate the Delay *  BW . So by this factor we are actually estimating the Delay factor.
-QUEUE_RATE_TO_QUEUE_DEPTH_FACTOR = 1 # this means if for a port queu rate is x it's queue deth will be 5x
+QUEUE_RATE_TO_QUEUE_DEPTH_FACTOR = .2 # this means if for a port queu rate is x it's queue deth will be 5x
 MAX_PORT_NUMBER = 256 # This field means each switch will have maximum 1024 ports. Corresponding value (MAX_PORTS_IN_SWITCH=1024) also needed to be set in P4 constant.p4 file
 MAX_PORT_NUMBER_PLUS_ONE = MAX_PORT_NUMBER+1  # This special number is used for creating multicast sessions
 

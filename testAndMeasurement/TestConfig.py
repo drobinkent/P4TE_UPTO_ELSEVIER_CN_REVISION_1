@@ -374,10 +374,10 @@ class IPerfDeplymentPair:
                 #self.clientCmdString= self.clientCmdString + " -w " + confConst.IPERF_DEFAULT_WINDOW_SIZE_FOR_SERVER + " "
             else:
                 self.clientCmdString= self.clientCmdString + " -w " + confConst.IPERF_DEFAULT_WINDOW_SIZE_FOR_SERVER + " "
-            if( str(self.flowInfo.src_data_rate) != ""): # If src-data rate is empty stringn then iperf will use it's own setting for data rate. which is unlimited for tcp
-                self.clientCmdString=  self.clientCmdString + " -b "+ str(self.flowInfo.src_data_rate)
-            else:
-                self.clientCmdString=  self.clientCmdString + " -b "+ str(confConst.IPERF_MAX_FLOW_RATE_FOR_SERVER)
+            # if( str(self.flowInfo.src_data_rate) != ""): # If src-data rate is empty stringn then iperf will use it's own setting for data rate. which is unlimited for tcp
+            #     self.clientCmdString=  self.clientCmdString + " -b "+ str(self.flowInfo.src_data_rate)
+            # else:
+            #     self.clientCmdString=  self.clientCmdString + " -b "+ str(confConst.IPERF_MAX_FLOW_RATE_FOR_SERVER)
             # self.clientCmdString= self.clientCmdString + " -w " + confConst.IPERF_DEFAULT_WINDOW_SIZE_FOR_SERVER + " "
             self.clientCmdString = self.clientCmdString + " -S "+ str(self.flowInfo.flow_traffic_class)
             self.clientCmdString = self.clientCmdString + " -C dctcp "

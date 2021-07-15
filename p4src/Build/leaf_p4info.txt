@@ -680,51 +680,6 @@ registers {
 }
 registers {
   preamble {
-    id: 369210850
-    name: "IngressPipeImpl.ingress_delay_processor_control_block.path_avg_delay_registers"
-    alias: "path_avg_delay_registers"
-  }
-  type_spec {
-    bitstring {
-      bit {
-        bitwidth: 48
-      }
-    }
-  }
-  size: 256
-}
-registers {
-  preamble {
-    id: 382216063
-    name: "IngressPipeImpl.ingress_delay_processor_control_block.path_last_updated_delay_registers"
-    alias: "path_last_updated_delay_registers"
-  }
-  type_spec {
-    bitstring {
-      bit {
-        bitwidth: 48
-      }
-    }
-  }
-  size: 256
-}
-registers {
-  preamble {
-    id: 379471605
-    name: "IngressPipeImpl.ingress_delay_processor_control_block.time_of_last_delay_update"
-    alias: "time_of_last_delay_update"
-  }
-  type_spec {
-    bitstring {
-      bit {
-        bitwidth: 48
-      }
-    }
-  }
-  size: 256
-}
-registers {
-  preamble {
     id: 370808593
     name: "IngressPipeImpl.upstream_ecmp_routing_control_block.ecmp_flowlet_id_map"
     alias: "ecmp_flowlet_id_map"

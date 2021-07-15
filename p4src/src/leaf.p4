@@ -166,7 +166,7 @@ control IngressPipeImpl (inout parsed_headers_t    hdr,
         mark_to_drop(standard_metadata);
    }else{ //This means these packets are normal packets and they will generate the events
         init_pkt();
-        ingress_delay_processor_control_block.apply(hdr, local_metadata, standard_metadata);
+        //ingress_delay_processor_control_block.apply(hdr, local_metadata, standard_metadata);
         ingress_rate_monitor_control_block.apply(hdr, local_metadata, standard_metadata);  //TODO we need to make this hash and meter based to adapt with per flow or some policy based admission control
     }
 
@@ -451,7 +451,7 @@ control EgressPipeImpl (inout parsed_headers_t hdr,
                 hdr.mdn_int.setInvalid();
                 //ekhane somehow deklay_hdr valid paccje. j karone ndp ns er reply vull next_hdr soho
             }else{
-                //log_msg("This is a packet from a host toward a host. So no need to clone E2E for feedback");
+                log_msg("This is a packet from a host toward a host. So no need to clone E2E for feedback");
                 hdr.mdn_int.setInvalid();  //This is not needed for else part. But no harm in doing extra invalid. NOt optimized obviously
             }
         }else if (standard_metadata.egress_port == PORT_ZERO) {
