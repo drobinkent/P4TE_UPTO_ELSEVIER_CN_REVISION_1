@@ -95,3 +95,8 @@ SPINE_TO_SUPER_SPINE_BW = SPINE_TO_SUPER_SPINE_BW_10Mbps
 
 HOST_COMMAND_FOLDER  = "./MininetSimulator/PER_HOST_COMMANDS/"
 HOST_COMMAND_LOGS = "./MininetSimulator/TEST_LOG/"
+
+
+TCP_SERVER_COMAND_FILE = "/home/deba/Desktop/P4TE/testAndMeasurement/TEST_RESULTS/FlowInfos/WebSearchWorkLoad_load_factor_0.2.serverdat"
+TCP_CLIENT_COMAND_FILE = "/home/deba/Desktop/P4TE/testAndMeasurement/TEST_RESULTS/FlowInfos/WebSearchWorkLoad_load_factor_0.2.clientdat"
+TEST_START_DELAY= 100   #After starting the hosts. after 125 secsonds the client and host for simulatiing the traffic load will start

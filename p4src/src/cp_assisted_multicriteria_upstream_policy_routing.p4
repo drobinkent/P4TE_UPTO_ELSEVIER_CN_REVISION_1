@@ -78,36 +78,18 @@ control cp_assisted_multicriteria_upstream_policy_routing(inout parsed_headers_t
         // bit<48> last_used_path_previous_rate_update_time = 0;
         // egress_queue_rate_last_update_time_map.read(last_used_path_previous_rate_update_time, (bit<32>)local_metadata.flowlet_last_used_path);
 
-        if (hdr.ipv6.traffic_class == TRAFFIC_CLASS_LOW_DELAY){
-            if (local_metadata.flow_inter_packet_gap > FLOWLET_INTER_PACKET_GAP_THRESHOLD){
-                  //Select the path according to flow type
-                  bit<48> low_delay_path_rate_status = 0;
-                  egress_queue_rate_value_map.read(low_delay_path_rate_status, (bit<32>)local_metadata.delay_based_path);
-                 if(low_delay_path_rate_status == (bit<48>)GREEN ){
-                    //use_low_egress_queue_depth_port();
-                    use_low_delay_port();
-                 }else if(low_delay_path_rate_status == (bit<48>)YELLOW ){ // now try to find a better path. here we will use low_e_q_Depth port
-                     use_low_egress_queue_rate_port();
-                 }else if((low_delay_path_rate_status == (bit<48>)RED ) ){ // use safe rate port
-                     use_low_egress_queue_depth_port();
-                 }
-                 update_flowlet_id_map();
-            }else{
-                use_old_port();
-                update_flowlet_id_map();
-            }
-        }else if (hdr.ipv6.traffic_class == TRAFFIC_CLASS_HIGH_THROUGHPUT){ //Need to implement this.
+        if (hdr.ipv6.traffic_class == TRAFFIC_CLASS_HIGH_THROUGHPUT){ //Need to implement this.
             // use low queue rate port . assumption is that, we can use this port to send more amount of data
             if (local_metadata.flow_inter_packet_gap > FLOWLET_INTER_PACKET_GAP_THRESHOLD){
                   //Select the path according to flow type
                  bit<48> low_utilization_path_rate_status = 0;
-                  egress_queue_rate_value_map.read(low_utilization_path_rate_status, (bit<32>)local_metadata.egr_queue_based_path);
+                  egress_queue_rate_value_map.read(low_utilization_path_rate_status, (bit<32>)local_metadata.egr_rate_based_path);
                  if(low_utilization_path_rate_status == (bit<48>)GREEN ){
-                    use_low_egress_queue_depth_port();
+                    use_low_egress_queue_rate_port();
                  }else if(low_utilization_path_rate_status == (bit<48>)YELLOW ){ // now try to find a better path. here we will use low_e_q_Depth port
-                     use_low_egress_queue_rate_port();
+                     use_low_egress_queue_depth_port();
                  }else if((low_utilization_path_rate_status == (bit<48>)RED ) ){ // use safe rate port
-                     use_low_delay_port();
+                     use_low_egress_queue_depth_port();
                  }
                  //use_low_egress_queue_rate_port();
                  update_flowlet_id_map();
@@ -116,13 +98,25 @@ control cp_assisted_multicriteria_upstream_policy_routing(inout parsed_headers_t
                 update_flowlet_id_map();
             }
         }else{
-
-            //local_metadata.flag_hdr.found_egr_queue_depth_based_path = false;
-            //local_metadata.flag_hdr.found_egr_queue_rate_based_path = false;
-            //local_metadata.flag_hdr.found_path_delay_based_path = false;
-            use_low_delay_port(); //for all other traffic try to reduce FCT
-            //this will force to use ECMP for all other traffic
-        }
+             if (local_metadata.flow_inter_packet_gap > FLOWLET_INTER_PACKET_GAP_THRESHOLD){
+                   //Select the path according to flow type
+                   bit<48> low_delay_path_rate_status = 0;
+                   egress_queue_rate_value_map.read(low_delay_path_rate_status, (bit<32>)local_metadata.egr_queue_based_path);
+                  if(low_delay_path_rate_status == (bit<48>)GREEN ){
+                     use_low_egress_queue_depth_port();
+                     //use_low_delay_port();
+                  }
+                  else if(low_delay_path_rate_status == (bit<48>)YELLOW ){ // now try to find a better path. here we will use low_e_q_Depth port
+                      use_low_egress_queue_rate_port();
+                  }else if((low_delay_path_rate_status == (bit<48>)RED ) ){ // use safe rate port
+                      use_low_egress_queue_rate_port();
+                  }
+                  update_flowlet_id_map();
+             }else{
+                 use_old_port();
+                 update_flowlet_id_map();
+             }
+         }
 
     }
 

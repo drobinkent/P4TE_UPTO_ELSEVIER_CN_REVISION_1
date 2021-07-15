@@ -343,7 +343,7 @@ class IPerfDeplymentPair:
 
 
     def generateIPerf3Command(self, testResultFolderRoot, clientResultLogSubFolder, serverResultLogSubFolder):
-        blockSize = "1024"
+        # blockSize = "1024"
         self.clientSideTestResultFileName = testResultFolderRoot + "/" + self.testCaseName +clientResultLogSubFolder+"/"+ str(self.src.hostName)+"-" +str(self.srcPort) +"-" + str(self.dest.hostName)+"-"+str(self.destPort)
         self.serverSideTestResultFileName = testResultFolderRoot+"/"+self.testCaseName+serverResultLogSubFolder+"/"+str(self.src.hostName)+"-"  +str(self.srcPort) +"-" + str(self.dest.hostName)+"-" +str(self.destPort)
 

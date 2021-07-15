@@ -63,21 +63,21 @@ RESULT_PROCESSOR_LOG_FILE_PATH = "./log/RESULT_PROCESSOR_LOG.log"
 
 #------------Usually  buffer size should be Delay *  bandwidth . for bmv2 based testing this have to be represented and configured through Queue depth.
 # ------ So we will multiply port bandwidth by a factor to estimate the Delay *  BW . So by this factor we are actually estimating the Delay factor.
-QUEUE_RATE_TO_QUEUE_DEPTH_FACTOR = 2 # this means if for a port queu rate is x it's queue deth will be 5x
+QUEUE_RATE_TO_QUEUE_DEPTH_FACTOR = 1 # this means if for a port queu rate is x it's queue deth will be 5x
 MAX_PORT_NUMBER = 256 # This field means each switch will have maximum 1024 ports. Corresponding value (MAX_PORTS_IN_SWITCH=1024) also needed to be set in P4 constant.p4 file
 MAX_PORT_NUMBER_PLUS_ONE = MAX_PORT_NUMBER+1  # This special number is used for creating multicast sessions
 
 #=======this parameter is required for meters of each port. We have, setup queue rate for each ports. So the CIR will be queue_rate * CIR threshold factor and PIR will be queue rate
 #===== This parameter is not used at this moment
-INGRESS_STATS_METER_CIR_THRESHOLD_FACTOR = 0.6  # This means each port will color packet yellow when it reaches 70% of the queu rate and red when. These are initial rate. In runtime we will set them dynamically
+INGRESS_STATS_METER_CIR_THRESHOLD_FACTOR = 0.8  # This means each port will color packet yellow when it reaches 70% of the queu rate and red when. These are initial rate. In runtime we will set them dynamically
 INGRESS_STATS_METER_CBURST_FACTOR = 0.1
-INGRESS_STATS_METER_PIR_FACTOR = 0.8
-INGRESS_STATS_METER_PBURST_FACTOR = 0.2 #--- This 4 parameters are not used at this moment
+INGRESS_STATS_METER_PIR_FACTOR = 0.95
+INGRESS_STATS_METER_PBURST_FACTOR = 0.1 #--- This 4 parameters are not used at this moment
 
 #==== This is one of our major parameter and used
 EGRESS_STATS_METER_CIR_THRESHOLD_FACTOR = 0.70  # This means each port will color packet yellow when it reaches 70% of the queu rate and red when
 EGRESS_STATS_METER_CBURST_FACTOR = 0.1
-EGRESS_STATS_METER_PIR_FACTOR = 0.9
+EGRESS_STATS_METER_PIR_FACTOR = 1.0
 EGRESS_STATS_METER_PBURST_FACTOR = 0.1
 
 # === These 2 arrays defines, what portion of total upward traffic processing capcicyt is reserved for which class of trffic
@@ -90,11 +90,11 @@ EGRESS_STATS_METER_PBURST_FACTOR = 0.1
 TRAFFIC_CLASS_LOW_DELAY           = 0x04
 TRAFFIC_CLASS_MAXIMIZE_THROUGHPUT = 0x02
 TRAFFIC_CLASS_MAXIMIZE_PROFIT     = 0x08  # LOW cost .. if we want to present our low cost that means profit is maximized. but that will require dvisiion. so we are taking direct maximize profit
-TRAFFIC_CLASS_AS_LIST = [TRAFFIC_CLASS_LOW_DELAY, TRAFFIC_CLASS_MAXIMIZE_THROUGHPUT , TRAFFIC_CLASS_MAXIMIZE_PROFIT]
+# TRAFFIC_CLASS_AS_LIST = [TRAFFIC_CLASS_LOW_DELAY, TRAFFIC_CLASS_MAXIMIZE_THROUGHPUT , TRAFFIC_CLASS_MAXIMIZE_PROFIT]
+
 #-- for only one category of flow if we prioritize rate for that we can get better perofrmance.
 #here for large flow giving 70%- gives better peprformance compare to ECMP
-#PERCENTAGE_OF_TOTAL_UPWARD_TRAFFIC_FOR_TRAFFIC_CLASS = [40, 70, 10]
-PERCENTAGE_OF_TOTAL_UPWARD_TRAFFIC_FOR_TRAFFIC_CLASS = [65,35, 5] # How much of the link capacity should a traffic class get.
+
 #======================thread control and timer related
 STATISTICS_PULLING_INTERVAL = 15 # This meand after each 15 second controller will wake up the StatisticsPuller thread and collect stats from the switches
 PORT_STATISTICS_HISTORY_LENGTH = 1000 # this means the history will be
@@ -103,7 +103,7 @@ class DataplnaeAlgorithm(Enum):
     DP_ALGO_BASIC_ECMP = "ecmp"
     DP_ALGO_CP_ASSISTED_POLICY_ROUTING = "DP_ALGO_CP_ASSISTED_POLICY_ROUTING"
 
-ALGORITHM_IN_USE = DataplnaeAlgorithm.DP_ALGO_CP_ASSISTED_POLICY_ROUTING
+ALGORITHM_IN_USE = DataplnaeAlgorithm.DP_ALGO_BASIC_ECMP
 #ALGORITHM_IN_USE = DataplnaeAlgorithm.DP_ALGO_CP_ASSISTED_POLICY_ROUTING
 
 queueRateForHostFacingPortsOfLeafSwitch = 40
@@ -138,9 +138,13 @@ EGRESS_QUEUE_DEPTH_DELAY_LEVELS_LINEAR = [(0, 2, 0, 0),(3,5,1,0), (6, 10,2,00)]
 #######################################################################################################################################################################################
 #######################################################################################################################################################################################
 
-FLOW_TYPE_IDENTIFIER_BY_FLOW_VOLUME_IN_KB = [50, 256]  # These means in our experiments we will consider 2 types of traffic . one with 50 KB size another 1 MB or 1024 KB
-FLOW_TYPE_LOAD_RATIO = [20, 80]  # These means in our experiments we will consider 2 types of traffic . one with 50 KB size another 1 MB or 1024 KB
-FLOW_VOLUME_IDENTIFIER_VARIATION_LIMIT_IN_PERCENTAGE = 80 # this means any flow size within range of 15% defined in previous array will be categorized as flow of same type. 80 percent is configured to acoomdate both 10kb and 50 kb flow
+FLOW_TYPE_IDENTIFIER_BY_FLOW_VOLUME_IN_KB = [50, 256, 512, 1024]  # These means in our experiments we will consider 2 types of traffic . one with 50 KB size another 1 MB or 1024 KB
+FLOW_TYPE_LOAD_RATIO = [20, 10, 15, 55]  # These means in our experiments we will consider 2 types of traffic . one with 50 KB size another 1 MB or 1024 KB
+FLOW_TYPE_TRAFFIC_CLASS_TAG = ["0x02","0x06","0xA","0x0E"]
+FLOW_TYPE_BITRATE = [ 8192, 8192, 8192, 8192]
+TRAFFIC_CLASS_AS_LIST = FLOW_TYPE_TRAFFIC_CLASS_TAG
+PERCENTAGE_OF_TOTAL_UPWARD_TRAFFIC_FOR_TRAFFIC_CLASS =  [55,55,55,20]# How much of the link capacity should a traffic class get.
+FLOW_VOLUME_IDENTIFIER_VARIATION_LIMIT_IN_PERCENTAGE = 20 # this means any flow size within range of 15% defined in previous array will be categorized as flow of same type. 80 percent is configured to acoomdate both 10kb and 50 kb flow
 PACKET_SIZE = 1400
 
 
@@ -174,6 +178,7 @@ TEST_RESULT_FOLDER = "/home/deba/Desktop/P4TE/testAndMeasurement/TEST_RESULTS"
 TEST_RESULT_FOLDER_SERVER = "/server-logs"
 TEST_RESULT_FOLDER_CLIENT = "/client-logs"
 TEST_START_TIME_FILE_NAME ="/test_start_timer.txt"
+TEST_CONFIG_FOLDER = "testAndMeasurement/TestConfigs"
 
 MAX_PORT_COUNT = 8
 

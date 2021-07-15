@@ -49,6 +49,10 @@ def setupFlowtypeBasedIngressRateMonitoring(dev):
     # if switch is leaf type -- find sum of total packet processing rates for host facing ports
     # else if switch is spine type  -- find sum of total packet processing rates for leaf facing ports
     # if switch is super spine type  -- find sum of total packet processing rates for spine facing ports
+    if (dev.dpAlgorithm != ConfConst.DataplnaeAlgorithm.DP_ALGO_BASIC_ECMP) :
+        return
+
+
     downwardPortList = []
     upwardPortList = []
     if (dev.fabric_device_config.switch_type == jp.SwitchType.LEAF ):
@@ -76,7 +80,7 @@ def setupFlowtypeBasedIngressRateMonitoring(dev):
                 actionName="IngressPipeImpl.ingress_rate_monitor_control_block.monitor_incoming_flow_based_on_flow_type_for_pkts_rcvd_from_downstream",
                  actionParamName = "flow_type_based_meter_idx", actionParamValue = str(tClass))
             me = sh.MeterEntry(dev,"IngressPipeImpl.ingress_rate_monitor_control_block.flow_type_based_ingress_meter_for_downstream")
-            me.index = tClass
+            me.index = i
             me.cir = int((totalRateOfDownWardPorts * ConfConst.PERCENTAGE_OF_TOTAL_UPWARD_TRAFFIC_FOR_TRAFFIC_CLASS[i])/100)
             me.cburst = int(math.ceil((totalRateOfDownWardPorts - int((totalRateOfDownWardPorts * ConfConst.PERCENTAGE_OF_TOTAL_UPWARD_TRAFFIC_FOR_TRAFFIC_CLASS[i]))/100)/5))  # 1/5 th of the rest of the bandwidth
             me.pir = int(totalRateOfDownWardPorts * 0.95)   # 95 %of the total traffic
@@ -92,7 +96,7 @@ def setupFlowtypeBasedIngressRateMonitoring(dev):
                                                      actionName="IngressPipeImpl.ingress_rate_monitor_control_block.monitor_incoming_flow_based_on_flow_type_for_pkts_rcvd_from_upstream",
                                                      actionParamName = "flow_type_based_meter_idx", actionParamValue = str(tClass))
             me = sh.MeterEntry(dev,"IngressPipeImpl.ingress_rate_monitor_control_block.flow_type_based_ingress_meter_for_upstream")
-            me.index = tClass
+            me.index = i
             me.cir = int((totalRateOfDownWardPorts * ConfConst.PERCENTAGE_OF_TOTAL_UPWARD_TRAFFIC_FOR_TRAFFIC_CLASS[i])/100)
             me.cburst = int(math.ceil((totalRateOfDownWardPorts - int((totalRateOfDownWardPorts * ConfConst.PERCENTAGE_OF_TOTAL_UPWARD_TRAFFIC_FOR_TRAFFIC_CLASS[i]))/100)/5))  # 1/5 th of the rest of the bandwidth
             me.pir = int(totalRateOfDownWardPorts * 0.95)   # 95 %of the total traffic
@@ -110,22 +114,25 @@ def getTotalPacketProcessingRatesForPortList(dev, portList):
     return totalRate
 
 def portBasedEgressRateMonitoring(dev):
+    if (dev.dpAlgorithm == ConfConst.DataplnaeAlgorithm.DP_ALGO_BASIC_ECMP) :
+        return
     for portIndex in dev.portToQueueRateMap:
-        dev.addExactMatchEntryWithoutActionParam(tableName="EgressPipeImpl.egress_rate_monitor_control_block.egress_rate_monitor_table",fieldName="standard_metadata.egress_port", fieldValue=portIndex,
-                                                 actionName="EgressPipeImpl.egress_rate_monitor_control_block.monitor_outgoing_flow")
-        portQueueRate = dev.portToQueueRateMap.get(portIndex)
-        cir = portQueueRate * ConfConst.EGRESS_STATS_METER_CIR_THRESHOLD_FACTOR
-        cburst = portQueueRate * ConfConst.EGRESS_STATS_METER_CBURST_FACTOR
-        pir = portQueueRate*ConfConst.EGRESS_STATS_METER_PIR_FACTOR
-        pburst = portQueueRate * ConfConst.EGRESS_STATS_METER_PBURST_FACTOR
-        ce = sh.DirectMeterEntry(dev, "EgressPipeImpl.egress_rate_monitor_control_block.egress_meter")
-        ce.table_entry.match["standard_metadata.egress_port"] = portIndex
-        ce.cir = int(cir)
-        ce.cburst = int(cburst)
-        ce.pir = int(pir)
-        ce.pburst = int(pburst)
-        ce.modify()
-        logging.info("Modified meter entry in device: "+str(dev))
+        if (not( (str(portIndex)=="1") or (str(portIndex)=="2") or (str(portIndex)=="3") or (str(portIndex)=="4"))):
+            dev.addExactMatchEntryWithoutActionParam(tableName="EgressPipeImpl.egress_rate_monitor_control_block.egress_rate_monitor_table",fieldName="standard_metadata.egress_port", fieldValue=portIndex,
+                                                     actionName="EgressPipeImpl.egress_rate_monitor_control_block.monitor_outgoing_flow")
+            portQueueRate = dev.portToQueueRateMap.get(portIndex)
+            cir = portQueueRate * ConfConst.EGRESS_STATS_METER_CIR_THRESHOLD_FACTOR
+            cburst = portQueueRate * ConfConst.EGRESS_STATS_METER_CBURST_FACTOR
+            pir = portQueueRate*ConfConst.EGRESS_STATS_METER_PIR_FACTOR
+            pburst = portQueueRate * ConfConst.EGRESS_STATS_METER_PBURST_FACTOR
+            ce = sh.DirectMeterEntry(dev, "EgressPipeImpl.egress_rate_monitor_control_block.egress_meter")
+            ce.table_entry.match["standard_metadata.egress_port"] = portIndex
+            ce.cir = int(cir)
+            ce.cburst = int(cburst)
+            ce.pir = int(pir)
+            ce.pburst = int(pburst)
+            ce.modify()
+            logging.info("Modified meter entry in device: "+str(dev))
 
 def setupEgressQueueDepthMetricsLevelCalculatorTables(dev, egressQueueDepthMetricsLevels):
     for metricsLevel in egressQueueDepthMetricsLevels:

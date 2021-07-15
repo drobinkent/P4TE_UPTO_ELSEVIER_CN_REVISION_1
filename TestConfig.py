@@ -67,7 +67,7 @@ def randomSamePodTestPairCreator(nameToHostMap,maxPortcountInSwitch, podId = 1):
     #maxPortcountInSwitch means this many pods are their. so we can rnadomly take one and generate flow
     # or take the podId passed as parameter.
     #2 type combination a) stride inside pod
-    # all pair
+    # all pair 
     pass
 
 def l2StridePatternTestPairCreator(nameToHostMap, maxPortcountInSwitch, pattern, flow, strideCount=8):
@@ -130,35 +130,35 @@ def generateNRandomSrcDestPair(testCaseName,nameToHostMap, maxPortcountInSwitch,
         destList.append(dstHost)
     return srcList, destList
 
-def startNRandomFlow(testCaseName,nameToHostMap, maxPortcountInSwitch, pattern, flow):
-    '''
-    :testCaseName:
-    :param nameToHostMap:
-    :param maxPortcountInSwitch:
-    :param pattern:
-    :param flow: This type of test case will only have one flow in src-dst pair. property for that flow will be used for all the randmly generated flows
-    :return:
-    '''
-
-
-    deploymentPairList= []
-    hostList =  [item for item in nameToHostMap]
-    for j in range(0, flow.repeat):
-        srcList, destList = generateNRandomSrcDestPair(testCaseName,nameToHostMap, maxPortcountInSwitch, pattern, flow)
-        if (len(srcList) != len(destList)):
-            logger.error("Srclist and dest list is not equal in length. Printing them and exiting")
-            logger.error(srcList)
-            logger.error(destList)
-            exit(1)
-        for i in range(0, len(srcList)):
-            x = nprandom.poisson(lam=confConst.LAMBDA, size=len(srcList))
-            print("List is "+str(hostList))
-            print("Creating new deployment pair with src"+str(srcList[i])+" Destination:-- "+str(destList[i]) + " Start ime : "+str(x[i]))
-            newDeploymentPair = IPerfDeplymentPair((srcList[i]), (destList[i]), (srcList[i]).getNextIPerf3ClientPort(),
-                                                   (destList[i]).getNextIPerf3ServerPort(),flow,
-                                                   testCaseName,startTime= x[i]+(flow.repeat_interval*j))
-            deploymentPairList.append(newDeploymentPair)
-    return  deploymentPairList
+# def startNRandomFlow(testCaseName,nameToHostMap, maxPortcountInSwitch, pattern, flow):
+#     '''
+#     :testCaseName:
+#     :param nameToHostMap:
+#     :param maxPortcountInSwitch:
+#     :param pattern:
+#     :param flow: This type of test case will only have one flow in src-dst pair. property for that flow will be used for all the randmly generated flows
+#     :return:
+#     '''
+#
+#
+#     deploymentPairList= []
+#     hostList =  [item for item in nameToHostMap]
+#     for j in range(0, flow.repeat):
+#         srcList, destList = generateNRandomSrcDestPair(testCaseName,nameToHostMap, maxPortcountInSwitch, pattern, flow)
+#         if (len(srcList) != len(destList)):
+#             logger.error("Srclist and dest list is not equal in length. Printing them and exiting")
+#             logger.error(srcList)
+#             logger.error(destList)
+#             exit(1)
+#         for i in range(0, len(srcList)):
+#             x = nprandom.poisson(lam=confConst.LAMBDA, size=len(srcList))
+#             print("List is "+str(hostList))
+#             print("Creating new deployment pair with src"+str(srcList[i])+" Destination:-- "+str(destList[i]) + " Start ime : "+str(x[i]))
+#             newDeploymentPair = IPerfDeplymentPair((srcList[i]), (destList[i]), (srcList[i]).getNextIPerf3ClientPort(),
+#                                                (destList[i]).getNextIPerf3ServerPort(),flow,
+#                                                testCaseName,startTime= x[i]+(flow.repeat_interval*j))
+#             deploymentPairList.append(newDeploymentPair)
+#     return  deploymentPairList
 
 def allPairHostTestPairCreator(nameToHostMap,maxPortcountInSwitch):
     '''
@@ -332,7 +332,7 @@ def makeDirectory(folderPath, accessRights):
 
 
 class IPerfDeplymentPair:
-    def __init__(self,src, dest, srcPort, destPort,srcHostName, destHostName, testCaseName, startTime = 0,flowSizeinPackets=100):
+    def __init__(self,src, dest, srcPort, destPort,srcHostName, destHostName, testCaseName,trafficClass, bitrate,startTime = 0,flowSizeinPackets=100, ):
         '''
         startTime is required when we want to repeat a flow. So assume we want to repeat a flow 10 times. So if we start a specfic test at time x,
         This deployment Pari will be started at x+startTime time
@@ -349,7 +349,10 @@ class IPerfDeplymentPair:
         self.testResultFolder = ConfigConst.TEST_RESULT_FOLDER+"/"+testCaseName
         self.srcHostName = srcHostName
         self.destHostName = destHostName
+        self.trafficClass = trafficClass
+        self.bitrate = bitrate
         access_rights = 0o777
+
         try:
             original_umask = os.umask(0)
             logger.info("Original mask is "+str(original_umask))
@@ -365,8 +368,8 @@ class IPerfDeplymentPair:
 
     def getCleintCommand(self):
         self.clientCmdString = self.srcHostName + " "+ "python Client.py "+ str(self.destIP) + " "+ str(self.destPort) + "  "+str(self.flowSizeinPackets) \
-                               + " "+self.testResultFolder+ "/"+str(self.srcIP)+"_"+str(self.srcPort)+"_"+self.destIP+"_"+str(self.destPort) + \
-                               " "+str(self.startTime)
+                               + " "+self.testResultFolder+ "/"+str(self.srcIP)+"_"+str(self.srcPort)+"_"+self.destIP+"_"+str(self.destPort) +\
+                               " "+str(self.startTime) + " "+str(self.trafficClass)+" "+str(self.bitrate)
         return self.clientCmdString
 
     def generateIPerf3Command(self, testResultFolderRoot, clientResultLogSubFolder, serverResultLogSubFolder):
@@ -382,7 +385,7 @@ class IPerfDeplymentPair:
         # -1 for accepting only one connection
         self.serverCmdString = " iperf3 --server -1 -D --port "+str(self.destPort) +" --json --logfile "+self.serverSideTestResultFileName+"  &"
         #self.serverCmdString = "ls -la"
-        #print(self.serverCmdString)
+        #print(self.serverCmdString) 
         # build the iperf3 client command for daemon mode with only one try for connection. Src is the client here
         #/home/deba/Desktop/bmv2-p0s1.log.2.txt
         if self.flowInfo.flow_type == "tcp":
@@ -495,54 +498,54 @@ class SrcDstPair:
         result["flows"] = from_list(lambda x: to_class(Flow, x), self.flows)
         return result
 
-    def generatePair(self,test_case_name, nameToHostMap,maxPortcountInSwitch):
-        self.testCaseName= test_case_name
-        srcList = []
-        destList = []
-        if self.pattern.lower() == "one-to-one":
-            srcList.append(nameToHostMap.get(self.src))
-            destList.append(nameToHostMap.get(self.dest))
-        elif self.pattern.lower() == "random-same-pod":
-            pass
-        elif self.pattern.lower() == "random-same-leaf":
-            pass
-        elif self.pattern.lower().startswith("random(") :
-            deploymentPairList = startNRandomFlow(self.testCaseName,nameToHostMap,maxPortcountInSwitch,self.pattern, self.flows[0])  #Only one flow will be in test case, that flows' property will be used ofr all the randomly gnerated flow
-            return deploymentPairList
-        elif self.pattern.lower().startswith("stride") :
-            srcList, destList = stridePatternTestPairCreator(nameToHostMap, maxPortcountInSwitch,self.pattern, self.flows[0])
-            pass
-        elif self.pattern.lower().startswith("l2stride") :
-            srcList, destList = l2StridePatternTestPairCreator(nameToHostMap, maxPortcountInSwitch,self.pattern, self.flows[0])
-            pass
-        elif self.pattern.lower() == "mesh":
-            srcList, destList = allPairHostTestPairCreator(nameToHostMap,maxPortcountInSwitch)
-            pass
-        else:
-            logger.error("Given patttern not supported yet. Exiting")
-            exit(1)
-
-        deploymentPairList= []
-        for f in self.flows:
-            #We expect that for each src there will be a dest. so srclist and dest list will be equal in size. and i'th index of srclist will connect with i'th indexed element fo dstList; Otherwise there is some error
-            if (len(srcList) != len(destList)):
-                logger.error("Srclist and dest list is not equal in length. Printing them and exiting")
-                logger.error(srcList)
-                logger.error(destList)
-                exit(1)
-            else:
-                i = 0
-                j=0
-
-                for i in range(0, len(srcList)):
-                    tempStart = 0
-                    for j in range(0, f.repeat):
-                        newDeploymentPair = IPerfDeplymentPair(srcList[i], destList[i], srcList[i].getNextIPerf3ClientPort(), destList[i].getNextIPerf3ServerPort(),f,
-                                                               self.testCaseName,startTime= tempStart)
-                        deploymentPairList.append(newDeploymentPair)
-                        tempStart = tempStart + f.repeat_interval
-
-        return  deploymentPairList
+    # def generatePair(self,test_case_name, nameToHostMap,maxPortcountInSwitch):
+    #     self.testCaseName= test_case_name
+    #     srcList = []
+    #     destList = []
+    #     if self.pattern.lower() == "one-to-one":
+    #         srcList.append(nameToHostMap.get(self.src))
+    #         destList.append(nameToHostMap.get(self.dest))
+    #     elif self.pattern.lower() == "random-same-pod":
+    #         pass
+    #     elif self.pattern.lower() == "random-same-leaf":
+    #         pass
+    #     elif self.pattern.lower().startswith("random(") :
+    #         deploymentPairList = startNRandomFlow(self.testCaseName,nameToHostMap,maxPortcountInSwitch,self.pattern, self.flows[0])  #Only one flow will be in test case, that flows' property will be used ofr all the randomly gnerated flow
+    #         return deploymentPairList
+    #     elif self.pattern.lower().startswith("stride") :
+    #         srcList, destList = stridePatternTestPairCreator(nameToHostMap, maxPortcountInSwitch,self.pattern, self.flows[0])
+    #         pass
+    #     elif self.pattern.lower().startswith("l2stride") :
+    #         srcList, destList = l2StridePatternTestPairCreator(nameToHostMap, maxPortcountInSwitch,self.pattern, self.flows[0])
+    #         pass
+    #     elif self.pattern.lower() == "mesh":
+    #         srcList, destList = allPairHostTestPairCreator(nameToHostMap,maxPortcountInSwitch)
+    #         pass
+    #     else:
+    #         logger.error("Given patttern not supported yet. Exiting")
+    #         exit(1)
+    #
+    #     deploymentPairList= []
+    #     for f in self.flows:
+    #         #We expect that for each src there will be a dest. so srclist and dest list will be equal in size. and i'th index of srclist will connect with i'th indexed element fo dstList; Otherwise there is some error
+    #         if (len(srcList) != len(destList)):
+    #             logger.error("Srclist and dest list is not equal in length. Printing them and exiting")
+    #             logger.error(srcList)
+    #             logger.error(destList)
+    #             exit(1)
+    #         else:
+    #             i = 0
+    #             j=0
+    #
+    #             for i in range(0, len(srcList)):
+    #                 tempStart = 0
+    #                 for j in range(0, f.repeat):
+    #                     newDeploymentPair = IPerfDeplymentPair(srcList[i], destList[i], srcList[i].getNextIPerf3ClientPort(), destList[i].getNextIPerf3ServerPort(),f,
+    #                         self.testCaseName,startTime= tempStart)
+    #                     deploymentPairList.append(newDeploymentPair)
+    #                     tempStart = tempStart + f.repeat_interval
+    #
+    #     return  deploymentPairList
 
 @dataclass
 class Test:

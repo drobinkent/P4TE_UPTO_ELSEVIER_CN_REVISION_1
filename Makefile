@@ -328,3 +328,18 @@ process-statistics:
 	make process-l2strideSmallLarge-strideCount-4-statistics
 	make process-l2highContention-statistics
 	make process-l2multihighContention-statistics
+
+
+
+create-result-folders:
+	mkdir ./testAndMeasurement/TEST_RESULTS/WebSearchWorkLoad_load_factor_0.2
+	mkdir ./testAndMeasurement/TEST_RESULTS/WebSearchWorkLoad_load_factor_0.4
+	mkdir ./testAndMeasurement/TEST_RESULTS/WebSearchWorkLoad_load_factor_0.6
+#	mkdir ./testAndMeasurement/TEST_RESULTS/WebSearchWorkLoad_load_factor_0.7
+	mkdir ./testAndMeasurement/TEST_RESULTS/WebSearchWorkLoad_load_factor_0.8
+#	mkdir ./testAndMeasurement/TEST_RESULTS/WebSearchWorkLoad_load_factor_1.0
+
+create-algowise-result-folder:
+	mkdir ./testAndMeasurement/TEST_RESULTS/ECMP_RESULTS
+	mkdir ./testAndMeasurement/TEST_RESULTS/P4KP_RESULTS
+	mkdir ./testAndMeasurement/TEST_RESULTS/HULA_RESULTS
