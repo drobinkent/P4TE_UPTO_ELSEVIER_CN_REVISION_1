@@ -23,22 +23,24 @@ def getAVGFCTByFolder(folderName):
     #     # flowTypeVsFCTMap[flowVolume]  = 0
     #     flowTypeVsFCTMap[flowVolume]  = []
     #     flowTypeVsFlowCountMap[flowVolume] = 0
-    start, end, iperfResults = rp.parseIperfResultsFromFolder(folderName)
-    iperfResults = iperfResults.iperfResults
-    # print("Result is ", iperfResults.iperfResults)
+    start, end, iperfResultsAsList = rp.parseIperfResultsFromFolder(folderName)
+    iperfResultsAsList = iperfResultsAsList.iperfResults
+    # print("Result is ", iperfResultsAsList.iperfResultsAsList)
 
     totalBytesSent = 0
-    for r in iperfResults:
+    for r in iperfResultsAsList:
         flowSize = r[0].end.sum_received.bytes
         fct = r[0].end.sum_received.seconds
         totalBytesSent = totalBytesSent + flowSize
     totalBytesSent = totalBytesSent/1024
     print("totalBytesSent (in KB) =",totalBytesSent )
-    for r in iperfResults:
+    print("Total flows "+str(len(iperfResultsAsList)))
+    for r in iperfResultsAsList:
         flowSize = r[0].end.sum_received.bytes
+        # print(flowSize)
         fct = r[0].end.sum_received.seconds
         for flowVolume in ConfigConst.FLOW_TYPE_IDENTIFIER_BY_FLOW_VOLUME_IN_KB:
-            if abs(flowVolume*1024 - flowSize) <= (ConfigConst.FLOW_VOLUME_IDENTIFIER_VARIATION_LIMIT_IN_PERCENTAGE*flowVolume*1024/100):
+            if abs(flowVolume*1024 - flowSize) <= (40*1024):
                 # flowTypeVsFCTMap[flowVolume] = flowTypeVsFCTMap.get(flowVolume) + fct
                 if (flowTypeVsFCTMap.get(flowVolume) == None):
                     flowTypeVsFCTMap[flowVolume] = []
@@ -57,18 +59,28 @@ def getAVGFCTByFolder(folderName):
 
         print(str(f) + " -- ",(flowTypeVsFlowCountMap.get(f)))
         weightedFct = np.average(flowTypeVsFCTMap.get(f))
+        # weightedFct = np.percentile(flowTypeVsFCTMap.get(f),90)
         print(str(f) + " -- ",weightedFct)
-        print(str(f) + " -- ",np.std(flowTypeVsFCTMap.get(f)))
+        # print(str(f) + " -- ",np.std(flowTypeVsFCTMap.get(f)))
         # print(flowTypeVsFCTMap.get(f))
         totalFlowsize= totalFlowsize+ float(f)
         totalOfFlowSizeMultipliedByAvgFct = totalOfFlowSizeMultipliedByAvgFct + ( float(f) * weightedFct)
     print("Average FCT  = ", totalOfFlowSizeMultipliedByAvgFct/totalFlowsize)
     pass
 
-print("P4TE")
-getAVGFCTByFolder(folderName= "/home/deba/Desktop/P4TE/testAndMeasurement/TEST_RESULTS/P4TE/l2-incast/client-logs-0")
+print("ECMP")
+getAVGFCTByFolder(folderName= "/home/deba/Desktop/P4TE/testAndMeasurement/TEST_RESULTS/WebSearchWorkLoad_load_factor_0.8/client-logs-1")
 print("\n\n")
 
-print("ECMP")
-getAVGFCTByFolder(folderName= "/home/deba/Desktop/P4TE/testAndMeasurement/TEST_RESULTS/P4TE/l2-incast/client-logs-2")
+print("P4TE")
+getAVGFCTByFolder(folderName= "/home/deba/Desktop/P4TE/testAndMeasurement/TEST_RESULTS/WebSearchWorkLoad_load_factor_0.8/client-logs-0")
 print("\n\n")
+#
+#
+# print("P4TE")
+# getAVGFCTByFolder(folderName= "/home/deba/Desktop/P4TE/testAndMeasurement/TEST_RESULTS/WebSearchWorkLoad_load_factor_0.8/client-logs-1")
+# print("\n\n")
+#
+# print("P4TE")
+# getAVGFCTByFolder(folderName= "/home/deba/Desktop/P4TE/testAndMeasurement/TEST_RESULTS/WebSearchWorkLoad_load_factor_0.8/client-logs-2")
+# print("\n\n")

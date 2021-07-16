@@ -370,62 +370,62 @@ class IPerfDeplymentPair:
                                " "+str(self.startTime)
         return self.clientCmdString
 
-    def generateIPerf3Command(self, testResultFolderRoot, clientResultLogSubFolder, serverResultLogSubFolder):
-        blockSize = "1024"
-        self.clientSideTestResultFileName = testResultFolderRoot + "/" + self.testCaseName +clientResultLogSubFolder+"/"+ str(self.src.hostName)+"-" +str(self.srcPort) +"-" + str(self.dest.hostName)+"-"+str(self.destPort)
-        self.serverSideTestResultFileName = testResultFolderRoot+"/"+self.testCaseName+serverResultLogSubFolder+"/"+str(self.src.hostName)+"-"  +str(self.srcPort) +"-" + str(self.dest.hostName)+"-" +str(self.destPort)
-
-
-
-        #self.testResultFileName = "./"+self.testCaseName+"-"+str(self.src.hostName)+"-"+str(self.dest.hostName)
-        #print(self.testResultFileName)
-        # build the iperf3 server command for daemon mode with only one try for connection. dest is the server here. iperf3 -s -D
-        # -1 for accepting only one connection
-        self.serverCmdString = " iperf3 --server -1 -D --port "+str(self.destPort) +" --json --logfile "+self.serverSideTestResultFileName+"  &"
-        #self.serverCmdString = "ls -la"
-        #print(self.serverCmdString)
-        # build the iperf3 client command for daemon mode with only one try for connection. Src is the client here
-        #/home/deba/Desktop/bmv2-p0s1.log.2.txt
-        if self.flowInfo.flow_type == "tcp":
-            # Build iperf3 client command for tcp
-            #self.clientCmdString = "python3 ./testAndMeasurement/HostFlowStarter.py \" iperf3 --client " + str(self.destIP) +" --port " + str(self.destPort) +" --cport " + str(self.srcPort)#+" -f K "
-            self.clientCmdString = "iperf3 --client " + str(self.destIP) +" --port " + str(self.destPort) +" --cport " + str(self.srcPort)#+" -f K "
-            #self.clientCmdString=  self.clientCmdString + " -n "+ str(self.flowInfo.flow_volume) + " --set-mss "+str(self.flowInfo.pkt_size) + " --window "+str(self.flowInfo.src_window_size)+" "
-            #self.clientCmdString=  self.clientCmdString + " -t 20 -n 2 -l 50" + " --set-mss "+str(self.flowInfo.pkt_size) + " --window "+str(self.flowInfo.src_window_size)+" "
-            self.clientCmdString = self.clientCmdString+ " --connect-timeout 9999 "
-            self.clientCmdString = self.clientCmdString+ " -l 1400 " # use 4K buffer length. That means each time write 4KB of data. otherwise iperf3 tries to write 128 KB data this results in highly variable result
-            #self.clientCmdString=  self.clientCmdString + " " + "--flowlabel"+ " " + " --set-mss "+str(self.flowInfo.pkt_size) + " -w "+str(self.flowInfo.src_window_size)
-            self.clientCmdString=  self.clientCmdString + " " + " " + " --set-mss "+str(self.flowInfo.pkt_size) + " "
-            self.clientCmdString=  self.clientCmdString + " -n "+ str(self.flowInfo.flow_volume)
-            if( str(self.flowInfo.src_window_size) != ""):
-                self.clientCmdString=  self.clientCmdString + " -w "+ str(self.flowInfo.src_window_size)
-                #self.clientCmdString= self.clientCmdString + " -w " + confConst.IPERF_DEFAULT_WINDOW_SIZE_FOR_SERVER + " "
-            else:
-                self.clientCmdString= self.clientCmdString + " -w " + confConst.IPERF_DEFAULT_WINDOW_SIZE_FOR_SERVER + " "
-            if( str(self.flowInfo.src_data_rate) != ""): # If src-data rate is empty stringn then iperf will use it's own setting for data rate. which is unlimited for tcp
-                self.clientCmdString=  self.clientCmdString + " -b "+ str(self.flowInfo.src_data_rate)
-            else:
-                self.clientCmdString=  self.clientCmdString + " -b "+ str(confConst.IPERF_MAX_FLOW_RATE_FOR_SERVER)
-            self.clientCmdString= self.clientCmdString + " -w " + confConst.IPERF_DEFAULT_WINDOW_SIZE_FOR_SERVER + " "
-            self.clientCmdString = self.clientCmdString + " -S "+ str(self.flowInfo.flow_traffic_class)
-            # self.clientCmdString = self.clientCmdString + " --pacing-timer "+ str(confConst.IPERF_PACING_TIMER) + " "
-            #self.clientCmdString=  self.clientCmdString +  " --set-mss "+str(self.flowInfo.pkt_size) + " --window "+str(self.flowInfo.src_window_size)+" "
-            #self.clientCmdString=  self.clientCmdString + " -k "+ str(flowVloumeToBlockCountConverter(self.flowInfo.flow_volume, blockSize))+ " -b "+ str(self.flowInfo.src_data_rate) + " -l "+blockSize+" "
-            self.clientCmdString = self.clientCmdString+ " -C dctcp  "
-            #self.clientCmdString=  self.clientCmdString  +" --json --logfile "+ self.clientSideTestResultFileName + " &\" "
-            self.clientCmdString=  self.clientCmdString  +" --json --logfile "+ self.clientSideTestResultFileName + " & "
-            #self.clientCmdString=  self.clientCmdString  +" --logfile "+ self.clientSideTestResultFileName + " &\" "
-            pass
-        elif self.flowInfo.flow_type == "udp":
-            self.clientCmdString = "python3 ./testAndMeasurement/HostFlowStarter.py \"iperf3 --client " + str(self.destIP) +" --port " + str(self.destPort) +" --cport " + str(self.srcPort) +" --json --logfile " + self.clientSideTestResultFileName + " &\" "
-            pass
-        else:
-            print("flow type: "+ self.flowInfo.flow_type + " is not supported yet" )
-            exit(1)
-        #print(self.clientCmdString)
-        self.dest.serverCommands.append(self)
-        self.src.clientCommands.append(self)
-        return
+    # def generateIPerf3Command(self, testResultFolderRoot, clientResultLogSubFolder, serverResultLogSubFolder):
+    #     blockSize = "1024"
+    #     self.clientSideTestResultFileName = testResultFolderRoot + "/" + self.testCaseName +clientResultLogSubFolder+"/"+ str(self.src.hostName)+"-" +str(self.srcPort) +"-" + str(self.dest.hostName)+"-"+str(self.destPort)
+    #     self.serverSideTestResultFileName = testResultFolderRoot+"/"+self.testCaseName+serverResultLogSubFolder+"/"+str(self.src.hostName)+"-"  +str(self.srcPort) +"-" + str(self.dest.hostName)+"-" +str(self.destPort)
+    #
+    #
+    #
+    #     #self.testResultFileName = "./"+self.testCaseName+"-"+str(self.src.hostName)+"-"+str(self.dest.hostName)
+    #     #print(self.testResultFileName)
+    #     # build the iperf3 server command for daemon mode with only one try for connection. dest is the server here. iperf3 -s -D
+    #     # -1 for accepting only one connection
+    #     self.serverCmdString = " iperf3 --server -1 -D --port "+str(self.destPort) +" --json --logfile "+self.serverSideTestResultFileName+"  &"
+    #     #self.serverCmdString = "ls -la"
+    #     #print(self.serverCmdString)
+    #     # build the iperf3 client command for daemon mode with only one try for connection. Src is the client here
+    #     #/home/deba/Desktop/bmv2-p0s1.log.2.txt
+    #     if self.flowInfo.flow_type == "tcp":
+    #         # Build iperf3 client command for tcp
+    #         #self.clientCmdString = "python3 ./testAndMeasurement/HostFlowStarter.py \" iperf3 --client " + str(self.destIP) +" --port " + str(self.destPort) +" --cport " + str(self.srcPort)#+" -f K "
+    #         self.clientCmdString = "iperf3 --client " + str(self.destIP) +" --port " + str(self.destPort) +" --cport " + str(self.srcPort)#+" -f K "
+    #         #self.clientCmdString=  self.clientCmdString + " -n "+ str(self.flowInfo.flow_volume) + " --set-mss "+str(self.flowInfo.pkt_size) + " --window "+str(self.flowInfo.src_window_size)+" "
+    #         #self.clientCmdString=  self.clientCmdString + " -t 20 -n 2 -l 50" + " --set-mss "+str(self.flowInfo.pkt_size) + " --window "+str(self.flowInfo.src_window_size)+" "
+    #         self.clientCmdString = self.clientCmdString+ " --connect-timeout 9999 "
+    #         self.clientCmdString = self.clientCmdString+ " -l 1400 " # use 4K buffer length. That means each time write 4KB of data. otherwise iperf3 tries to write 128 KB data this results in highly variable result
+    #         #self.clientCmdString=  self.clientCmdString + " " + "--flowlabel"+ " " + " --set-mss "+str(self.flowInfo.pkt_size) + " -w "+str(self.flowInfo.src_window_size)
+    #         self.clientCmdString=  self.clientCmdString + " " + " " + " --set-mss "+str(self.flowInfo.pkt_size) + " "
+    #         self.clientCmdString=  self.clientCmdString + " -n "+ str(self.flowInfo.flow_volume)
+    #         if( str(self.flowInfo.src_window_size) != ""):
+    #             self.clientCmdString=  self.clientCmdString + " -w "+ str(self.flowInfo.src_window_size)
+    #             #self.clientCmdString= self.clientCmdString + " -w " + confConst.IPERF_DEFAULT_WINDOW_SIZE_FOR_SERVER + " "
+    #         else:
+    #             self.clientCmdString= self.clientCmdString + " -w " + confConst.IPERF_DEFAULT_WINDOW_SIZE_FOR_SERVER + " "
+    #         if( str(self.flowInfo.src_data_rate) != ""): # If src-data rate is empty stringn then iperf will use it's own setting for data rate. which is unlimited for tcp
+    #             self.clientCmdString=  self.clientCmdString + " -b "+ str(self.flowInfo.src_data_rate)
+    #         else:
+    #             self.clientCmdString=  self.clientCmdString + " -b "+ str(confConst.IPERF_MAX_FLOW_RATE_FOR_SERVER)
+    #         self.clientCmdString= self.clientCmdString + " -w " + confConst.IPERF_DEFAULT_WINDOW_SIZE_FOR_SERVER + " "
+    #         self.clientCmdString = self.clientCmdString + " -S "+ str(self.flowInfo.flow_traffic_class)
+    #         # self.clientCmdString = self.clientCmdString + " --pacing-timer "+ str(confConst.IPERF_PACING_TIMER) + " "
+    #         #self.clientCmdString=  self.clientCmdString +  " --set-mss "+str(self.flowInfo.pkt_size) + " --window "+str(self.flowInfo.src_window_size)+" "
+    #         #self.clientCmdString=  self.clientCmdString + " -k "+ str(flowVloumeToBlockCountConverter(self.flowInfo.flow_volume, blockSize))+ " -b "+ str(self.flowInfo.src_data_rate) + " -l "+blockSize+" "
+    #         self.clientCmdString = self.clientCmdString+ " -C dctcp  "
+    #         #self.clientCmdString=  self.clientCmdString  +" --json --logfile "+ self.clientSideTestResultFileName + " &\" "
+    #         self.clientCmdString=  self.clientCmdString  +" --json --logfile "+ self.clientSideTestResultFileName + " & "
+    #         #self.clientCmdString=  self.clientCmdString  +" --logfile "+ self.clientSideTestResultFileName + " &\" "
+    #         pass
+    #     elif self.flowInfo.flow_type == "udp":
+    #         self.clientCmdString = "python3 ./testAndMeasurement/HostFlowStarter.py \"iperf3 --client " + str(self.destIP) +" --port " + str(self.destPort) +" --cport " + str(self.srcPort) +" --json --logfile " + self.clientSideTestResultFileName + " &\" "
+    #         pass
+    #     else:
+    #         print("flow type: "+ self.flowInfo.flow_type + " is not supported yet" )
+    #         exit(1)
+    #     #print(self.clientCmdString)
+    #     self.dest.serverCommands.append(self)
+    #     self.src.clientCommands.append(self)
+    #     return
 
 
 

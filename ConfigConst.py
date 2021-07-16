@@ -103,7 +103,7 @@ class DataplnaeAlgorithm(Enum):
     DP_ALGO_BASIC_ECMP = "ecmp"
     DP_ALGO_CP_ASSISTED_POLICY_ROUTING = "DP_ALGO_CP_ASSISTED_POLICY_ROUTING"
 
-ALGORITHM_IN_USE = DataplnaeAlgorithm.DP_ALGO_CP_ASSISTED_POLICY_ROUTING
+ALGORITHM_IN_USE = DataplnaeAlgorithm.DP_ALGO_BASIC_ECMP
 #ALGORITHM_IN_USE = DataplnaeAlgorithm.DP_ALGO_CP_ASSISTED_POLICY_ROUTING
 
 queueRateForHostFacingPortsOfLeafSwitch = 40
@@ -138,13 +138,18 @@ EGRESS_QUEUE_DEPTH_DELAY_LEVELS_LINEAR = [(0, 2, 0, 0),(3,5,1,0), (6, 10,2,00)]
 #######################################################################################################################################################################################
 #######################################################################################################################################################################################
 
-FLOW_TYPE_IDENTIFIER_BY_FLOW_VOLUME_IN_KB = [50, 256, 512, 1024]  # These means in our experiments we will consider 2 types of traffic . one with 50 KB size another 1 MB or 1024 KB
-FLOW_TYPE_LOAD_RATIO = [20, 10, 15, 55]  # These means in our experiments we will consider 2 types of traffic . one with 50 KB size another 1 MB or 1024 KB
-FLOW_TYPE_TRAFFIC_CLASS_TAG = ["0x02","0x06","0xA","0x0E"]
-FLOW_TYPE_BITRATE = [ 8192, 8192, 8192, 8192]
+FLOW_TYPE_IDENTIFIER_BY_FLOW_VOLUME_IN_KB = [50, 256, 368, 768,1024]  # These means in our experiments we will consider 2 types of traffic . one with 50 KB size another 1 MB or 1024 KB
+FLOW_TYPE_LOAD_RATIO = [25, 50, 10,10, 5]  # These means in our experiments we will consider 2 types of traffic . one with 50 KB size another 1 MB or 1024 KB
+FLOW_TYPE_TRAFFIC_CLASS_TAG = ["0x02","0x06","0xA","0xB","0x0E"]
+FLOW_TYPE_BITRATE = [ 8192, 8192, 8192, 8192,8192]
 TRAFFIC_CLASS_AS_LIST = FLOW_TYPE_TRAFFIC_CLASS_TAG
-PERCENTAGE_OF_TOTAL_UPWARD_TRAFFIC_FOR_TRAFFIC_CLASS =  [55,55,55,20]# How much of the link capacity should a traffic class get.
-FLOW_VOLUME_IDENTIFIER_VARIATION_LIMIT_IN_PERCENTAGE = 20 # this means any flow size within range of 15% defined in previous array will be categorized as flow of same type. 80 percent is configured to acoomdate both 10kb and 50 kb flow
+# PERCENTAGE_OF_TOTAL_UPWARD_TRAFFIC_FOR_TRAFFIC_CLASS =  [40,23,10,27]# How much of the link capacity should a traffic class get.
+# PERCENTAGE_OF_TOTAL_UPWARD_TRAFFIC_FOR_TRAFFIC_CLASS =  [7,7,6,80]# How much of the link capacity should a traffic class get.
+# PERCENTAGE_OF_TOTAL_UPWARD_TRAFFIC_FOR_TRAFFIC_CLASS =  [13,9,10,68]# How much of the link capacity should a traffic class get.
+PERCENTAGE_OF_TOTAL_UPWARD_TRAFFIC_FOR_TRAFFIC_CLASS =  [33,53,8,5,2]
+
+
+FLOW_VOLUME_IDENTIFIER_VARIATION_LIMIT_IN_PERCENTAGE = 40 # this means any flow size within range of 15% defined in previous array will be categorized as flow of same type. 80 percent is configured to acoomdate both 10kb and 50 kb flow
 PACKET_SIZE = 1400
 
 

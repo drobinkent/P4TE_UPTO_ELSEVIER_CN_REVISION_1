@@ -49,8 +49,8 @@ def setupFlowtypeBasedIngressRateMonitoring(dev):
     # if switch is leaf type -- find sum of total packet processing rates for host facing ports
     # else if switch is spine type  -- find sum of total packet processing rates for leaf facing ports
     # if switch is super spine type  -- find sum of total packet processing rates for spine facing ports
-    if (dev.dpAlgorithm != ConfConst.DataplnaeAlgorithm.DP_ALGO_BASIC_ECMP) :
-        return
+    # if (dev.dpAlgorithm != ConfConst.DataplnaeAlgorithm.DP_ALGO_BASIC_ECMP) :
+    #     return
 
 
     downwardPortList = []
@@ -82,10 +82,15 @@ def setupFlowtypeBasedIngressRateMonitoring(dev):
             me = sh.MeterEntry(dev,"IngressPipeImpl.ingress_rate_monitor_control_block.flow_type_based_ingress_meter_for_downstream")
             me.index = i
             me.cir = int((totalRateOfDownWardPorts * ConfConst.PERCENTAGE_OF_TOTAL_UPWARD_TRAFFIC_FOR_TRAFFIC_CLASS[i])/100)
-            me.cburst = int(math.ceil((totalRateOfDownWardPorts - int((totalRateOfDownWardPorts * ConfConst.PERCENTAGE_OF_TOTAL_UPWARD_TRAFFIC_FOR_TRAFFIC_CLASS[i]))/100)/5))  # 1/5 th of the rest of the bandwidth
+            #me.cburst = int(math.ceil((totalRateOfDownWardPorts - int((totalRateOfDownWardPorts * ConfConst.PERCENTAGE_OF_TOTAL_UPWARD_TRAFFIC_FOR_TRAFFIC_CLASS[i]))/100)/5))  # 1/5 th of the rest of the bandwidth
+            me.cburst =  math.ceil(int((totalRateOfDownWardPorts * ConfConst.PERCENTAGE_OF_TOTAL_UPWARD_TRAFFIC_FOR_TRAFFIC_CLASS[i])/(100*5)))  # 1/5 th of the rest of the bandwidth
             me.pir = int(totalRateOfDownWardPorts * 0.95)   # 95 %of the total traffic
             me.pburst = int(math.ceil((totalRateOfDownWardPorts * 0.05)))
             me.modify()
+            print(dev.devName+"Rate config of meter for port -- "+str(p)+" traffic class "+str(tClass)+" cir "+str(int((totalRateOfDownWardPorts * ConfConst.PERCENTAGE_OF_TOTAL_UPWARD_TRAFFIC_FOR_TRAFFIC_CLASS[i])/100))
+                  +" cburst "+str(math.ceil(int((totalRateOfDownWardPorts * ConfConst.PERCENTAGE_OF_TOTAL_UPWARD_TRAFFIC_FOR_TRAFFIC_CLASS[i])/(100*5))))+
+                  " pir "+str(int(totalRateOfDownWardPorts * 0.95) )+
+                  " pbirst "+str(int(math.ceil((totalRateOfDownWardPorts * 0.05)))))
     for p in upwardPortList:
         for i in range (0, len(ConfConst.TRAFFIC_CLASS_AS_LIST)):
 
@@ -102,6 +107,11 @@ def setupFlowtypeBasedIngressRateMonitoring(dev):
             me.pir = int(totalRateOfDownWardPorts * 0.95)   # 95 %of the total traffic
             me.pburst = int(math.ceil((totalRateOfDownWardPorts * 0.05)))
             me.modify()
+            print(dev.devName+"Rate config of meter for port -- "+str(p)+" traffic class "+str(tClass)+" cir "+str(int((totalRateOfDownWardPorts * ConfConst.PERCENTAGE_OF_TOTAL_UPWARD_TRAFFIC_FOR_TRAFFIC_CLASS[i])/100))
+                  +" cburst "+str(int(math.ceil((totalRateOfDownWardPorts - int((totalRateOfDownWardPorts * ConfConst.PERCENTAGE_OF_TOTAL_UPWARD_TRAFFIC_FOR_TRAFFIC_CLASS[i]))/100)/5)))+
+                  " pir "+str(int(totalRateOfDownWardPorts * 0.95) )+
+                  " pbirst "+str(int(math.ceil((totalRateOfDownWardPorts * 0.05)))))
+
 
 
 def getTotalPacketProcessingRatesForPortList(dev, portList):
@@ -110,7 +120,8 @@ def getTotalPacketProcessingRatesForPortList(dev, portList):
     totalRate = 0
     for p in portList:
         if dev.portToQueueRateMap[str(p)] != None:
-            totalRate = totalRate + int(dev.portToQueueRateMap[str(p)] )
+            # totalRate = totalRate + int(dev.portToQueueRateMap[str(p)] )
+            totalRate =  int(dev.portToQueueRateMap[str(p)] )
     return totalRate
 
 def portBasedEgressRateMonitoring(dev):
