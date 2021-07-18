@@ -48,17 +48,24 @@ def calculateFlowArrivalTimes(loadFactor, duration):
         # print(networkRateForFlowType)
         # print(totalFlowRequiredForFlowTypeOverWholeDuration)
     flowArrivalTimesByflowType = []
+    totalFlowCount =0
     for i in range (0, len(ConfigConst.FLOW_TYPE_IDENTIFIER_BY_FLOW_VOLUME_IN_KB)):
         # numbPoints = scipy.stats.poisson( int(totalFlowRequiredForFlowType[i])).rvs()#Poisson number of points
         # val = duration*scipy.stats.uniform.rvs(0,1,((numbPoints,1)))#x coordinates of Poisson points
         val = poisson.rvs(lambdaForFlowType[i], size=totalFlowRequiredForFlowType[i])
         val = np.sort(val, axis=None)
         flowArrivalTimesByflowType.append(val)
+        totalFlowCount = totalFlowCount + len(val)
         # print(val)
         # print((len(val)))
         # print(np.average(val))
         # print(np.max(val))
         # print(np.min(val))
+    print("flow size vs flow count data is follwoing:")
+    accumPercentage = 0
+    for i in range (0, len(ConfigConst.FLOW_TYPE_IDENTIFIER_BY_FLOW_VOLUME_IN_KB)):
+        accumPercentage = accumPercentage + len(flowArrivalTimesByflowType[i])/totalFlowCount
+        print(str(ConfigConst.FLOW_TYPE_IDENTIFIER_BY_FLOW_VOLUME_IN_KB[i])+ " --- "+str(len(flowArrivalTimesByflowType[i]))+ "-- "+str(accumPercentage))
     return flowArrivalTimesByflowType
 
 # calculateFlowArrivalTimes(loadFactor=.3, duration = 200)
@@ -98,7 +105,7 @@ def l2StridePatternTestPairCreator(nameToHostMap, maxPortcountInSwitch):
             srcList.append(srcHost)
             destList.append((peerHostObject))
             count = count+1
-        print("Src: "+srcHostName+" peer host:"+peerName)
+        # print("Src: "+srcHostName+" peer host:"+peerName)
         if(count>=(len(nameToHostMap))):
             break;
 
@@ -366,23 +373,23 @@ if __name__ == "__main__":
     testEvaluator = TestCommandDeployer(topologyConfigFilePath = confConst.TOPOLOGY_CONFIG_FILE,resultFolder = "FlowInfos" , clientPortStart=confConst.IPERF3_CLIENT_PORT_START,
                                         serverPortStart=confConst.IPERF3_SERVER_PORT_START, testStartDelay=10)
     testEvaluator.setupTestConfigFolderForJson()
-    testEvaluator.generateTestCommandsAsJsonFile(testCaseNAme= "WebSearchWorkLoad_load_factor_0.2",loadFactor=0.2,testDuration=75,maxPortcountInSwitch=ConfigConst.MAX_PORT_COUNT)
+    testEvaluator.generateTestCommandsAsJsonFile(testCaseNAme= "WebSearchWorkLoad_load_factor_0.2",loadFactor=0.2,testDuration=150,maxPortcountInSwitch=ConfigConst.MAX_PORT_COUNT)
 
     #--------------------
 
     testEvaluator = TestCommandDeployer(topologyConfigFilePath = confConst.TOPOLOGY_CONFIG_FILE,resultFolder = "FlowInfos" , clientPortStart=confConst.IPERF3_CLIENT_PORT_START,
                                         serverPortStart=confConst.IPERF3_SERVER_PORT_START, testStartDelay=10)
     testEvaluator.setupTestConfigFolderForJson()
-    testEvaluator.generateTestCommandsAsJsonFile( testCaseNAme= "WebSearchWorkLoad_load_factor_0.4",loadFactor=0.4,testDuration=75,maxPortcountInSwitch=ConfigConst.MAX_PORT_COUNT)
+    testEvaluator.generateTestCommandsAsJsonFile( testCaseNAme= "WebSearchWorkLoad_load_factor_0.4",loadFactor=0.4,testDuration=150,maxPortcountInSwitch=ConfigConst.MAX_PORT_COUNT)
 
     #--------------------
     testEvaluator = TestCommandDeployer(topologyConfigFilePath = confConst.TOPOLOGY_CONFIG_FILE,resultFolder = "FlowInfos" , clientPortStart=confConst.IPERF3_CLIENT_PORT_START,
                                         serverPortStart=confConst.IPERF3_SERVER_PORT_START, testStartDelay=10)
     testEvaluator.setupTestConfigFolderForJson()
-    testEvaluator.generateTestCommandsAsJsonFile( testCaseNAme= "WebSearchWorkLoad_load_factor_0.6",loadFactor=0.6,testDuration=75,maxPortcountInSwitch=ConfigConst.MAX_PORT_COUNT)
+    testEvaluator.generateTestCommandsAsJsonFile( testCaseNAme= "WebSearchWorkLoad_load_factor_0.6",loadFactor=0.6,testDuration=150,maxPortcountInSwitch=ConfigConst.MAX_PORT_COUNT)
 
     #--------------------
     testEvaluator = TestCommandDeployer(topologyConfigFilePath = confConst.TOPOLOGY_CONFIG_FILE,resultFolder = "FlowInfos" , clientPortStart=confConst.IPERF3_CLIENT_PORT_START,
                                         serverPortStart=confConst.IPERF3_SERVER_PORT_START, testStartDelay=10)
     testEvaluator.setupTestConfigFolderForJson()
-    testEvaluator.generateTestCommandsAsJsonFile( testCaseNAme= "WebSearchWorkLoad_load_factor_0.8",loadFactor=0.8,testDuration=75,maxPortcountInSwitch=ConfigConst.MAX_PORT_COUNT)
+    testEvaluator.generateTestCommandsAsJsonFile( testCaseNAme= "WebSearchWorkLoad_load_factor_0.8",loadFactor=0.8,testDuration=150,maxPortcountInSwitch=ConfigConst.MAX_PORT_COUNT)

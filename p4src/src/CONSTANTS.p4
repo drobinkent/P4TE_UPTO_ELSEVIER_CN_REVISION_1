@@ -62,7 +62,8 @@ const bit<32> NDP_FLAG_OVERRIDE = 0x20000000;
 
 //============= traffic class constants
 const bit<6> TRAFFIC_CLASS_LOW_DELAY = 0x04; //0x10 becomes 0x04
-const bit<6> TRAFFIC_CLASS_HIGH_THROUGHPUT= 0x03;  //in iperf3 0x08 turns into 0x02 bcz of last 2 bit is ecn
+const bit<6> TRAFFIC_CLASS_HIGH_THROUGHPUT= 0x05;  //in iperf3 0x08 turns into 0x02 bcz of last 2 bit is ecn
+const bit<6> TRAFFIC_CLASS_HIGH_THROUGHPUT2= 0x06;  //in iperf3 0x08 turns into 0x02 bcz of last 2 bit is ecn
 
 // These definitions are derived from the numerical values of the enum
 // named "PktInstanceType" in the p4lang/behavioral-model source file

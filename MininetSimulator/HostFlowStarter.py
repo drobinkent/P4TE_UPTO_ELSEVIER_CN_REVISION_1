@@ -29,15 +29,16 @@ class HostFlowStarter:
         if (delayVal>0):
             time.sleep(delayVal)
         logger.info("Wake up after interval. Will start test flow now")
+        logger.info("Hosflow started command is :"+ command)
         access_rights = 0o777
         originalMask = 0
         try:
-            if(curTime<= float(timeToStartFlow)):
-                delayVal = float(timeToStartFlow) - curTime
-                time.sleep(delayVal)
-
-                logger.info("Wake up after interval. Will start test flow now")
-                logger.info("Hosflow started command is :"+ command)
+            # if(curTime<= float(timeToStartFlow)):
+            #     delayVal = float(timeToStartFlow) - curTime
+            #     time.sleep(delayVal)
+            #
+            #     logger.info("Wake up after interval. Will start test flow now")
+            #     logger.info("Hosflow started command is :"+ command)
             out = os.popen("pwd")
             logger.info("Output of pwd command is "+str(out.read()))
             out = os.popen(command)

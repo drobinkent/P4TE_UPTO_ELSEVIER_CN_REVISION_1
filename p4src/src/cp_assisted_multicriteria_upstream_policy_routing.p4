@@ -78,7 +78,7 @@ control cp_assisted_multicriteria_upstream_policy_routing(inout parsed_headers_t
         // bit<48> last_used_path_previous_rate_update_time = 0;
         // egress_queue_rate_last_update_time_map.read(last_used_path_previous_rate_update_time, (bit<32>)local_metadata.flowlet_last_used_path);
 
-        if (hdr.ipv6.traffic_class == TRAFFIC_CLASS_HIGH_THROUGHPUT){ //Need to implement this.
+        if ((hdr.ipv6.traffic_class == TRAFFIC_CLASS_HIGH_THROUGHPUT) || (hdr.ipv6.traffic_class == TRAFFIC_CLASS_HIGH_THROUGHPUT2)){ //Need to implement this.
             // use low queue rate port . assumption is that, we can use this port to send more amount of data
             if (local_metadata.flow_inter_packet_gap > FLOWLET_INTER_PACKET_GAP_THRESHOLD){
                   //Select the path according to flow type

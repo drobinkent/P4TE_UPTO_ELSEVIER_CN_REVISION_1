@@ -133,6 +133,7 @@ clear-logs:
 	rm -rf result/*
 	rm -rf log/*
 	rm -rf result/*
+	rm -rf ./MininetSimulator/TEST_LOG/*
 	sudo pkill -f iperf
 
 clear-iperf-processes:
