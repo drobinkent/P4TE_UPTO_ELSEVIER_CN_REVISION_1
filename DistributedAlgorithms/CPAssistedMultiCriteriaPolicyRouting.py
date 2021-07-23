@@ -30,7 +30,7 @@ class CPAssistedMultiCriteriaPolicyRoutingAlgorithm:
         This function setup all the relevant stuffs for running the algorithm
         '''
         self.p4dev.ctrlPlaneLogic.addGroupsForStepBasedRouting()
-        self.emptyGroupHandlerMemberForDelayBasedRoutingTable, self.emptyGroupHandlerMemberForEgressQueueDepthBasedRoutingTable, \
+        self.emptyGroupHandlerMemberForEgressQueueDepthBasedRoutingTable, \
                 self.emptyGroupHandlerMemberForEgressRateBasedRoutingTable= self.addDummyActionProfileMemberForHandlingEmptyRoutingGroup()
         self.p4dev.ctrlPlaneLogic.initializeUpstreamRouting()
 
@@ -481,28 +481,28 @@ class CPAssistedMultiCriteriaPolicyRoutingAlgorithm:
 # ===========================================End path delay event procesing ============================
     def addGroupsForStepBasedRouting(self):
         print(self.p4dev.devName)
-        try:
-            group4 = sh.ActionProfileGroup(self.p4dev,  "delay_based_upstream_path_selector")(group_id=InternalConfig.DELAY_BASED_ROUTING_GROUP_1_4)
-            group3 = sh.ActionProfileGroup(self.p4dev,  "delay_based_upstream_path_selector")(group_id=InternalConfig.DELAY_BASED_ROUTING_GROUP_1_3)
-            group2 = sh.ActionProfileGroup(self.p4dev,  "delay_based_upstream_path_selector")(group_id=InternalConfig.DELAY_BASED_ROUTING_GROUP_1_2)
-            group1 = sh.ActionProfileGroup(self.p4dev,  "delay_based_upstream_path_selector")(group_id=InternalConfig.DELAY_BASED_ROUTING_GROUP_1_1)
-
-            group4.insert()
-            self.delayBasedRoutingInfo.addGroup(InternalConfig.DELAY_BASED_ROUTING_GROUP_1_4, group4, metricsLevelRangeLowerValue= InternalConfig.COMMON_PRIORITY_LOWEST_VALUE,
-                metricsRangeHigherValue=InternalConfig.DELAY_BASED_ROUTING_GROUP_1_4_PRIORITY, ternaryMatchPriority=InternalConfig.DELAY_BASED_ROUTING_GROUP_1_4_PRIORITY)
-            group3.insert()
-            self.delayBasedRoutingInfo.addGroup(InternalConfig.DELAY_BASED_ROUTING_GROUP_1_3, group3, metricsLevelRangeLowerValue= InternalConfig.COMMON_PRIORITY_LOWEST_VALUE,
-                metricsRangeHigherValue=InternalConfig.DELAY_BASED_ROUTING_GROUP_1_3_PRIORITY, ternaryMatchPriority=InternalConfig.DELAY_BASED_ROUTING_GROUP_1_3_PRIORITY)
-            group2.insert()
-            self.delayBasedRoutingInfo.addGroup(InternalConfig.DELAY_BASED_ROUTING_GROUP_1_2, group2, metricsLevelRangeLowerValue= InternalConfig.COMMON_PRIORITY_LOWEST_VALUE,
-                metricsRangeHigherValue=InternalConfig.DELAY_BASED_ROUTING_GROUP_1_2_PRIORITY, ternaryMatchPriority=InternalConfig.DELAY_BASED_ROUTING_GROUP_1_2_PRIORITY)
-            group1.insert()
-            self.delayBasedRoutingInfo.addGroup(InternalConfig.DELAY_BASED_ROUTING_GROUP_1_1, group1, metricsLevelRangeLowerValue= InternalConfig.COMMON_PRIORITY_LOWEST_VALUE,
-                metricsRangeHigherValue=InternalConfig.DELAY_BASED_ROUTING_GROUP_1_1_PRIORITY, ternaryMatchPriority=InternalConfig.DELAY_BASED_ROUTING_GROUP_1_1_PRIORITY)
-        except Exception as e:
-            logger.info("Exceptionm in creating routing groups for StepBased Routings (Delay). Exception is "+e)
-            logger.info("Exiting")
-            exit(1)
+        # try:
+        #     group4 = sh.ActionProfileGroup(self.p4dev,  "delay_based_upstream_path_selector")(group_id=InternalConfig.DELAY_BASED_ROUTING_GROUP_1_4)
+        #     group3 = sh.ActionProfileGroup(self.p4dev,  "delay_based_upstream_path_selector")(group_id=InternalConfig.DELAY_BASED_ROUTING_GROUP_1_3)
+        #     group2 = sh.ActionProfileGroup(self.p4dev,  "delay_based_upstream_path_selector")(group_id=InternalConfig.DELAY_BASED_ROUTING_GROUP_1_2)
+        #     group1 = sh.ActionProfileGroup(self.p4dev,  "delay_based_upstream_path_selector")(group_id=InternalConfig.DELAY_BASED_ROUTING_GROUP_1_1)
+        #
+        #     group4.insert()
+        #     self.delayBasedRoutingInfo.addGroup(InternalConfig.DELAY_BASED_ROUTING_GROUP_1_4, group4, metricsLevelRangeLowerValue= InternalConfig.COMMON_PRIORITY_LOWEST_VALUE,
+        #         metricsRangeHigherValue=InternalConfig.DELAY_BASED_ROUTING_GROUP_1_4_PRIORITY, ternaryMatchPriority=InternalConfig.DELAY_BASED_ROUTING_GROUP_1_4_PRIORITY)
+        #     group3.insert()
+        #     self.delayBasedRoutingInfo.addGroup(InternalConfig.DELAY_BASED_ROUTING_GROUP_1_3, group3, metricsLevelRangeLowerValue= InternalConfig.COMMON_PRIORITY_LOWEST_VALUE,
+        #         metricsRangeHigherValue=InternalConfig.DELAY_BASED_ROUTING_GROUP_1_3_PRIORITY, ternaryMatchPriority=InternalConfig.DELAY_BASED_ROUTING_GROUP_1_3_PRIORITY)
+        #     group2.insert()
+        #     self.delayBasedRoutingInfo.addGroup(InternalConfig.DELAY_BASED_ROUTING_GROUP_1_2, group2, metricsLevelRangeLowerValue= InternalConfig.COMMON_PRIORITY_LOWEST_VALUE,
+        #         metricsRangeHigherValue=InternalConfig.DELAY_BASED_ROUTING_GROUP_1_2_PRIORITY, ternaryMatchPriority=InternalConfig.DELAY_BASED_ROUTING_GROUP_1_2_PRIORITY)
+        #     group1.insert()
+        #     self.delayBasedRoutingInfo.addGroup(InternalConfig.DELAY_BASED_ROUTING_GROUP_1_1, group1, metricsLevelRangeLowerValue= InternalConfig.COMMON_PRIORITY_LOWEST_VALUE,
+        #         metricsRangeHigherValue=InternalConfig.DELAY_BASED_ROUTING_GROUP_1_1_PRIORITY, ternaryMatchPriority=InternalConfig.DELAY_BASED_ROUTING_GROUP_1_1_PRIORITY)
+        # except Exception as e:
+        #     logger.info("Exceptionm in creating routing groups for StepBased Routings (Delay). Exception is "+e)
+        #     logger.info("Exiting")
+        #     exit(1)
 
 
         try:
@@ -579,14 +579,14 @@ class CPAssistedMultiCriteriaPolicyRoutingAlgorithm:
         :return:
         '''
         for p in upwardPortList:
-            member = self.p4dev.createAndAddMemeberToActionProfileGroup( actionProfileGroupObject =self.delayBasedRoutingInfo.getGroup(id = InternalConfig.DELAY_BASED_ROUTING_GROUP_1_4),
-                 selectorName = "delay_based_upstream_path_selector",
-                 memebrId = InternalConfig.DELAY_BASED_ROUTING_GROUP_MEMBER_ID_START+int(p),
-                 actionName = "IngressPipeImpl.cp_assisted_multicriteria_upstream_routing_control_block.delay_based_upstream_path_selector_action_with_param",
-                 actionParamName="port_num",actionParamValue = p)
-            self.delayBasedRoutingInfo.addPortNumToGroupMapping(port = p, actionProfileGroupObject=
-            self.delayBasedRoutingInfo.getGroup(id = InternalConfig.DELAY_BASED_ROUTING_GROUP_1_4), prevMetricsValue=0)
-            self.delayBasedRoutingInfo.addPortToActionProfileMemberMap(p,member )
+            # member = self.p4dev.createAndAddMemeberToActionProfileGroup( actionProfileGroupObject =self.delayBasedRoutingInfo.getGroup(id = InternalConfig.DELAY_BASED_ROUTING_GROUP_1_4),
+            #      selectorName = "delay_based_upstream_path_selector",
+            #      memebrId = InternalConfig.DELAY_BASED_ROUTING_GROUP_MEMBER_ID_START+int(p),
+            #      actionName = "IngressPipeImpl.cp_assisted_multicriteria_upstream_routing_control_block.delay_based_upstream_path_selector_action_with_param",
+            #      actionParamName="port_num",actionParamValue = p)
+            # self.delayBasedRoutingInfo.addPortNumToGroupMapping(port = p, actionProfileGroupObject=
+            # self.delayBasedRoutingInfo.getGroup(id = InternalConfig.DELAY_BASED_ROUTING_GROUP_1_4), prevMetricsValue=0)
+            # self.delayBasedRoutingInfo.addPortToActionProfileMemberMap(p,member )
             member = self.p4dev.createAndAddMemeberToActionProfileGroup( actionProfileGroupObject =self.egressQueueDepthBasedRoutingInfo.getGroup(id = InternalConfig.EGRESS_QUEUE_DEPTH_BASED_ROUTING_GROUP_1_4),
                          selectorName = "egr_queue_depth_based_upstream_path_selector",
                          memebrId = (InternalConfig.EGRESS_QUEUE_DEPTH_BASED_ROUTING_GROUP_MEMBER_ID_START+int(p)),
@@ -608,47 +608,47 @@ class CPAssistedMultiCriteriaPolicyRoutingAlgorithm:
             logger.info("There is no port in upward list of device "+self.p4dev.devName)
             logger.info("If you are working with layer 2 DCN then it is fuine. Otherwise There is something wrong fix it")
             return
-        self.p4dev.addLPMMatchEntryWithGroupActionWith2RangeField( tableName = "IngressPipeImpl.cp_assisted_multicriteria_upstream_routing_control_block.delay_based_upstream_path_table",
-               fieldName = "hdr.ipv6.dst_addr", fieldValue= InternalConfig.DCN_CORE_IPv6_PREFIX, prefixLength = InternalConfig.DCN_CORE_IPv6_PREFIX_LENGTH,
-               rangeField1Name = "local_metadata.delay_value_range", rangeField1LowerValue=1,rangefield1HigherValue =4,
-                rangeField2Name = "local_metadata.minimum_group_members_requirement",
-                rangeField2LowerValue=1,rangefield2HigherValue =InternalConfig.DUMMY_MAX_MINIMUM_GROUP_MEMBERS_REQUIREMENT,
-               actionName= "IngressPipeImpl.cp_assisted_multicriteria_upstream_routing_control_block.delay_based_upstream_path_selector_action_with_param",
-               actionParamName=None, actionParamValue=None,
-               groupID = InternalConfig.DELAY_BASED_ROUTING_GROUP_1_4, priority = InternalConfig.DELAY_BASED_ROUTING_GROUP_1_4_PRIORITY)
+        # self.p4dev.addLPMMatchEntryWithGroupActionWith2RangeField( tableName = "IngressPipeImpl.cp_assisted_multicriteria_upstream_routing_control_block.delay_based_upstream_path_table",
+        #        fieldName = "hdr.ipv6.dst_addr", fieldValue= InternalConfig.DCN_CORE_IPv6_PREFIX, prefixLength = InternalConfig.DCN_CORE_IPv6_PREFIX_LENGTH,
+        #        rangeField1Name = "local_metadata.delay_value_range", rangeField1LowerValue=1,rangefield1HigherValue =4,
+        #         rangeField2Name = "local_metadata.minimum_group_members_requirement",
+        #         rangeField2LowerValue=1,rangefield2HigherValue =InternalConfig.DUMMY_MAX_MINIMUM_GROUP_MEMBERS_REQUIREMENT,
+        #        actionName= "IngressPipeImpl.cp_assisted_multicriteria_upstream_routing_control_block.delay_based_upstream_path_selector_action_with_param",
+        #        actionParamName=None, actionParamValue=None,
+        #        groupID = InternalConfig.DELAY_BASED_ROUTING_GROUP_1_4, priority = InternalConfig.DELAY_BASED_ROUTING_GROUP_1_4_PRIORITY)
         #=================================== for DELAY_BASED_ROUTING_GROUP_1_3
-        actionProfileGroupObject = self.delayBasedRoutingInfo.getGroup(id = InternalConfig.DELAY_BASED_ROUTING_GROUP_1_3)
-        actionProfileGroupObject.add(self.emptyGroupHandlerMemberForDelayBasedRoutingTable.member_id)
-        actionProfileGroupObject.modify()
-        self.p4dev.addLPMMatchEntryWithGroupActionWith2RangeField( tableName = "IngressPipeImpl.cp_assisted_multicriteria_upstream_routing_control_block.delay_based_upstream_path_table",
-                   fieldName = "hdr.ipv6.dst_addr", fieldValue= InternalConfig.DCN_CORE_IPv6_PREFIX, prefixLength = InternalConfig.DCN_CORE_IPv6_PREFIX_LENGTH ,
-                   rangeField1Name = "local_metadata.delay_value_range", rangeField1LowerValue=1,rangefield1HigherValue =3,
-                   rangeField2Name = "local_metadata.minimum_group_members_requirement", rangeField2LowerValue=0,rangefield2HigherValue =0,
-                   actionName= "IngressPipeImpl.cp_assisted_multicriteria_upstream_routing_control_block.delay_based_upstream_path_selector_action_with_param",
-                   actionParamName=None, actionParamValue=None,
-                   groupID = InternalConfig.DELAY_BASED_ROUTING_GROUP_1_3, priority = InternalConfig.DELAY_BASED_ROUTING_GROUP_1_3_PRIORITY)
+        # actionProfileGroupObject = self.delayBasedRoutingInfo.getGroup(id = InternalConfig.DELAY_BASED_ROUTING_GROUP_1_3)
+        # actionProfileGroupObject.add(self.emptyGroupHandlerMemberForDelayBasedRoutingTable.member_id)
+        # actionProfileGroupObject.modify()
+        # self.p4dev.addLPMMatchEntryWithGroupActionWith2RangeField( tableName = "IngressPipeImpl.cp_assisted_multicriteria_upstream_routing_control_block.delay_based_upstream_path_table",
+        #            fieldName = "hdr.ipv6.dst_addr", fieldValue= InternalConfig.DCN_CORE_IPv6_PREFIX, prefixLength = InternalConfig.DCN_CORE_IPv6_PREFIX_LENGTH ,
+        #            rangeField1Name = "local_metadata.delay_value_range", rangeField1LowerValue=1,rangefield1HigherValue =3,
+        #            rangeField2Name = "local_metadata.minimum_group_members_requirement", rangeField2LowerValue=0,rangefield2HigherValue =0,
+        #            actionName= "IngressPipeImpl.cp_assisted_multicriteria_upstream_routing_control_block.delay_based_upstream_path_selector_action_with_param",
+        #            actionParamName=None, actionParamValue=None,
+        #            groupID = InternalConfig.DELAY_BASED_ROUTING_GROUP_1_3, priority = InternalConfig.DELAY_BASED_ROUTING_GROUP_1_3_PRIORITY)
         #=================================== for DELAY_BASED_ROUTING_GROUP_1_2
-        actionProfileGroupObject = self.delayBasedRoutingInfo.getGroup(id = InternalConfig.DELAY_BASED_ROUTING_GROUP_1_2)
-        actionProfileGroupObject.add(self.emptyGroupHandlerMemberForDelayBasedRoutingTable.member_id)
-        actionProfileGroupObject.modify()
-        self.p4dev.addLPMMatchEntryWithGroupActionWith2RangeField( tableName = "IngressPipeImpl.cp_assisted_multicriteria_upstream_routing_control_block.delay_based_upstream_path_table",
-                   fieldName = "hdr.ipv6.dst_addr", fieldValue= InternalConfig.DCN_CORE_IPv6_PREFIX, prefixLength = InternalConfig.DCN_CORE_IPv6_PREFIX_LENGTH,
-                   rangeField1Name = "local_metadata.delay_value_range", rangeField1LowerValue=1,rangefield1HigherValue =2,
-                   rangeField2Name = "local_metadata.minimum_group_members_requirement", rangeField2LowerValue=0,rangefield2HigherValue =0,
-                   actionName= "IngressPipeImpl.cp_assisted_multicriteria_upstream_routing_control_block.delay_based_upstream_path_selector_action_with_param",
-                   actionParamName=None, actionParamValue=None,
-                   groupID = InternalConfig.DELAY_BASED_ROUTING_GROUP_1_2, priority = InternalConfig.DELAY_BASED_ROUTING_GROUP_1_2_PRIORITY)
+        # actionProfileGroupObject = self.delayBasedRoutingInfo.getGroup(id = InternalConfig.DELAY_BASED_ROUTING_GROUP_1_2)
+        # actionProfileGroupObject.add(self.emptyGroupHandlerMemberForDelayBasedRoutingTable.member_id)
+        # actionProfileGroupObject.modify()
+        # self.p4dev.addLPMMatchEntryWithGroupActionWith2RangeField( tableName = "IngressPipeImpl.cp_assisted_multicriteria_upstream_routing_control_block.delay_based_upstream_path_table",
+        #            fieldName = "hdr.ipv6.dst_addr", fieldValue= InternalConfig.DCN_CORE_IPv6_PREFIX, prefixLength = InternalConfig.DCN_CORE_IPv6_PREFIX_LENGTH,
+        #            rangeField1Name = "local_metadata.delay_value_range", rangeField1LowerValue=1,rangefield1HigherValue =2,
+        #            rangeField2Name = "local_metadata.minimum_group_members_requirement", rangeField2LowerValue=0,rangefield2HigherValue =0,
+        #            actionName= "IngressPipeImpl.cp_assisted_multicriteria_upstream_routing_control_block.delay_based_upstream_path_selector_action_with_param",
+        #            actionParamName=None, actionParamValue=None,
+        #            groupID = InternalConfig.DELAY_BASED_ROUTING_GROUP_1_2, priority = InternalConfig.DELAY_BASED_ROUTING_GROUP_1_2_PRIORITY)
         #=================================== for DELAY_BASED_ROUTING_GROUP_1_1
-        actionProfileGroupObject = self.delayBasedRoutingInfo.getGroup(id = InternalConfig.DELAY_BASED_ROUTING_GROUP_1_1)
-        actionProfileGroupObject.add(self.emptyGroupHandlerMemberForDelayBasedRoutingTable.member_id)
-        actionProfileGroupObject.modify()
-        self.p4dev.addLPMMatchEntryWithGroupActionWith2RangeField( tableName = "IngressPipeImpl.cp_assisted_multicriteria_upstream_routing_control_block.delay_based_upstream_path_table",
-                   fieldName = "hdr.ipv6.dst_addr", fieldValue= InternalConfig.DCN_CORE_IPv6_PREFIX, prefixLength = InternalConfig.DCN_CORE_IPv6_PREFIX_LENGTH,
-                   rangeField1Name = "local_metadata.delay_value_range", rangeField1LowerValue=1,rangefield1HigherValue =1,
-                   rangeField2Name = "local_metadata.minimum_group_members_requirement", rangeField2LowerValue=0,rangefield2HigherValue =0,
-                   actionName= "IngressPipeImpl.cp_assisted_multicriteria_upstream_routing_control_block.delay_based_upstream_path_selector_action_with_param",
-                   actionParamName=None, actionParamValue=None,
-                   groupID = InternalConfig.DELAY_BASED_ROUTING_GROUP_1_1, priority = InternalConfig.DELAY_BASED_ROUTING_GROUP_1_1_PRIORITY)
+        # actionProfileGroupObject = self.delayBasedRoutingInfo.getGroup(id = InternalConfig.DELAY_BASED_ROUTING_GROUP_1_1)
+        # actionProfileGroupObject.add(self.emptyGroupHandlerMemberForDelayBasedRoutingTable.member_id)
+        # actionProfileGroupObject.modify()
+        # self.p4dev.addLPMMatchEntryWithGroupActionWith2RangeField( tableName = "IngressPipeImpl.cp_assisted_multicriteria_upstream_routing_control_block.delay_based_upstream_path_table",
+        #            fieldName = "hdr.ipv6.dst_addr", fieldValue= InternalConfig.DCN_CORE_IPv6_PREFIX, prefixLength = InternalConfig.DCN_CORE_IPv6_PREFIX_LENGTH,
+        #            rangeField1Name = "local_metadata.delay_value_range", rangeField1LowerValue=1,rangefield1HigherValue =1,
+        #            rangeField2Name = "local_metadata.minimum_group_members_requirement", rangeField2LowerValue=0,rangefield2HigherValue =0,
+        #            actionName= "IngressPipeImpl.cp_assisted_multicriteria_upstream_routing_control_block.delay_based_upstream_path_selector_action_with_param",
+        #            actionParamName=None, actionParamValue=None,
+        #            groupID = InternalConfig.DELAY_BASED_ROUTING_GROUP_1_1, priority = InternalConfig.DELAY_BASED_ROUTING_GROUP_1_1_PRIORITY)
 
         #**************************************************************************************************************************************
         #=================================== for EGRESS_QUEUE_DEPTH_BASED_ROUTING_GROUP_1_4
@@ -747,8 +747,8 @@ class CPAssistedMultiCriteriaPolicyRoutingAlgorithm:
 
     def addDummyActionProfileMemberForHandlingEmptyRoutingGroup(self):
         #===============for delay based routing table
-        emptyGroupHandlerMemberForDelayBasedRoutingTable = sh.ActionProfileMember(self.p4dev, "delay_based_upstream_path_selector")(member_id= InternalConfig.EMPTY_GROUP_MEMBER_ID_FOR_DELAY_BASED_ROUTING_TABLE, action="delay_based_upstream_path_selector_action_without_param")
-        emptyGroupHandlerMemberForDelayBasedRoutingTable.insert()
+        # emptyGroupHandlerMemberForDelayBasedRoutingTable = sh.ActionProfileMember(self.p4dev, "delay_based_upstream_path_selector")(member_id= InternalConfig.EMPTY_GROUP_MEMBER_ID_FOR_DELAY_BASED_ROUTING_TABLE, action="delay_based_upstream_path_selector_action_without_param")
+        # emptyGroupHandlerMemberForDelayBasedRoutingTable.insert()
 
         #===============for egress queue depth based routing table
         emptyGroupHandlerMemberForEgressQueueDepthBasedRoutingTable = sh.ActionProfileMember(self.p4dev, "egr_queue_depth_based_upstream_path_selector")(member_id= InternalConfig.EMPTY_GROUP_MEMBER_ID_FOR_EGRESS_QUEUE_DEPTH_BASED_ROUTING_TABLE, action="egr_queue_depth_based_upstream_path_selector_action_without_param")
@@ -758,7 +758,7 @@ class CPAssistedMultiCriteriaPolicyRoutingAlgorithm:
         emptyGroupHandlerMemberForEgressRateBasedRoutingTable = sh.ActionProfileMember(self.p4dev, "egr_port_rate_based_upstream_path_selector")(member_id= InternalConfig.EMPTY_GROUP_MEMBER_ID_FOR_EGRESS_RATE_BASED_ROUTING_TABLE, action="egr_port_rate_based_upstream_path_selector_action_without_param")
         emptyGroupHandlerMemberForEgressRateBasedRoutingTable.insert()
 
-        return emptyGroupHandlerMemberForDelayBasedRoutingTable, emptyGroupHandlerMemberForEgressQueueDepthBasedRoutingTable, emptyGroupHandlerMemberForEgressRateBasedRoutingTable
+        return  emptyGroupHandlerMemberForEgressQueueDepthBasedRoutingTable, emptyGroupHandlerMemberForEgressRateBasedRoutingTable
 
 
     def setupPolicyRoutingTable(self):

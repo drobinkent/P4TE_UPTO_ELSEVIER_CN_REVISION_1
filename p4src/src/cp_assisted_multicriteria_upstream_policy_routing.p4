@@ -37,11 +37,11 @@ control cp_assisted_multicriteria_upstream_policy_routing(inout parsed_headers_t
         // Decrement TTL
         hdr.ipv6.hop_limit = hdr.ipv6.hop_limit - 1;
     }
-    action use_low_delay_port() {
+   /* action use_low_delay_port() {
         standard_metadata.egress_spec = local_metadata.delay_based_path;
         // Decrement TTL
         hdr.ipv6.hop_limit = hdr.ipv6.hop_limit - 1;
-    }
+    }*/
     action use_low_egress_queue_depth_port() {
          standard_metadata.egress_spec = local_metadata.egr_queue_based_path ;
          // Decrement TTL
@@ -53,7 +53,7 @@ control cp_assisted_multicriteria_upstream_policy_routing(inout parsed_headers_t
           hdr.ipv6.hop_limit = hdr.ipv6.hop_limit - 1;
       }
 
-    table policy_based_upstream_routing {
+    /*table policy_based_upstream_routing {
         key = {
             hdr.ipv6.traffic_class: exact ;
             local_metadata.ingress_queue_event_hdr.ingress_queue_event   :exact;
@@ -63,14 +63,14 @@ control cp_assisted_multicriteria_upstream_policy_routing(inout parsed_headers_t
         }
         actions = {
             use_old_port;
-            use_low_delay_port;
+            //use_low_delay_port;
             use_low_egress_queue_depth_port;
         }
         default_action = use_old_port;
         //implementation = delay_based_upstream_path_selector;
         //@name("delay_based_upstream_path_table_counter")
         //counters = direct_counter(CounterType.packets_and_bytes);
-    }
+    }*/
 
 
     apply {

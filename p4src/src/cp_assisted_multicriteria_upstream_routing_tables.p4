@@ -19,7 +19,7 @@ control cp_assisted_multicriteria_upstream_routing_tables(inout parsed_headers_t
 {
 
     //======================================== Table for slecting path with minimum delay ==========================================
-    action delay_based_upstream_path_selector_action_without_param() {
+    /*action delay_based_upstream_path_selector_action_without_param() {
         local_metadata.delay_based_path = 0;
         local_metadata.flag_hdr.found_path_delay_based_path = false;
     }
@@ -51,7 +51,7 @@ control cp_assisted_multicriteria_upstream_routing_tables(inout parsed_headers_t
         implementation = delay_based_upstream_path_selector;
         @name("delay_based_upstream_path_table_counter")
         counters = direct_counter(CounterType.packets_and_bytes);
-    }
+    }*/
 
 
 
@@ -140,7 +140,7 @@ control cp_assisted_multicriteria_upstream_routing_tables(inout parsed_headers_t
 
     apply {
 
-        delay_based_upstream_path_table.apply();
+        //delay_based_upstream_path_table.apply();
         egr_queue_depth_based_upstream_path_table.apply();
         local_metadata.egr_port_rate_value_range  = 1; //This is required to find the port with green color.
         egr_port_rate_based_upstream_path_table.apply();

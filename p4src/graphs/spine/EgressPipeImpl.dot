@@ -9,11 +9,11 @@ label="", labeljust=r, style=bold];
 4[label="egress_queue_depth_monitor_control_block_port_id/port_id = (bit<32>)standard_metadata.egress_spec;
 ...
 local_metadata.egress_queue_event_hdr.egress_queue_event_port = standard_metadata.egress_port;", margin="", shape=rectangle, style=solid];
-5[label="standard_metadata.deq_qdepth >= egress_queue_depth_monitor_control_block_last_updated_deq_depth/last_updated_deq_depth + 4;", margin="", shape=rectangle, style=solid];
+5[label="standard_metadata.deq_qdepth >= egress_queue_depth_monitor_control_block_last_updated_deq_depth/last_updated_deq_depth + 2;", margin="", shape=rectangle, style=solid];
 6[label="local_metadata.egress_queue_event_hdr.event_src_type = 1;
 ...
 local_metadata.flag_hdr.is_control_pkt_from_egr_queue_depth = 1;", margin="", shape=rectangle, style=solid];
-7[label="standard_metadata.deq_qdepth < egress_queue_depth_monitor_control_block_last_updated_deq_depth/last_updated_deq_depth + 524284;", margin="", shape=rectangle, style=solid];
+7[label="standard_metadata.deq_qdepth < egress_queue_depth_monitor_control_block_last_updated_deq_depth/last_updated_deq_depth + 524286;", margin="", shape=rectangle, style=solid];
 8[label="local_metadata.egress_queue_event_hdr.event_src_type = 1;
 ...
 local_metadata.flag_hdr.is_control_pkt_from_egr_queue_depth = 1;", margin="", shape=rectangle, style=solid];

@@ -225,7 +225,7 @@ struct local_metadata_t {
     //bit<4> path_egr_queue_level_requirement;
 
     // These are the placeholder where the egress ports will be kept after matching.
-    bit<9> delay_based_path;
+    //bit<9> delay_based_path;
     bit<9> egr_queue_based_path;
     bit<9> egr_rate_based_path;
     bit<32> temp; //This will be used for various tempporaty operation in various control blocks. But remeber we can not gues anything about it's initial data

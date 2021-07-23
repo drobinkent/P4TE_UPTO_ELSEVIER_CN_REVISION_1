@@ -310,7 +310,11 @@ class TestCommandDeployer:
                 jsonString = jsonString + indentString +"        \"flow_type\": \"tcp\",\n"
                 jsonString = jsonString + indentString +"        \"flow_traffic_class\": \""+str(d.trafficClassTag)+"\",\n"
                 jsonString = jsonString + indentString +"        \"flow-volume\": \""+str(math.ceil(d.flowSizeinPackets*ConfigConst.PACKET_SIZE/1024))+"K\",\n"
-                jsonString = jsonString + indentString +"        \"src-window-size\": \"16K\",\n"
+                if(d.flowSizeinPackets <=25):
+                    windowSize = str(math.ceil(d.flowSizeinPackets*ConfigConst.PACKET_SIZE/2048))+"K"
+                    jsonString = jsonString + indentString +"        \"src-window-size\": \""+ windowSize+"K\",\n"
+                else:
+                    jsonString = jsonString + indentString +"        \"src-window-size\": \"16K\",\n"
                 # jsonString = jsonString + indentString +"        \"src-data-rate\": \"48K\",\n"
                 jsonString = jsonString + indentString +"        \"src-data-rate\": \"\",\n"
                 jsonString = jsonString + indentString +"        \"pkt-size\": \"1400\",\n"
@@ -368,6 +372,7 @@ if __name__ == "__main__":
     # testEvaluator.setupTestConfigFolderForJson()
     # testEvaluator.generateTestCommandsAsJsonFile( testCaseNAme= "WebSearchWorkLoad_load_factor_0.8",loadFactor=0.8,testDuration=75,maxPortcountInSwitch=ConfigConst.MAX_PORT_COUNT)
 
+    # WEbsearch
 
     topologyConfigFilePath =  confConst.TOPOLOGY_CONFIG_FILE
     testEvaluator = TestCommandDeployer(topologyConfigFilePath = confConst.TOPOLOGY_CONFIG_FILE,resultFolder = "FlowInfos" , clientPortStart=confConst.IPERF3_CLIENT_PORT_START,
@@ -393,3 +398,32 @@ if __name__ == "__main__":
                                         serverPortStart=confConst.IPERF3_SERVER_PORT_START, testStartDelay=10)
     testEvaluator.setupTestConfigFolderForJson()
     testEvaluator.generateTestCommandsAsJsonFile( testCaseNAme= "WebSearchWorkLoad_load_factor_0.8",loadFactor=0.8,testDuration=150,maxPortcountInSwitch=ConfigConst.MAX_PORT_COUNT)
+
+
+    #Data Mining
+
+    # topologyConfigFilePath =  confConst.TOPOLOGY_CONFIG_FILE
+    # testEvaluator = TestCommandDeployer(topologyConfigFilePath = confConst.TOPOLOGY_CONFIG_FILE,resultFolder = "FlowInfos" , clientPortStart=confConst.IPERF3_CLIENT_PORT_START,
+    #                                     serverPortStart=confConst.IPERF3_SERVER_PORT_START, testStartDelay=10)
+    # testEvaluator.setupTestConfigFolderForJson()
+    # testEvaluator.generateTestCommandsAsJsonFile(testCaseNAme= "DataMining_Workload_load_factor_0.2",loadFactor=0.2,testDuration=150,maxPortcountInSwitch=ConfigConst.MAX_PORT_COUNT)
+    #
+    # #--------------------
+    #
+    # testEvaluator = TestCommandDeployer(topologyConfigFilePath = confConst.TOPOLOGY_CONFIG_FILE,resultFolder = "FlowInfos" , clientPortStart=confConst.IPERF3_CLIENT_PORT_START,
+    #                                     serverPortStart=confConst.IPERF3_SERVER_PORT_START, testStartDelay=10)
+    # testEvaluator.setupTestConfigFolderForJson()
+    # testEvaluator.generateTestCommandsAsJsonFile( testCaseNAme= "DataMining_Workload_load_factor_0.4",loadFactor=0.4,testDuration=150,maxPortcountInSwitch=ConfigConst.MAX_PORT_COUNT)
+    #
+    # #--------------------
+    # testEvaluator = TestCommandDeployer(topologyConfigFilePath = confConst.TOPOLOGY_CONFIG_FILE,resultFolder = "FlowInfos" , clientPortStart=confConst.IPERF3_CLIENT_PORT_START,
+    #                                     serverPortStart=confConst.IPERF3_SERVER_PORT_START, testStartDelay=10)
+    # testEvaluator.setupTestConfigFolderForJson()
+    # testEvaluator.generateTestCommandsAsJsonFile( testCaseNAme= "DataMining_Workload_load_factor_0.6",loadFactor=0.6,testDuration=150,maxPortcountInSwitch=ConfigConst.MAX_PORT_COUNT)
+    #
+    # #--------------------
+    # testEvaluator = TestCommandDeployer(topologyConfigFilePath = confConst.TOPOLOGY_CONFIG_FILE,resultFolder = "FlowInfos" , clientPortStart=confConst.IPERF3_CLIENT_PORT_START,
+    #                                     serverPortStart=confConst.IPERF3_SERVER_PORT_START, testStartDelay=10)
+    # testEvaluator.setupTestConfigFolderForJson()
+    # testEvaluator.generateTestCommandsAsJsonFile( testCaseNAme= "DataMining_Workload_load_factor_0.8",loadFactor=0.8,testDuration=150,maxPortcountInSwitch=ConfigConst.MAX_PORT_COUNT)
+    #
