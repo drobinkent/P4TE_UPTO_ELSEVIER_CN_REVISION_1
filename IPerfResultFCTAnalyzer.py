@@ -148,8 +148,8 @@ def getAVGFCTByFolder(folderName):
     if (largeFlowTotalBytesSent > 0):
         print("largeFlowcount is "+str(largeFlowcount))
         print("Average FCT for large flow  = ", largeFlowTotalBytesMultipliedByFCT/largeFlowTotalBytesSent)
-    print("Total retransmissions for short flow  = ", shortFlowTotalBytesMultipledByRetransmission)
-    print("Total retransmissions for large flow  = ", largeFlowTotalRetransmission)
+    print("Average retransmissions for short flow  = ", shortFlowTotalBytesMultipledByRetransmission/shortFlowcount)
+    print("Average retransmissions for large flow  = ", largeFlowTotalRetransmission/largeFlowcount)
     pass
 
 
@@ -207,9 +207,9 @@ print("P4TE")
 getAVGFCTByFolder(folderName= "/home/deba/Desktop/P4TE/testAndMeasurement/TEST_RESULTS_WEB_SEARCH_WORKLOAD_RESULTS/P4TE_RESULTS/WebSearchWorkLoad_load_factor_0.8/client-logs-0")
 print("\n\n")
 
-print("P4TE-variation")
-getAVGFCTByFolder(folderName= "/home/deba/Desktop/P4TE/testAndMeasurement/TEST_RESULTS/WebSearchWorkLoad_load_factor_0.8/client-logs-0")
-print("\n\n")
+# print("P4TE-variation")
+# getAVGFCTByFolder(folderName= "/home/deba/Desktop/P4TE/testAndMeasurement/TEST_RESULTS/WebSearchWorkLoad_load_factor_0.8/client-logs-0")
+# print("\n\n")
 
 print("Load factor 0.6")
 print("ECMP")
@@ -245,9 +245,9 @@ print("\n\n\n\n=================================================================
 print(" Analyzing average FCT and total retransmissions for incast scneario")
 
 print("ECMP")
-getAVGFCTByFolder(folderName= "/home/deba/Desktop/P4TE/testAndMeasurement/TEST_RESULTS/ecmp/l2-incast/client-logs-0")
+getAVGFCTByFolder(folderName= "/home/deba/Desktop/P4TE/testAndMeasurement/TEST_RESULTS_INCAST_WORKLOAD/ecmp/l2-incast/client-logs-0")
 print("\n\n")
 
 print("P4TE")
-getAVGFCTByFolder(folderName= "/home/deba/Desktop/P4TE/testAndMeasurement/TEST_RESULTS/P4TE/l2-incast/client-logs-0")
+getAVGFCTByFolder(folderName= "/home/deba/Desktop/P4TE/testAndMeasurement/TEST_RESULTS_INCAST_WORKLOAD/P4TE/l2-incast/client-logs-0")
 print("\n\n")

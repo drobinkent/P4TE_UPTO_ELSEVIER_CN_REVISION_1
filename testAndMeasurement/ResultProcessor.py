@@ -1251,8 +1251,8 @@ def processDataAndPLotUpwardLinkUtilizationGraph(valueSet1, valueSet2,  folderPa
             # autolabel(rects1)
             # autolabel(rects2)
 
-            #plt.savefig(folderPathToStorePdf+"/"+devName+".pdf")
-            plt.savefig("/home/deba/Desktop/P4TE/ProcessedResultImages/linkUtilizationTesterGraphs/"+devName+".pdf")
+            # plt.savefig(folderPathToStorePdf+"/"+devName+".pdf")
+            # plt.savefig("/home/deba/Desktop/P4TE/ProcessedResultImages/linkUtilizationTesterGraphs/"+devName+".pdf")
 
     pass
 
@@ -1301,228 +1301,228 @@ def processResults(iPerfResultsFolder1, iPerfResultsFolder2, algorithm1, algorit
 
 
     #This part Generates graph
-    generateGraphFor2Scenario(iPerfResultsFolder1,iPerfResultsFolder2,resultSet1,resultSet2, avgResultSet1, avgResultSet2,algorithm1, algorithm2, folderToSaveResult)
+    # generateGraphFor2Scenario(iPerfResultsFolder1,iPerfResultsFolder2,resultSet1,resultSet2, avgResultSet1, avgResultSet2,algorithm1, algorithm2, folderToSaveResult)
     # generateTimeByThroughputGraphForOneIteration(iPerfResultsFolder1,iPerfResultsFolder2,resultSet1, resultSet2, avgResultSet1, avgResultSet2,algorithm1, algorithm2, folderToSaveResult)
     # plotNthPercenTileFCTVsTotalThroughout(iPerfResultsFolder1,iPerfResultsFolder2,resultSet1, resultSet2, avgResultSet1, avgResultSet2,algorithm1, algorithm2, folderToSaveResult)
     print("If you want to generate graph for link utilization then take only one iteration and comment out the previous block. and uncomment the fllowing 4 lines of code")
-    # print("Link utilization for P4TE")
-    # val1 = upwardLinkUtilizationAnalyzer(config=config, folderPath = iPerfResultsFolder1)
-    # print(val1)
-    # print("Link utilization for ecmp")
-    # val2 = upwardLinkUtilizationAnalyzer(config=config, folderPath = iPerfResultsFolder2)
-    # print(val2)
-    # processDataAndPLotUpwardLinkUtilizationGraph(val1, val2,  folderPathToStorePdf= "./ProcessedResultImages/linkUtilizationTesterGraphs")
+    print("Link utilization for P4TE")
+    val1 = upwardLinkUtilizationAnalyzer(config=config, folderPath = iPerfResultsFolder1)
+    print(val1)
+    print("Link utilization for ecmp")
+    val2 = upwardLinkUtilizationAnalyzer(config=config, folderPath = iPerfResultsFolder2)
+    print(val2)
+    processDataAndPLotUpwardLinkUtilizationGraph(val1, val2,  folderPathToStorePdf= "./ProcessedResultImages/linkUtilizationTesterGraphs")
 
-    # This part prints result in file
-    print("\n\n====================================================================================")
-    print("FCT of short flows ")
-    print("For :"+algorithm1)
-    # json.dump(avgResultSet1.shortFlowPercentileBasedResults.fctPercentileList, sys.stdout)
-    print("\nStandard Deviation: "+str(resultSet1[0].shortFlowPercentileBasedResults.fctSTD))
-    print("Average: "+str(resultSet1[0].shortFlowPercentileBasedResults.fctAVG))
-    print("For :"+algorithm2)
-    # print(avgResultSet2.shortFlowPercentileBasedResults.fctPercentileList)
-    print("\nStandard Deviation: "+str(resultSet2[0].shortFlowPercentileBasedResults.fctSTD))
-    print("Average: "+str(resultSet2[0].shortFlowPercentileBasedResults.fctAVG))
-    rateofChange = ((resultSet1[0].shortFlowPercentileBasedResults.fctSTD - resultSet2[0].shortFlowPercentileBasedResults.fctSTD) / resultSet1[0].shortFlowPercentileBasedResults.fctSTD) * 100
-    # print("P4TE's gain in SD of # FCT is "+str(rateofChange))
-    rateofChange = ((resultSet1[0].shortFlowPercentileBasedResults.fctAVG - resultSet2[0].shortFlowPercentileBasedResults.fctAVG) / resultSet1[0].shortFlowPercentileBasedResults.fctAVG) * 100
-    # print("P4TE's gain in avg of FCT is "+str(rateofChange))
-    print("FCT of large flows ")
-    print("For :"+algorithm1)
-    # print(avgResultSet1.largeFlowPercentileBasedResults.fctPercentileList)
-    print("\nStandard Deviation: "+str(resultSet1[0].largeFlowPercentileBasedResults.fctSTD))
-    print("Average: "+str(resultSet1[0].largeFlowPercentileBasedResults.fctAVG))
-    print("For :"+algorithm2)
-    # print(avgResultSet2.largeFlowPercentileBasedResults.fctPercentileList)
-    print("\nStandard Deviation: "+str(resultSet2[0].largeFlowPercentileBasedResults.fctSTD))
-    print("Average: "+str(resultSet2[0].largeFlowPercentileBasedResults.fctAVG))
-    rateofChange = ((resultSet1[0].largeFlowPercentileBasedResults.fctSTD - resultSet2[0].largeFlowPercentileBasedResults.fctSTD) / resultSet1[0].largeFlowPercentileBasedResults.fctSTD) * 100
-    # print("P4TE's gain in SD of FCT is "+str(rateofChange))
-    rateofChange = ((resultSet1[0].largeFlowPercentileBasedResults.fctAVG - resultSet2[0].largeFlowPercentileBasedResults.fctAVG) / resultSet1[0].largeFlowPercentileBasedResults.fctAVG) * 100
-    # print("P4TE's gain in Avg of FCT is "+str(rateofChange))
-
-    # print("\n\n====================================================================================")
-    # print("Total Data Loss of short flows ")
-    # print("For :"+algorithm1)
-    # print(avgResultSet1.shortFlowPercentileBasedResults.datalosspercentileList)
-    # print("\nStandard Deviation: "+str(resultSet1[0].shortFlowPercentileBasedResults.dataLossSTD))
-    # print("For :"+algorithm2)
-    # print(avgResultSet2.shortFlowPercentileBasedResults.datalosspercentileList)
-    # print("\nStandard Deviation: "+str(resultSet2[0].shortFlowPercentileBasedResults.dataLossSTD))
-    # print("Total Data Loss  of large flows ")
-    # print("For :"+algorithm1)
-    # print(avgResultSet1.largeFlowPercentileBasedResults.datalosspercentileList)
-    # print("\nStandard Deviation: "+str(resultSet1[0].largeFlowPercentileBasedResults.dataLossSTD))
-    # print("For :"+algorithm2)
-    # print(avgResultSet2.largeFlowPercentileBasedResults.datalosspercentileList)
-    # print("\nStandard Deviation: "+str(resultSet2[0].largeFlowPercentileBasedResults.dataLossSTD))
-
-    # print("\n\n====================================================================================")
-    # print("Total Sucessfully Sent volume of data of short flows ")
-    # print("For :"+algorithm1)
-    # print(avgResultSet1.shortFlowPercentileBasedResults.successfulDataPercentileList)
-    # print("\nStandard Deviation: "+str(resultSet1[0].shortFlowPercentileBasedResults.successfulDataSTD))
-    # print("For :"+algorithm2)
-    # print(avgResultSet2.shortFlowPercentileBasedResults.successfulDataPercentileList)
-    # print("\nStandard Deviation: "+str(resultSet2[0].shortFlowPercentileBasedResults.successfulDataSTD))
-    # print("Total Sucessfully Sent volume of data  of large flows ")
-    # print("For :"+algorithm1)
-    # print(avgResultSet1.largeFlowPercentileBasedResults.successfulDataPercentileList)
-    # print("\nStandard Deviation: "+str(resultSet1[0].largeFlowPercentileBasedResults.successfulDataSTD))
-    # print("For :"+algorithm2)
-    # print(avgResultSet2.largeFlowPercentileBasedResults.successfulDataPercentileList)
-    # print("\nStandard Deviation: "+str(resultSet2[0].largeFlowPercentileBasedResults.successfulDataSTD))
-
-
-    print("\n\n====================================================================================")
-    print("Total Number of retranmits of short flows ")
-    print("For :"+algorithm1)
-    # print(avgResultSet1.shortFlowPercentileBasedResults.retransmitPercentileList)
-    print("\nStandard Deviation: "+str(resultSet1[0].shortFlowPercentileBasedResults.retransmitSTD))
-    print("Avg: "+str(resultSet1[0].shortFlowPercentileBasedResults.retransmitAVG))
-    print("For :"+algorithm2)
-    # print(avgResultSet2.shortFlowPercentileBasedResults.retransmitPercentileList)
-    print("\nStandard Deviation: "+str(resultSet2[0].shortFlowPercentileBasedResults.retransmitSTD))
-    print("Avg: "+str(resultSet2[0].shortFlowPercentileBasedResults.retransmitAVG))
-    # rateofChange = ((resultSet1[0].shortFlowPercentileBasedResults.retransmitSTD - resultSet2[0].shortFlowPercentileBasedResults.retransmitSTD) / resultSet1[0].shortFlowPercentileBasedResults.retransmitSTD) * 100
-    # print("P4TE's gain in SD of  # of retransmission is "+str(rateofChange))
-    # rateofChange = ((resultSet1[0].shortFlowPercentileBasedResults.retransmitAVG - resultSet2[0].shortFlowPercentileBasedResults.retransmitAVG) / resultSet1[0].shortFlowPercentileBasedResults.retransmitAVG) * 100
-    # print("P4TE's gain in Avg of  # of retransmission is "+str(rateofChange))
-    print("Total Number of retranmits  of large flows ")
-    print("For :"+algorithm1)
-    # print(avgResultSet1.largeFlowPercentileBasedResults.retransmitPercentileList)
-    print("\nStandard Deviation: "+str(resultSet1[0].largeFlowPercentileBasedResults.retransmitSTD))
-    print("Avg: "+str(resultSet1[0].largeFlowPercentileBasedResults.retransmitAVG))
-    print("For :"+algorithm2)
-    # print(avgResultSet2.largeFlowPercentileBasedResults.retransmitPercentileList)
-    print("\nStandard Deviation: "+str(resultSet2[0].largeFlowPercentileBasedResults.retransmitSTD))
-    print("Avg: "+str(resultSet2[0].largeFlowPercentileBasedResults.retransmitAVG))
-    # rateofChange = ((resultSet1[0].largeFlowPercentileBasedResults.retransmitSTD - resultSet2[0].largeFlowPercentileBasedResults.retransmitSTD) / resultSet1[0].largeFlowPercentileBasedResults.retransmitSTD) * 100
-    # print("P4TE's gain in SD of  # of retransmission is "+str(rateofChange))
-    # rateofChange = ((resultSet1[0].largeFlowPercentileBasedResults.retransmitAVG - resultSet2[0].largeFlowPercentileBasedResults.retransmitAVG) / resultSet1[0].largeFlowPercentileBasedResults.retransmitAVG) * 100
-    # print("P4TE's gain in Avg of  # of retransmission is "+str(rateofChange))
-
-
-    # print("\n\n====================================================================================")
-    # print("TCP Throughput of short flows ")
-    # print("For :"+algorithm1)
-    # print(avgResultSet1.shortFlowPercentileBasedResults.tcpThroughputInBPSList)
-    # print("\nStandard Deviation: "+str(resultSet1[0].shortFlowPercentileBasedResults.tcpThroughoutSTD))
-    # print("For :"+algorithm2)
-    # print(avgResultSet2.shortFlowPercentileBasedResults.tcpThroughputInBPSList)
-    # print("\nStandard Deviation: "+str(resultSet2[0].shortFlowPercentileBasedResults.tcpThroughoutSTD))
-    # print("TCP Throughput of large flows ")
-    # print("For :"+algorithm1)
-    # print(avgResultSet1.largeFlowPercentileBasedResults.tcpThroughputInBPSList)
-    # print("\nStandard Deviation: "+str(resultSet1[0].largeFlowPercentileBasedResults.tcpThroughoutSTD))
-    # print("For :"+algorithm2)
-    # print(avgResultSet2.largeFlowPercentileBasedResults.tcpThroughputInBPSList)
-    # print("\nStandard Deviation: "+str(resultSet2[0].largeFlowPercentileBasedResults.tcpThroughoutSTD))
-
-    # start1 , end1   = getMinMaxtimeStampForLInkVisulationforAFolder(iPerfResultsFolder1)
-    # upwardLinkUtilizationAnalyzer(config = config)
-    # start2 , end2   = getMinMaxtimeStampForLInkVisulationforAFolder(iPerfResultsFolder2)
-    # print(start2)
-    # print(end2)
-    # val = upwardLinkUtilizationAnalyzer(config = config)
-    # print(val)
-
-    #percentileValuesToComapre = [50,75,90,99]
-
+    # # This part prints result in file
     # print("\n\n====================================================================================")
     # print("FCT of short flows ")
     # print("For :"+algorithm1)
-    # for r in percentileValuesToComapre:
-    #     print(avgResultSet1.shortFlowPercentileBasedResults.fctPercentileList[r])
+    # # json.dump(avgResultSet1.shortFlowPercentileBasedResults.fctPercentileList, sys.stdout)
+    # print("\nStandard Deviation: "+str(resultSet1[0].shortFlowPercentileBasedResults.fctSTD))
+    # print("Average: "+str(resultSet1[0].shortFlowPercentileBasedResults.fctAVG))
     # print("For :"+algorithm2)
-    # for r in percentileValuesToComapre:
-    #     print(avgResultSet2.shortFlowPercentileBasedResults.fctPercentileList[r])
-    #
+    # # print(avgResultSet2.shortFlowPercentileBasedResults.fctPercentileList)
+    # print("\nStandard Deviation: "+str(resultSet2[0].shortFlowPercentileBasedResults.fctSTD))
+    # print("Average: "+str(resultSet2[0].shortFlowPercentileBasedResults.fctAVG))
+    # rateofChange = ((resultSet1[0].shortFlowPercentileBasedResults.fctSTD - resultSet2[0].shortFlowPercentileBasedResults.fctSTD) / resultSet1[0].shortFlowPercentileBasedResults.fctSTD) * 100
+    # # print("P4TE's gain in SD of # FCT is "+str(rateofChange))
+    # rateofChange = ((resultSet1[0].shortFlowPercentileBasedResults.fctAVG - resultSet2[0].shortFlowPercentileBasedResults.fctAVG) / resultSet1[0].shortFlowPercentileBasedResults.fctAVG) * 100
+    # # print("P4TE's gain in avg of FCT is "+str(rateofChange))
     # print("FCT of large flows ")
-    # for r in percentileValuesToComapre:
-    #     print(avgResultSet1.largeFlowPercentileBasedResults.fctPercentileList[r])
+    # print("For :"+algorithm1)
+    # # print(avgResultSet1.largeFlowPercentileBasedResults.fctPercentileList)
+    # print("\nStandard Deviation: "+str(resultSet1[0].largeFlowPercentileBasedResults.fctSTD))
+    # print("Average: "+str(resultSet1[0].largeFlowPercentileBasedResults.fctAVG))
     # print("For :"+algorithm2)
-    # for r in percentileValuesToComapre:
-    #     print(avgResultSet2.largeFlowPercentileBasedResults.fctPercentileList[r])
+    # # print(avgResultSet2.largeFlowPercentileBasedResults.fctPercentileList)
+    # print("\nStandard Deviation: "+str(resultSet2[0].largeFlowPercentileBasedResults.fctSTD))
+    # print("Average: "+str(resultSet2[0].largeFlowPercentileBasedResults.fctAVG))
+    # rateofChange = ((resultSet1[0].largeFlowPercentileBasedResults.fctSTD - resultSet2[0].largeFlowPercentileBasedResults.fctSTD) / resultSet1[0].largeFlowPercentileBasedResults.fctSTD) * 100
+    # # print("P4TE's gain in SD of FCT is "+str(rateofChange))
+    # rateofChange = ((resultSet1[0].largeFlowPercentileBasedResults.fctAVG - resultSet2[0].largeFlowPercentileBasedResults.fctAVG) / resultSet1[0].largeFlowPercentileBasedResults.fctAVG) * 100
+    # # print("P4TE's gain in Avg of FCT is "+str(rateofChange))
     #
-    # print("\n\n====================================================================================")
-    # print("Total Data Loss of short flows ")
-    # print("For :"+algorithm1)
-    # for r in percentileValuesToComapre:
-    #     print(avgResultSet1.shortFlowPercentileBasedResults.datalosspercentileList[r])
-    # print("For :"+algorithm2)
-    # for r in percentileValuesToComapre:
-    #     print(avgResultSet2.shortFlowPercentileBasedResults.datalosspercentileList[r])
-    # print("Total Data Loss  of large flows ")
-    # print("For :"+algorithm1)
-    # for r in percentileValuesToComapre:
-    #     print(avgResultSet1.largeFlowPercentileBasedResults.datalosspercentileList[r])
-    # print("For :"+algorithm2)
-    # for r in percentileValuesToComapre:
-    #     print(avgResultSet2.largeFlowPercentileBasedResults.datalosspercentileList[r])
+    # # print("\n\n====================================================================================")
+    # # print("Total Data Loss of short flows ")
+    # # print("For :"+algorithm1)
+    # # print(avgResultSet1.shortFlowPercentileBasedResults.datalosspercentileList)
+    # # print("\nStandard Deviation: "+str(resultSet1[0].shortFlowPercentileBasedResults.dataLossSTD))
+    # # print("For :"+algorithm2)
+    # # print(avgResultSet2.shortFlowPercentileBasedResults.datalosspercentileList)
+    # # print("\nStandard Deviation: "+str(resultSet2[0].shortFlowPercentileBasedResults.dataLossSTD))
+    # # print("Total Data Loss  of large flows ")
+    # # print("For :"+algorithm1)
+    # # print(avgResultSet1.largeFlowPercentileBasedResults.datalosspercentileList)
+    # # print("\nStandard Deviation: "+str(resultSet1[0].largeFlowPercentileBasedResults.dataLossSTD))
+    # # print("For :"+algorithm2)
+    # # print(avgResultSet2.largeFlowPercentileBasedResults.datalosspercentileList)
+    # # print("\nStandard Deviation: "+str(resultSet2[0].largeFlowPercentileBasedResults.dataLossSTD))
     #
-    # print("\n\n====================================================================================")
-    # print("Total Sucessfully Sent volume of data of short flows ")
-    # print("For :"+algorithm1)
-    # for r in percentileValuesToComapre:
-    #     print(avgResultSet1.shortFlowPercentileBasedResults.successfulDataPercentileList[r])
-    # print("For :"+algorithm2)
-    # for r in percentileValuesToComapre:
-    #     print(avgResultSet2.shortFlowPercentileBasedResults.successfulDataPercentileList[r])
-    # print("Total Sucessfully Sent volume of data  of large flows ")
-    # print("For :"+algorithm1)
-    # for r in percentileValuesToComapre:
-    #     print(avgResultSet1.largeFlowPercentileBasedResults.successfulDataPercentileList[r])
-    # print("For :"+algorithm2)
-    # for r in percentileValuesToComapre:
-    #     print(avgResultSet2.largeFlowPercentileBasedResults.successfulDataPercentileList[r])
+    # # print("\n\n====================================================================================")
+    # # print("Total Sucessfully Sent volume of data of short flows ")
+    # # print("For :"+algorithm1)
+    # # print(avgResultSet1.shortFlowPercentileBasedResults.successfulDataPercentileList)
+    # # print("\nStandard Deviation: "+str(resultSet1[0].shortFlowPercentileBasedResults.successfulDataSTD))
+    # # print("For :"+algorithm2)
+    # # print(avgResultSet2.shortFlowPercentileBasedResults.successfulDataPercentileList)
+    # # print("\nStandard Deviation: "+str(resultSet2[0].shortFlowPercentileBasedResults.successfulDataSTD))
+    # # print("Total Sucessfully Sent volume of data  of large flows ")
+    # # print("For :"+algorithm1)
+    # # print(avgResultSet1.largeFlowPercentileBasedResults.successfulDataPercentileList)
+    # # print("\nStandard Deviation: "+str(resultSet1[0].largeFlowPercentileBasedResults.successfulDataSTD))
+    # # print("For :"+algorithm2)
+    # # print(avgResultSet2.largeFlowPercentileBasedResults.successfulDataPercentileList)
+    # # print("\nStandard Deviation: "+str(resultSet2[0].largeFlowPercentileBasedResults.successfulDataSTD))
     #
     #
     # print("\n\n====================================================================================")
     # print("Total Number of retranmits of short flows ")
     # print("For :"+algorithm1)
-    # for r in percentileValuesToComapre:
-    #     print(avgResultSet1.shortFlowPercentileBasedResults.retransmitPercentileList[r])
+    # # print(avgResultSet1.shortFlowPercentileBasedResults.retransmitPercentileList)
+    # print("\nStandard Deviation: "+str(resultSet1[0].shortFlowPercentileBasedResults.retransmitSTD))
+    # print("Avg: "+str(resultSet1[0].shortFlowPercentileBasedResults.retransmitAVG))
     # print("For :"+algorithm2)
-    # for r in percentileValuesToComapre:
-    #     print(avgResultSet2.shortFlowPercentileBasedResults.retransmitPercentileList[r])
+    # # print(avgResultSet2.shortFlowPercentileBasedResults.retransmitPercentileList)
+    # print("\nStandard Deviation: "+str(resultSet2[0].shortFlowPercentileBasedResults.retransmitSTD))
+    # print("Avg: "+str(resultSet2[0].shortFlowPercentileBasedResults.retransmitAVG))
+    # # rateofChange = ((resultSet1[0].shortFlowPercentileBasedResults.retransmitSTD - resultSet2[0].shortFlowPercentileBasedResults.retransmitSTD) / resultSet1[0].shortFlowPercentileBasedResults.retransmitSTD) * 100
+    # # print("P4TE's gain in SD of  # of retransmission is "+str(rateofChange))
+    # # rateofChange = ((resultSet1[0].shortFlowPercentileBasedResults.retransmitAVG - resultSet2[0].shortFlowPercentileBasedResults.retransmitAVG) / resultSet1[0].shortFlowPercentileBasedResults.retransmitAVG) * 100
+    # # print("P4TE's gain in Avg of  # of retransmission is "+str(rateofChange))
     # print("Total Number of retranmits  of large flows ")
     # print("For :"+algorithm1)
-    # for r in percentileValuesToComapre:
-    #     print(avgResultSet1.largeFlowPercentileBasedResults.retransmitPercentileList[r])
+    # # print(avgResultSet1.largeFlowPercentileBasedResults.retransmitPercentileList)
+    # print("\nStandard Deviation: "+str(resultSet1[0].largeFlowPercentileBasedResults.retransmitSTD))
+    # print("Avg: "+str(resultSet1[0].largeFlowPercentileBasedResults.retransmitAVG))
     # print("For :"+algorithm2)
-    # for r in percentileValuesToComapre:
-    #     print(avgResultSet2.largeFlowPercentileBasedResults.retransmitPercentileList[r])
+    # # print(avgResultSet2.largeFlowPercentileBasedResults.retransmitPercentileList)
+    # print("\nStandard Deviation: "+str(resultSet2[0].largeFlowPercentileBasedResults.retransmitSTD))
+    # print("Avg: "+str(resultSet2[0].largeFlowPercentileBasedResults.retransmitAVG))
+    # # rateofChange = ((resultSet1[0].largeFlowPercentileBasedResults.retransmitSTD - resultSet2[0].largeFlowPercentileBasedResults.retransmitSTD) / resultSet1[0].largeFlowPercentileBasedResults.retransmitSTD) * 100
+    # # print("P4TE's gain in SD of  # of retransmission is "+str(rateofChange))
+    # # rateofChange = ((resultSet1[0].largeFlowPercentileBasedResults.retransmitAVG - resultSet2[0].largeFlowPercentileBasedResults.retransmitAVG) / resultSet1[0].largeFlowPercentileBasedResults.retransmitAVG) * 100
+    # # print("P4TE's gain in Avg of  # of retransmission is "+str(rateofChange))
     #
     #
-    # print("\n\n====================================================================================")
-    # print("TCP Throughput of short flows ")
-    # print("For :"+algorithm1)
-    # for r in percentileValuesToComapre:
-    #     print(avgResultSet1.shortFlowPercentileBasedResults.tcpThroughputInBPSList[r].getMyselfInKBPS())
-    # print("For :"+algorithm2)
-    # for r in percentileValuesToComapre:
-    #     print(avgResultSet2.shortFlowPercentileBasedResults.tcpThroughputInBPSList[r].getMyselfInKBPS())
-    # print("TCP Throughput of large flows ")
-    # print("For :"+algorithm1)
-    # for r in percentileValuesToComapre:
-    #     print(avgResultSet1.largeFlowPercentileBasedResults.tcpThroughputInBPSList[r].getMyselfInKBPS())
-    # print("For :"+algorithm2)
-    # for r in percentileValuesToComapre:
-    #     print(avgResultSet2.largeFlowPercentileBasedResults.tcpThroughputInBPSList[r].getMyselfInKBPS())
+    # # print("\n\n====================================================================================")
+    # # print("TCP Throughput of short flows ")
+    # # print("For :"+algorithm1)
+    # # print(avgResultSet1.shortFlowPercentileBasedResults.tcpThroughputInBPSList)
+    # # print("\nStandard Deviation: "+str(resultSet1[0].shortFlowPercentileBasedResults.tcpThroughoutSTD))
+    # # print("For :"+algorithm2)
+    # # print(avgResultSet2.shortFlowPercentileBasedResults.tcpThroughputInBPSList)
+    # # print("\nStandard Deviation: "+str(resultSet2[0].shortFlowPercentileBasedResults.tcpThroughoutSTD))
+    # # print("TCP Throughput of large flows ")
+    # # print("For :"+algorithm1)
+    # # print(avgResultSet1.largeFlowPercentileBasedResults.tcpThroughputInBPSList)
+    # # print("\nStandard Deviation: "+str(resultSet1[0].largeFlowPercentileBasedResults.tcpThroughoutSTD))
+    # # print("For :"+algorithm2)
+    # # print(avgResultSet2.largeFlowPercentileBasedResults.tcpThroughputInBPSList)
+    # # print("\nStandard Deviation: "+str(resultSet2[0].largeFlowPercentileBasedResults.tcpThroughoutSTD))
     #
-    # start1 , end1   = getMinMaxtimeStampForLInkVisulationforAFolder(iPerfResultsFolder1)
-    # upwardLinkUtilizationAnalyzer(config = config)
-    # start2 , end2   = getMinMaxtimeStampForLInkVisulationforAFolder(iPerfResultsFolder2)
-    # print(start2)
-    # print(end2)
-    # val = upwardLinkUtilizationAnalyzer(config = config)
-    # print(val)
-    # print("Finally printingn the both result set summary")
-    # newResult = PercentileSummaryResultForOneIterationOfTestCase(resultSet1[0].shortFlowPercentileBasedResults, resultSet1[0].largeFlowPercentileBasedResults)
-    # print(return_class_variables(resultSet1[0].largeFlowPercentileBasedResults))
-    # print(return_class_variables(resultSet1[0].shortFlowPercentileBasedResults))
+    # # start1 , end1   = getMinMaxtimeStampForLInkVisulationforAFolder(iPerfResultsFolder1)
+    # # upwardLinkUtilizationAnalyzer(config = config)
+    # # start2 , end2   = getMinMaxtimeStampForLInkVisulationforAFolder(iPerfResultsFolder2)
+    # # print(start2)
+    # # print(end2)
+    # # val = upwardLinkUtilizationAnalyzer(config = config)
+    # # print(val)
+    #
+    # #percentileValuesToComapre = [50,75,90,99]
+    #
+    # # print("\n\n====================================================================================")
+    # # print("FCT of short flows ")
+    # # print("For :"+algorithm1)
+    # # for r in percentileValuesToComapre:
+    # #     print(avgResultSet1.shortFlowPercentileBasedResults.fctPercentileList[r])
+    # # print("For :"+algorithm2)
+    # # for r in percentileValuesToComapre:
+    # #     print(avgResultSet2.shortFlowPercentileBasedResults.fctPercentileList[r])
+    # #
+    # # print("FCT of large flows ")
+    # # for r in percentileValuesToComapre:
+    # #     print(avgResultSet1.largeFlowPercentileBasedResults.fctPercentileList[r])
+    # # print("For :"+algorithm2)
+    # # for r in percentileValuesToComapre:
+    # #     print(avgResultSet2.largeFlowPercentileBasedResults.fctPercentileList[r])
+    # #
+    # # print("\n\n====================================================================================")
+    # # print("Total Data Loss of short flows ")
+    # # print("For :"+algorithm1)
+    # # for r in percentileValuesToComapre:
+    # #     print(avgResultSet1.shortFlowPercentileBasedResults.datalosspercentileList[r])
+    # # print("For :"+algorithm2)
+    # # for r in percentileValuesToComapre:
+    # #     print(avgResultSet2.shortFlowPercentileBasedResults.datalosspercentileList[r])
+    # # print("Total Data Loss  of large flows ")
+    # # print("For :"+algorithm1)
+    # # for r in percentileValuesToComapre:
+    # #     print(avgResultSet1.largeFlowPercentileBasedResults.datalosspercentileList[r])
+    # # print("For :"+algorithm2)
+    # # for r in percentileValuesToComapre:
+    # #     print(avgResultSet2.largeFlowPercentileBasedResults.datalosspercentileList[r])
+    # #
+    # # print("\n\n====================================================================================")
+    # # print("Total Sucessfully Sent volume of data of short flows ")
+    # # print("For :"+algorithm1)
+    # # for r in percentileValuesToComapre:
+    # #     print(avgResultSet1.shortFlowPercentileBasedResults.successfulDataPercentileList[r])
+    # # print("For :"+algorithm2)
+    # # for r in percentileValuesToComapre:
+    # #     print(avgResultSet2.shortFlowPercentileBasedResults.successfulDataPercentileList[r])
+    # # print("Total Sucessfully Sent volume of data  of large flows ")
+    # # print("For :"+algorithm1)
+    # # for r in percentileValuesToComapre:
+    # #     print(avgResultSet1.largeFlowPercentileBasedResults.successfulDataPercentileList[r])
+    # # print("For :"+algorithm2)
+    # # for r in percentileValuesToComapre:
+    # #     print(avgResultSet2.largeFlowPercentileBasedResults.successfulDataPercentileList[r])
+    # #
+    # #
+    # # print("\n\n====================================================================================")
+    # # print("Total Number of retranmits of short flows ")
+    # # print("For :"+algorithm1)
+    # # for r in percentileValuesToComapre:
+    # #     print(avgResultSet1.shortFlowPercentileBasedResults.retransmitPercentileList[r])
+    # # print("For :"+algorithm2)
+    # # for r in percentileValuesToComapre:
+    # #     print(avgResultSet2.shortFlowPercentileBasedResults.retransmitPercentileList[r])
+    # # print("Total Number of retranmits  of large flows ")
+    # # print("For :"+algorithm1)
+    # # for r in percentileValuesToComapre:
+    # #     print(avgResultSet1.largeFlowPercentileBasedResults.retransmitPercentileList[r])
+    # # print("For :"+algorithm2)
+    # # for r in percentileValuesToComapre:
+    # #     print(avgResultSet2.largeFlowPercentileBasedResults.retransmitPercentileList[r])
+    # #
+    # #
+    # # print("\n\n====================================================================================")
+    # # print("TCP Throughput of short flows ")
+    # # print("For :"+algorithm1)
+    # # for r in percentileValuesToComapre:
+    # #     print(avgResultSet1.shortFlowPercentileBasedResults.tcpThroughputInBPSList[r].getMyselfInKBPS())
+    # # print("For :"+algorithm2)
+    # # for r in percentileValuesToComapre:
+    # #     print(avgResultSet2.shortFlowPercentileBasedResults.tcpThroughputInBPSList[r].getMyselfInKBPS())
+    # # print("TCP Throughput of large flows ")
+    # # print("For :"+algorithm1)
+    # # for r in percentileValuesToComapre:
+    # #     print(avgResultSet1.largeFlowPercentileBasedResults.tcpThroughputInBPSList[r].getMyselfInKBPS())
+    # # print("For :"+algorithm2)
+    # # for r in percentileValuesToComapre:
+    # #     print(avgResultSet2.largeFlowPercentileBasedResults.tcpThroughputInBPSList[r].getMyselfInKBPS())
+    # #
+    # # start1 , end1   = getMinMaxtimeStampForLInkVisulationforAFolder(iPerfResultsFolder1)
+    # # upwardLinkUtilizationAnalyzer(config = config)
+    # # start2 , end2   = getMinMaxtimeStampForLInkVisulationforAFolder(iPerfResultsFolder2)
+    # # print(start2)
+    # # print(end2)
+    # # val = upwardLinkUtilizationAnalyzer(config = config)
+    # # print(val)
+    # # print("Finally printingn the both result set summary")
+    # # newResult = PercentileSummaryResultForOneIterationOfTestCase(resultSet1[0].shortFlowPercentileBasedResults, resultSet1[0].largeFlowPercentileBasedResults)
+    # # print(return_class_variables(resultSet1[0].largeFlowPercentileBasedResults))
+    # # print(return_class_variables(resultSet1[0].shortFlowPercentileBasedResults))
 
 def return_class_variables(A):
     return(A.__dict__)

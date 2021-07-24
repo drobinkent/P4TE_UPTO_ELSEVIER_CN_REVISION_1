@@ -5,19 +5,37 @@
       "src-dst-pairs": [
 
         {
-          "src": "h0p0l1",
+          "src": "h0p0l0",
           "dest": "h0p0l3",
           "pattern": "one-to-one",
           "flows": [
             {
               "flow_type": "tcp",
-              "flow_traffic_class": "0x10",
+              "flow_traffic_class": "0x04",
               "flow-volume": "512K",
               "src-window-size": "8K",
               "src-data-rate": "",
               "pkt-size": "1400",
-              "repeat": "2",
-              "repeat_interval": "20",
+              "repeat": "4",
+              "repeat_interval": "1",
+              "is-interactive": "true"
+            }
+          ]
+        },
+        {
+          "src": "h1p0l0",
+          "dest": "h0p0l3",
+          "pattern": "one-to-one",
+          "flows": [
+            {
+              "flow_type": "tcp",
+              "flow_traffic_class": "0x08",
+              "flow-volume": "512K",
+              "src-window-size": "8K",
+              "src-data-rate": "",
+              "pkt-size": "1400",
+              "repeat": "4",
+              "repeat_interval": "1",
               "is-interactive": "true"
             }
           ]
@@ -29,53 +47,36 @@
           "flows": [
             {
               "flow_type": "tcp",
-              "flow_traffic_class": "0x10",
+              "flow_traffic_class": "0xC",
               "flow-volume": "512K",
               "src-window-size": "8K",
               "src-data-rate": "",
               "pkt-size": "1400",
               "repeat": "4",
-              "repeat_interval": "50",
+              "repeat_interval": "1",
               "is-interactive": "true"
             }
           ]
         },
         {
-          "src": "h0p0l1",
+          "src": "h0p0l2",
           "dest": "h0p0l3",
           "pattern": "one-to-one",
           "flows": [
             {
               "flow_type": "tcp",
-              "flow_traffic_class": "0x10",
+              "flow_traffic_class": "0x04",
               "flow-volume": "512K",
               "src-window-size": "8K",
               "src-data-rate": "",
               "pkt-size": "1400",
               "repeat": "4",
-              "repeat_interval": "80",
+              "repeat_interval": "1",
               "is-interactive": "true"
             }
           ]
         },
-        {
-          "src": "h0p0l1",
-          "dest": "h0p0l3",
-          "pattern": "one-to-one",
-          "flows": [
-            {
-              "flow_type": "tcp",
-              "flow_traffic_class": "0x10",
-              "flow-volume": "512K",
-              "src-window-size": "8K",
-              "src-data-rate": "",
-              "pkt-size": "1400",
-              "repeat": "4",
-              "repeat_interval": "65",
-              "is-interactive": "true"
-            }
-          ]
-        },
+
         {
           "src": "h1p0l1",
           "dest": "h0p0l3",
@@ -83,107 +84,37 @@
           "flows": [
             {
               "flow_type": "tcp",
-              "flow_traffic_class": "0x10",
-              "flow-volume": "512K",
-              "src-window-size": "8K",
-              "src-data-rate": "",
-              "pkt-size": "1400",
-              "repeat": "4",
-              "repeat_interval": "75",
-              "is-interactive": "true"
-            }
-          ]
-        },
-        {
-          "src": "h0p0l0",
-          "dest": "h0p0l3",
-          "pattern": "one-to-one",
-          "flows": [
-            {
-              "flow_type": "tcp",
-              "flow_traffic_class": "0x10",
-              "flow-volume": "512K",
-              "src-window-size": "8K",
-              "src-data-rate": "",
-              "pkt-size": "1400",
-              "repeat": "1",
-              "repeat_interval": "35",
-              "is-interactive": "true"
-            }
-          ]
-        },
-        {
-          "src": "h1p0l0",
-          "dest": "h0p0l3",
-          "pattern": "one-to-one",
-          "flows": [
-            {
-              "flow_type": "tcp",
               "flow_traffic_class": "0x18",
-              "flow-volume": "1024K",
+              "flow-volume": "1240K",
               "src-window-size": "8K",
               "src-data-rate": "",
               "pkt-size": "1400",
               "repeat": "2",
-              "repeat_interval": "20",
+              "repeat_interval": "1",
               "is-interactive": "true"
             }
           ]
         },
         {
-          "src": "h1p0l0",
-          "dest": "h0p0l3",
-          "pattern": "one-to-one",
-          "flows": [
-            {
-              "flow_type": "tcp",
-              "flow_traffic_class": "0x18",
-              "flow-volume": "1024K",
-              "src-window-size": "8K",
-              "src-data-rate": "",
-              "pkt-size": "1400",
-              "repeat": "2",
-              "repeat_interval": "25",
-              "is-interactive": "true"
-            }
-          ]
-        },
-        {
-          "src": "h1p0l0",
+          "src": "h1p0l2",
           "dest": "h0p0l3",
           "pattern": "one-to-one",
           "flows": [
             {
               "flow_type": "tcp",
               "flow_traffic_class": "0x14",
-              "flow-volume": "1024K",
+              "flow-volume": "1112K",
               "src-window-size": "8K",
               "src-data-rate": "",
               "pkt-size": "1400",
               "repeat": "2",
-              "repeat_interval": "35",
-              "is-interactive": "true"
-            }
-          ]
-        },
-        {
-          "src": "h1p0l0",
-          "dest": "h0p0l3",
-          "pattern": "one-to-one",
-          "flows": [
-            {
-              "flow_type": "tcp",
-              "flow_traffic_class": "0x10",
-              "flow-volume": "512K",
-              "src-window-size": "8K",
-              "src-data-rate": "",
-              "pkt-size": "1400",
-              "repeat": "8",
-              "repeat_interval": "40",
+              "repeat_interval": "1",
               "is-interactive": "true"
             }
           ]
         }
+
+
       ]
     }
   ]

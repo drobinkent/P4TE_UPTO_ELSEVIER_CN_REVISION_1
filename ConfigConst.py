@@ -103,7 +103,7 @@ class DataplnaeAlgorithm(Enum):
     DP_ALGO_BASIC_ECMP = "ecmp"
     DP_ALGO_CP_ASSISTED_POLICY_ROUTING = "DP_ALGO_CP_ASSISTED_POLICY_ROUTING"
 
-ALGORITHM_IN_USE = DataplnaeAlgorithm.DP_ALGO_CP_ASSISTED_POLICY_ROUTING
+ALGORITHM_IN_USE = DataplnaeAlgorithm.DP_ALGO_BASIC_ECMP
 #ALGORITHM_IN_USE = DataplnaeAlgorithm.DP_ALGO_CP_ASSISTED_POLICY_ROUTING
 
 queueRateForHostFacingPortsOfLeafSwitch = 40
@@ -148,6 +148,13 @@ EGRESS_QUEUE_DEPTH_DELAY_LEVELS_LINEAR = [(0, 2, 0, 0),(3,5,1,0), (6, 10,2,00)]
 FLOW_TYPE_IDENTIFIER_BY_FLOW_VOLUME_IN_KB = [50, 128, 256, 512,1024, 1240]  # These means in our experiments we will consider 2 types of traffic . one with 50 KB size another 1 MB or 1024 KB
 FLOW_TYPE_LOAD_RATIO = [3, 5, 6,6,60, 20]  # These means in our experiments we will consider 2 types of traffic . one with 50 KB size another 1 MB or 1024 KB
 PERCENTAGE_OF_TOTAL_UPWARD_TRAFFIC_FOR_TRAFFIC_CLASS =  [40,20,13,10, 8,6]
+
+
+# #incast
+# FLOW_TYPE_IDENTIFIER_BY_FLOW_VOLUME_IN_KB = [512, 1240]  # These means in our experiments we will consider 2 types of traffic . one with 50 KB size another 1 MB or 1024 KB
+# FLOW_TYPE_LOAD_RATIO = [20,80]  # These means in our experiments we will consider 2 types of traffic . one with 50 KB size another 1 MB or 1024 KB
+# PERCENTAGE_OF_TOTAL_UPWARD_TRAFFIC_FOR_TRAFFIC_CLASS =  [80,20]
+# FLOW_TYPE_TRAFFIC_CLASS_TAG = ["0x04","0x05"]
 
 
 FLOW_TYPE_TRAFFIC_CLASS_TAG = ["0x04","0x08","0xC","0x10","0x14","0x18"]

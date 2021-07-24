@@ -127,12 +127,12 @@ class TestCommandDeployer:
         index = 0
         for d in deploymentPairsAsList:
             tcpVariationName = ""
-            if index%3 == 0:
-                tcpVariationName = "dctcp"
-            if index%3 == 1:
-                tcpVariationName = "cubic"
-            if index%3 == 2:
-                tcpVariationName = "reno"
+            # if index%3 == 0:
+            #     tcpVariationName = "dctcp"
+            # if index%3 == 1:
+            #     tcpVariationName = "cubic"
+            # if index%3 == 2:
+            #     tcpVariationName = "reno"
             if tcpVariationName == "":
                 tcpVariationName = "dctcp"
             d.generateIPerf3Command(confConst.TEST_RESULT_FOLDER, confConst.TEST_RESULT_FOLDER_CLIENT+testIterationNumber, confConst.TEST_RESULT_FOLDER_SERVER,tcpVariationName)
