@@ -65,7 +65,8 @@ def calculateFlowArrivalTimes(loadFactor, duration):
     accumPercentage = 0
     for i in range (0, len(ConfigConst.FLOW_TYPE_IDENTIFIER_BY_FLOW_VOLUME_IN_KB)):
         accumPercentage = accumPercentage + len(flowArrivalTimesByflowType[i])/totalFlowCount
-        print(str(ConfigConst.FLOW_TYPE_IDENTIFIER_BY_FLOW_VOLUME_IN_KB[i])+ " --- "+str(len(flowArrivalTimesByflowType[i]))+ "-- "+str(accumPercentage))
+        print(str(math.log(ConfigConst.FLOW_TYPE_IDENTIFIER_BY_FLOW_VOLUME_IN_KB[i]*1024,10))+ " --- "+str(len(flowArrivalTimesByflowType[i]))+ "-- "+str(accumPercentage))
+        # print(str((ConfigConst.FLOW_TYPE_IDENTIFIER_BY_FLOW_VOLUME_IN_KB[i]))+ " --- "+str(len(flowArrivalTimesByflowType[i]))+ "-- "+str(accumPercentage))
     return flowArrivalTimesByflowType
 
 # calculateFlowArrivalTimes(loadFactor=.3, duration = 200)

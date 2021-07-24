@@ -73,6 +73,7 @@ def getAVGFCTByFolder(folderName):
     flowTypeVsFCTMap = {}
     flowTypeVsFlowCountMap = {}
     flowTypeVsSendBytesMap = {}
+    flowTypeVsRetransmissionMap = {}
     # for flowVolume in ConfigConst.FLOW_TYPE_IDENTIFIER_BY_FLOW_VOLUME_IN_KB:
     #     # flowTypeVsFCTMap[flowVolume]  = 0
     #     flowTypeVsFCTMap[flowVolume]  = []
@@ -107,30 +108,48 @@ def getAVGFCTByFolder(folderName):
             flowTypeVsFCTMap[flowVolume] = [fct]
             flowTypeVsFlowCountMap[flowVolume] = 1
             flowTypeVsSendBytesMap[flowVolume] = [flowVolume]
+            flowTypeVsRetransmissionMap[flowVolume] = [r[0].end.sum_sent.retransmits]
             pass
         else:
             flowTypeVsFCTMap.get(flowVolume).append(fct)
             flowTypeVsFlowCountMap[flowVolume] = flowTypeVsFlowCountMap.get(flowVolume) + 1
             flowTypeVsSendBytesMap.get(flowVolume).append(flowSize)
+            flowTypeVsRetransmissionMap.get(flowVolume).append(r[0].end.sum_sent.retransmits)
     totalFlowsize = 0
     totalOfFlowSizeMultipliedByAvgFct=0
+    shortFlowTotalBytesSent = 0
+    shortFlowTotalBytesMultipliedByFCT = 0
+    shortFlowTotalBytesMultipledByRetransmission =0
+    largeFlowTotalBytesSent = 0
+    largeFlowTotalBytesMultipliedByFCT = 0
+    largeFlowTotalRetransmission =0
     for f in flowTypeVsFCTMap:
-        # print(str(f) + " -- ",np.percentile(flowTypeVsFCTMap.get(f), 80))
-        # print(str(f) + " -- ",flowTypeVsFlowCountMap.get(f))
-
-        # print(str(f) + " -- ",(flowTypeVsFlowCountMap.get(f)))
-        weightedFct = np.average(flowTypeVsFCTMap.get(f))
-        # weightedFct = np.percentile(flowTypeVsFCTMap.get(f),90)
-        # print(str(f) + " -- ",weightedFct)
-        # print(str(f) + " -- ",np.std(flowTypeVsFCTMap.get(f)))
-        # print(flowTypeVsFCTMap.get(f))
-        totalFlowsize= totalFlowsize+ float(f)
-        totalOfFlowSizeMultipliedByAvgFct = totalOfFlowSizeMultipliedByAvgFct + ( float(f) * weightedFct)
-    print("Average FCT  = ", totalOfFlowSizeMultipliedByAvgFct/totalFlowsize)
+        j=0
+        for j in range(0,len(flowTypeVsSendBytesMap.get(f))):
+            if (flowTypeVsSendBytesMap.get(f)[j]<1024*1024*.9):
+                shortFlowTotalBytesSent = shortFlowTotalBytesSent + float(f)
+                shortFlowTotalBytesMultipliedByFCT = shortFlowTotalBytesMultipliedByFCT + float(f) * flowTypeVsFCTMap.get(f)[j]
+                shortFlowTotalBytesMultipledByRetransmission = shortFlowTotalBytesMultipledByRetransmission + flowTypeVsRetransmissionMap.get(f)[j]
+            else:
+                largeFlowTotalBytesSent = largeFlowTotalBytesSent + float(f)
+                largeFlowTotalBytesMultipliedByFCT = largeFlowTotalBytesMultipliedByFCT + float(f) * flowTypeVsFCTMap.get(f)[j]
+                largeFlowTotalRetransmission = largeFlowTotalRetransmission + flowTypeVsRetransmissionMap.get(f)[j]
+        # weightedFct = np.average(flowTypeVsFCTMap.get(f))
+        #
+        # totalFlowsize= totalFlowsize+ float(f)
+        # totalOfFlowSizeMultipliedByAvgFct = totalOfFlowSizeMultipliedByAvgFct + ( float(f) * weightedFct)
+    if (shortFlowTotalBytesSent > 0):
+        print("Average FCT for short flow  = ", shortFlowTotalBytesMultipliedByFCT/shortFlowTotalBytesSent)
+    if (largeFlowTotalBytesSent > 0):
+        print("Average FCT for large flow  = ", largeFlowTotalBytesMultipliedByFCT/largeFlowTotalBytesSent)
+    print("Total retransmissions for short flow  = ", shortFlowTotalBytesMultipledByRetransmission)
+    print("Total retransmissions for large flow  = ", largeFlowTotalRetransmission)
     pass
 
 
+print(" Analyzing average FCT and total retransmissions for data mining workload ")
 
+print("Load factor 0.8")
 print("ECMP")
 getAVGFCTByFolder(folderName= "/home/deba/Desktop/P4TE/testAndMeasurement/TEST_RESULTS_DATA_MINING_WORKLOAD_RESULTS/ECMP_RESULTS/DataMining_Workload_load_factor_0.8/client-logs-0")
 print("\n\n")
@@ -139,15 +158,85 @@ print("P4TE")
 getAVGFCTByFolder(folderName= "/home/deba/Desktop/P4TE/testAndMeasurement/TEST_RESULTS_DATA_MINING_WORKLOAD_RESULTS/P4TE_RESULTS/DataMining_Workload_load_factor_0.8/client-logs-0")
 print("\n\n")
 
+
+print("Load factor 0.6")
+print("ECMP")
+getAVGFCTByFolder(folderName= "/home/deba/Desktop/P4TE/testAndMeasurement/TEST_RESULTS_DATA_MINING_WORKLOAD_RESULTS/ECMP_RESULTS/DataMining_Workload_load_factor_0.6/client-logs-0")
+print("\n\n")
+
 print("P4TE")
-getAVGFCTByFolder(folderName= "/home/deba/Desktop/P4TE/testAndMeasurement/TEST_RESULTS/DataMining_Workload_load_factor_0.8/client-logs-1")
+getAVGFCTByFolder(folderName= "/home/deba/Desktop/P4TE/testAndMeasurement/TEST_RESULTS_DATA_MINING_WORKLOAD_RESULTS/P4TE_RESULTS/DataMining_Workload_load_factor_0.6/client-logs-0")
+print("\n\n")
+
+print("Load factor 0.4")
+print("ECMP")
+getAVGFCTByFolder(folderName= "/home/deba/Desktop/P4TE/testAndMeasurement/TEST_RESULTS_DATA_MINING_WORKLOAD_RESULTS/ECMP_RESULTS/DataMining_Workload_load_factor_0.4/client-logs-0")
+print("\n\n")
+
+print("P4TE")
+getAVGFCTByFolder(folderName= "/home/deba/Desktop/P4TE/testAndMeasurement/TEST_RESULTS_DATA_MINING_WORKLOAD_RESULTS/P4TE_RESULTS/DataMining_Workload_load_factor_0.4/client-logs-0")
+print("\n\n")
+
+print("Load factor 0.2")
+print("ECMP")
+getAVGFCTByFolder(folderName= "/home/deba/Desktop/P4TE/testAndMeasurement/TEST_RESULTS_DATA_MINING_WORKLOAD_RESULTS/ECMP_RESULTS/DataMining_Workload_load_factor_0.2/client-logs-0")
+print("\n\n")
+
+print("P4TE")
+getAVGFCTByFolder(folderName= "/home/deba/Desktop/P4TE/testAndMeasurement/TEST_RESULTS_DATA_MINING_WORKLOAD_RESULTS/P4TE_RESULTS/DataMining_Workload_load_factor_0.2/client-logs-0")
 print("\n\n")
 #
 
-# print("P4TE")
-# getAVGFCTByFolder(folderName= "/home/deba/Desktop/P4TE/testAndMeasurement/TEST_RESULTS/WebSearchWorkLoad_load_factor_0.8/client-logs-2")
-# print("\n\n")
-# #
-# print("P4TE")
-# getAVGFCTByFolder(folderName= "/home/deba/Desktop/P4TE/testAndMeasurement/TEST_RESULTS/WebSearchWorkLoad_load_factor_0.8/client-logs-2")
-# print("\n\n")
+print("===================================================================================================================================================")
+print(" Analyzing average FCT and total retransmissions for web search workload ")
+
+print("Load factor 0.8")
+print("ECMP")
+getAVGFCTByFolder(folderName= "/home/deba/Desktop/P4TE/testAndMeasurement/TEST_RESULTS_WEB_SEARCH_WORKLOAD_RESULTS/ECMP_RESULTS/WebSearchWorkLoad_load_factor_0.8/client-logs-0")
+print("\n\n")
+
+print("P4TE")
+getAVGFCTByFolder(folderName= "/home/deba/Desktop/P4TE/testAndMeasurement/TEST_RESULTS_WEB_SEARCH_WORKLOAD_RESULTS/P4TE_RESULTS/WebSearchWorkLoad_load_factor_0.8/client-logs-0")
+print("\n\n")
+
+
+print("Load factor 0.6")
+print("ECMP")
+getAVGFCTByFolder(folderName= "/home/deba/Desktop/P4TE/testAndMeasurement/TEST_RESULTS_WEB_SEARCH_WORKLOAD_RESULTS/ECMP_RESULTS/WebSearchWorkLoad_load_factor_0.6/client-logs-0")
+print("\n\n")
+
+print("P4TE")
+getAVGFCTByFolder(folderName= "/home/deba/Desktop/P4TE/testAndMeasurement/TEST_RESULTS_WEB_SEARCH_WORKLOAD_RESULTS/P4TE_RESULTS/WebSearchWorkLoad_load_factor_0.6/client-logs-0")
+print("\n\n")
+
+
+print("Load factor 0.4")
+print("ECMP")
+getAVGFCTByFolder(folderName= "/home/deba/Desktop/P4TE/testAndMeasurement/TEST_RESULTS_WEB_SEARCH_WORKLOAD_RESULTS/ECMP_RESULTS/WebSearchWorkLoad_load_factor_0.4/client-logs-0")
+print("\n\n")
+
+print("P4TE")
+getAVGFCTByFolder(folderName= "/home/deba/Desktop/P4TE/testAndMeasurement/TEST_RESULTS_WEB_SEARCH_WORKLOAD_RESULTS/P4TE_RESULTS/WebSearchWorkLoad_load_factor_0.4/client-logs-0")
+print("\n\n")
+
+
+print("Load factor 0.2")
+print("ECMP")
+getAVGFCTByFolder(folderName= "/home/deba/Desktop/P4TE/testAndMeasurement/TEST_RESULTS_WEB_SEARCH_WORKLOAD_RESULTS/ECMP_RESULTS/WebSearchWorkLoad_load_factor_0.2/client-logs-0")
+print("\n\n")
+
+print("P4TE")
+getAVGFCTByFolder(folderName= "/home/deba/Desktop/P4TE/testAndMeasurement/TEST_RESULTS_WEB_SEARCH_WORKLOAD_RESULTS/P4TE_RESULTS/WebSearchWorkLoad_load_factor_0.2/client-logs-0")
+print("\n\n")
+
+
+print("\n\n\n\n===================================================================================================================================================")
+print(" Analyzing average FCT and total retransmissions for incast scneario")
+
+print("ECMP")
+getAVGFCTByFolder(folderName= "/home/deba/Desktop/P4TE/testAndMeasurement/TEST_RESULTS/ecmp/l2-incast/client-logs-0")
+print("\n\n")
+
+print("P4TE")
+getAVGFCTByFolder(folderName= "/home/deba/Desktop/P4TE/testAndMeasurement/TEST_RESULTS/P4TE/l2-incast/client-logs-0")
+print("\n\n")

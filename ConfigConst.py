@@ -139,15 +139,15 @@ EGRESS_QUEUE_DEPTH_DELAY_LEVELS_LINEAR = [(0, 2, 0, 0),(3,5,1,0), (6, 10,2,00)]
 #######################################################################################################################################################################################
 
 # for data mining workload
-FLOW_TYPE_IDENTIFIER_BY_FLOW_VOLUME_IN_KB = [10, 25, 50, 75,1024, 2048]  # These means in our experiments we will consider 2 types of traffic . one with 50 KB size another 1 MB or 1024 KB
-FLOW_TYPE_LOAD_RATIO = [1, 3, 6,5,60, 30]  # These means in our experiments we will consider 2 types of traffic . one with 50 KB size another 1 MB or 1024 KB
-PERCENTAGE_OF_TOTAL_UPWARD_TRAFFIC_FOR_TRAFFIC_CLASS =  [40,20,13,10, 8,6]
+# FLOW_TYPE_IDENTIFIER_BY_FLOW_VOLUME_IN_KB = [10, 25, 50, 75,1024, 2048]  # These means in our experiments we will consider 2 types of traffic . one with 50 KB size another 1 MB or 1024 KB
+# FLOW_TYPE_LOAD_RATIO = [1, 3, 6,5,60, 30]  # These means in our experiments we will consider 2 types of traffic . one with 50 KB size another 1 MB or 1024 KB
+# PERCENTAGE_OF_TOTAL_UPWARD_TRAFFIC_FOR_TRAFFIC_CLASS =  [40,20,13,10, 8,6]
 
 
 #  -- for websearch workload
-# FLOW_TYPE_IDENTIFIER_BY_FLOW_VOLUME_IN_KB = [50, 128, 256, 512,1024, 1240]  # These means in our experiments we will consider 2 types of traffic . one with 50 KB size another 1 MB or 1024 KB
-# FLOW_TYPE_LOAD_RATIO = [3, 5, 6,6,60, 20]  # These means in our experiments we will consider 2 types of traffic . one with 50 KB size another 1 MB or 1024 KB
-# PERCENTAGE_OF_TOTAL_UPWARD_TRAFFIC_FOR_TRAFFIC_CLASS =  [40,20,13,10, 8,6]
+FLOW_TYPE_IDENTIFIER_BY_FLOW_VOLUME_IN_KB = [50, 128, 256, 512,1024, 1240]  # These means in our experiments we will consider 2 types of traffic . one with 50 KB size another 1 MB or 1024 KB
+FLOW_TYPE_LOAD_RATIO = [3, 5, 6,6,60, 20]  # These means in our experiments we will consider 2 types of traffic . one with 50 KB size another 1 MB or 1024 KB
+PERCENTAGE_OF_TOTAL_UPWARD_TRAFFIC_FOR_TRAFFIC_CLASS =  [40,20,13,10, 8,6]
 
 
 FLOW_TYPE_TRAFFIC_CLASS_TAG = ["0x04","0x08","0xC","0x10","0x14","0x18"]
