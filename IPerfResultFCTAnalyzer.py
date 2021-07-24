@@ -123,24 +123,30 @@ def getAVGFCTByFolder(folderName):
     largeFlowTotalBytesSent = 0
     largeFlowTotalBytesMultipliedByFCT = 0
     largeFlowTotalRetransmission =0
+    shortFlowcount = 0
+    largeFlowcount = 0
     for f in flowTypeVsFCTMap:
         j=0
         for j in range(0,len(flowTypeVsSendBytesMap.get(f))):
-            if (flowTypeVsSendBytesMap.get(f)[j]<1024*1024*.9):
+            if (flowTypeVsSendBytesMap.get(f)[j]<1024*1024):
                 shortFlowTotalBytesSent = shortFlowTotalBytesSent + float(f)
                 shortFlowTotalBytesMultipliedByFCT = shortFlowTotalBytesMultipliedByFCT + float(f) * flowTypeVsFCTMap.get(f)[j]
                 shortFlowTotalBytesMultipledByRetransmission = shortFlowTotalBytesMultipledByRetransmission + flowTypeVsRetransmissionMap.get(f)[j]
+                shortFlowcount =  shortFlowcount  + 1
             else:
                 largeFlowTotalBytesSent = largeFlowTotalBytesSent + float(f)
                 largeFlowTotalBytesMultipliedByFCT = largeFlowTotalBytesMultipliedByFCT + float(f) * flowTypeVsFCTMap.get(f)[j]
                 largeFlowTotalRetransmission = largeFlowTotalRetransmission + flowTypeVsRetransmissionMap.get(f)[j]
+                largeFlowcount = largeFlowcount  + 1
         # weightedFct = np.average(flowTypeVsFCTMap.get(f))
         #
         # totalFlowsize= totalFlowsize+ float(f)
         # totalOfFlowSizeMultipliedByAvgFct = totalOfFlowSizeMultipliedByAvgFct + ( float(f) * weightedFct)
     if (shortFlowTotalBytesSent > 0):
+        print("shortFlowcount is "+str(shortFlowcount))
         print("Average FCT for short flow  = ", shortFlowTotalBytesMultipliedByFCT/shortFlowTotalBytesSent)
     if (largeFlowTotalBytesSent > 0):
+        print("largeFlowcount is "+str(largeFlowcount))
         print("Average FCT for large flow  = ", largeFlowTotalBytesMultipliedByFCT/largeFlowTotalBytesSent)
     print("Total retransmissions for short flow  = ", shortFlowTotalBytesMultipledByRetransmission)
     print("Total retransmissions for large flow  = ", largeFlowTotalRetransmission)
@@ -157,6 +163,8 @@ print("\n\n")
 print("P4TE")
 getAVGFCTByFolder(folderName= "/home/deba/Desktop/P4TE/testAndMeasurement/TEST_RESULTS_DATA_MINING_WORKLOAD_RESULTS/P4TE_RESULTS/DataMining_Workload_load_factor_0.8/client-logs-0")
 print("\n\n")
+
+
 
 
 print("Load factor 0.6")
@@ -199,6 +207,9 @@ print("P4TE")
 getAVGFCTByFolder(folderName= "/home/deba/Desktop/P4TE/testAndMeasurement/TEST_RESULTS_WEB_SEARCH_WORKLOAD_RESULTS/P4TE_RESULTS/WebSearchWorkLoad_load_factor_0.8/client-logs-0")
 print("\n\n")
 
+print("P4TE-variation")
+getAVGFCTByFolder(folderName= "/home/deba/Desktop/P4TE/testAndMeasurement/TEST_RESULTS/WebSearchWorkLoad_load_factor_0.8/client-logs-0")
+print("\n\n")
 
 print("Load factor 0.6")
 print("ECMP")

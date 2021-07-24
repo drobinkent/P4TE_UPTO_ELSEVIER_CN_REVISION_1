@@ -124,8 +124,19 @@ class TestCommandDeployer:
                 print("Timer file closed ")
         #logger.info("Setting up environment for test case:"+testCase.test_case_name)
         deploymentPairsAsList  = self.testCases.genIPerfCommands(self.nameToHostMap, confConst.MAX_PORT_COUNT)
+        index = 0
         for d in deploymentPairsAsList:
-            d.generateIPerf3Command(confConst.TEST_RESULT_FOLDER, confConst.TEST_RESULT_FOLDER_CLIENT+testIterationNumber, confConst.TEST_RESULT_FOLDER_SERVER)
+            tcpVariationName = ""
+            if index%3 == 0:
+                tcpVariationName = "dctcp"
+            if index%3 == 1:
+                tcpVariationName = "cubic"
+            if index%3 == 2:
+                tcpVariationName = "reno"
+            if tcpVariationName == "":
+                tcpVariationName = "dctcp"
+            d.generateIPerf3Command(confConst.TEST_RESULT_FOLDER, confConst.TEST_RESULT_FOLDER_CLIENT+testIterationNumber, confConst.TEST_RESULT_FOLDER_SERVER,tcpVariationName)
+            index = index + 1
         startTimer = int(time.time()) + self.testStartDelay
         for hName in self.nameToHostMap:
             hostObject = self.nameToHostMap.get(hName)

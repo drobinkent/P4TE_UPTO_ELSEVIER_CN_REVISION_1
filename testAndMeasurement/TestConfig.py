@@ -342,7 +342,7 @@ class IPerfDeplymentPair:
         self.startTime = startTime
 
 
-    def generateIPerf3Command(self, testResultFolderRoot, clientResultLogSubFolder, serverResultLogSubFolder):
+    def generateIPerf3Command(self, testResultFolderRoot, clientResultLogSubFolder, serverResultLogSubFolder,tcpVarioationName):
         # blockSize = "1024"
         self.clientSideTestResultFileName = testResultFolderRoot + "/" + self.testCaseName +clientResultLogSubFolder+"/"+ str(self.src.hostName)+"-" +str(self.srcPort) +"-" + str(self.dest.hostName)+"-"+str(self.destPort)
         self.serverSideTestResultFileName = testResultFolderRoot+"/"+self.testCaseName+serverResultLogSubFolder+"/"+str(self.src.hostName)+"-"  +str(self.srcPort) +"-" + str(self.dest.hostName)+"-" +str(self.destPort)
@@ -380,10 +380,10 @@ class IPerfDeplymentPair:
             #     self.clientCmdString=  self.clientCmdString + " -b "+ str(confConst.IPERF_MAX_FLOW_RATE_FOR_SERVER)
             # self.clientCmdString= self.clientCmdString + " -w " + confConst.IPERF_DEFAULT_WINDOW_SIZE_FOR_SERVER + " "
             self.clientCmdString = self.clientCmdString + " -S "+ str(self.flowInfo.flow_traffic_class)
-            self.clientCmdString = self.clientCmdString + " -C dctcp "
+            self.clientCmdString = self.clientCmdString + " -C  "+tcpVarioationName+ " "
             #self.clientCmdString=  self.clientCmdString +  " --set-mss "+str(self.flowInfo.pkt_size) + " --window "+str(self.flowInfo.src_window_size)+" "
             #self.clientCmdString=  self.clientCmdString + " -k "+ str(flowVloumeToBlockCountConverter(self.flowInfo.flow_volume, blockSize))+ " -b "+ str(self.flowInfo.src_data_rate) + " -l "+blockSize+" "
-            self.clientCmdString = self.clientCmdString+ " -C dctcp  "
+            # self.clientCmdString = self.clientCmdString+ " -C dctcp  "
             #self.clientCmdString=  self.clientCmdString  +" --json --logfile "+ self.clientSideTestResultFileName + " &\" "
             self.clientCmdString=  self.clientCmdString  +" --json --logfile "+ self.clientSideTestResultFileName + " & "
             #self.clientCmdString=  self.clientCmdString  +" --logfile "+ self.clientSideTestResultFileName + " &\" "
