@@ -56,23 +56,11 @@ parser ParserImpl (packet_in packet,
             IP_PROTO_TCP:    parse_tcp;
             IP_PROTO_UDP:    parse_udp;
             IP_PROTO_ICMPV6: parse_icmpv6;
-            MDN_INT        : parse_mdn_int;
-            CONTROL_PACKET : parse_ctrl_feedback;
             default: accept;
         }
     }
 
-    state parse_ctrl_feedback {
-        packet.extract(hdr.p2p_feedback);
-        transition select(hdr.p2p_feedback.next_hdr) {
-            IP_PROTO_TCP:    parse_tcp;
-            IP_PROTO_UDP:    parse_udp;
-            IP_PROTO_ICMPV6: parse_icmpv6;
-            MDN_INT        : parse_mdn_int;
-            CONTROL_PACKET : parse_ctrl_feedback;
-            default: accept;
-        }
-    }
+
     state parse_tcp {
         packet.extract(hdr.tcp);
         // For convenience, we copy the port numbers on generic metadata fields
@@ -104,17 +92,7 @@ parser ParserImpl (packet_in packet,
             packet.extract(hdr.ndp);
             transition accept;
         }
-    state parse_mdn_int {
-        packet.extract(hdr.mdn_int);
-        transition select(hdr.mdn_int.next_hdr){
-            IP_PROTO_TCP:    parse_tcp;
-            IP_PROTO_UDP:    parse_udp;
-            IP_PROTO_ICMPV6: parse_icmpv6;
-            MDN_INT        : parse_mdn_int;
-            default: accept;
-        }
 
-    }
 
 }
 

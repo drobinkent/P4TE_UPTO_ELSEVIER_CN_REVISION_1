@@ -1,0 +1,185 @@
+{
+	"start":	{
+		"connected":	[{
+				"socket":	6,
+				"local_host":	"2001:1:1:1::2:3",
+				"local_port":	42001,
+				"remote_host":	"2001:1:1:1::1:2",
+				"remote_port":	32001
+			}],
+		"version":	"iperf 3.7",
+		"system_info":	"Linux deba 5.8.0-63-generic #71~20.04.1-Ubuntu SMP Thu Jul 15 17:46:08 UTC 2021 x86_64",
+		"sock_bufsize":	16384,
+		"sndbuf_actual":	32768,
+		"rcvbuf_actual":	32768,
+		"timestamp":	{
+			"time":	"Fri, 30 Jul 2021 16:18:08 GMT",
+			"timesecs":	1627661888
+		},
+		"accepted_connection":	{
+			"host":	"2001:1:1:1::1:2",
+			"port":	49890
+		},
+		"cookie":	"q73fsbqslh2ncbb2uxcttwvgag3gsl3kec3a",
+		"tcp_mss":	1400,
+		"test_start":	{
+			"protocol":	"TCP",
+			"num_streams":	1,
+			"blksize":	1400,
+			"omit":	0,
+			"duration":	0,
+			"bytes":	52224,
+			"blocks":	0,
+			"reverse":	0,
+			"tos":	4
+		}
+	},
+	"intervals":	[{
+			"streams":	[{
+					"socket":	6,
+					"start":	0,
+					"end":	1.001019,
+					"seconds":	1.00101900100708,
+					"bytes":	0,
+					"bits_per_second":	0,
+					"omitted":	false,
+					"sender":	false
+				}],
+			"sum":	{
+				"start":	0,
+				"end":	1.001019,
+				"seconds":	1.00101900100708,
+				"bytes":	0,
+				"bits_per_second":	0,
+				"omitted":	false,
+				"sender":	false
+			}
+		}, {
+			"streams":	[{
+					"socket":	6,
+					"start":	1.001019,
+					"end":	2.000562,
+					"seconds":	0.99954301118850708,
+					"bytes":	4176,
+					"bits_per_second":	33423.274062289929,
+					"omitted":	false,
+					"sender":	false
+				}],
+			"sum":	{
+				"start":	1.001019,
+				"end":	2.000562,
+				"seconds":	0.99954301118850708,
+				"bytes":	4176,
+				"bits_per_second":	33423.274062289929,
+				"omitted":	false,
+				"sender":	false
+			}
+		}, {
+			"streams":	[{
+					"socket":	6,
+					"start":	2.000562,
+					"end":	3.000089,
+					"seconds":	0.9995269775390625,
+					"bytes":	15376,
+					"bits_per_second":	123066.21308297076,
+					"omitted":	false,
+					"sender":	false
+				}],
+			"sum":	{
+				"start":	2.000562,
+				"end":	3.000089,
+				"seconds":	0.9995269775390625,
+				"bytes":	15376,
+				"bits_per_second":	123066.21308297076,
+				"omitted":	false,
+				"sender":	false
+			}
+		}, {
+			"streams":	[{
+					"socket":	6,
+					"start":	3.000089,
+					"end":	4.000087,
+					"seconds":	0.99999797344207764,
+					"bytes":	12492,
+					"bits_per_second":	99936.202526502966,
+					"omitted":	false,
+					"sender":	false
+				}],
+			"sum":	{
+				"start":	3.000089,
+				"end":	4.000087,
+				"seconds":	0.99999797344207764,
+				"bytes":	12492,
+				"bits_per_second":	99936.202526502966,
+				"omitted":	false,
+				"sender":	false
+			}
+		}, {
+			"streams":	[{
+					"socket":	6,
+					"start":	4.000087,
+					"end":	4.336281,
+					"seconds":	0.33619400858879089,
+					"bytes":	0,
+					"bits_per_second":	0,
+					"omitted":	false,
+					"sender":	false
+				}],
+			"sum":	{
+				"start":	4.000087,
+				"end":	4.336281,
+				"seconds":	0.33619400858879089,
+				"bytes":	0,
+				"bits_per_second":	0,
+				"omitted":	false,
+				"sender":	false
+			}
+		}],
+	"end":	{
+		"streams":	[{
+				"sender":	{
+					"socket":	6,
+					"start":	0,
+					"end":	4.336281,
+					"seconds":	4.336281,
+					"bytes":	0,
+					"bits_per_second":	0,
+					"sender":	false
+				},
+				"receiver":	{
+					"socket":	6,
+					"start":	0,
+					"end":	4.336281,
+					"seconds":	4.336281,
+					"bytes":	32044,
+					"bits_per_second":	59117.940004349352,
+					"sender":	false
+				}
+			}],
+		"sum_sent":	{
+			"start":	0,
+			"end":	4.336281,
+			"seconds":	4.336281,
+			"bytes":	0,
+			"bits_per_second":	0,
+			"sender":	false
+		},
+		"sum_received":	{
+			"start":	0,
+			"end":	4.336281,
+			"seconds":	4.336281,
+			"bytes":	32044,
+			"bits_per_second":	59117.940004349352,
+			"sender":	false
+		},
+		"cpu_utilization_percent":	{
+			"host_total":	0.0030662230741548609,
+			"host_user":	0.0030662230741548609,
+			"host_system":	0,
+			"remote_total":	0,
+			"remote_user":	0,
+			"remote_system":	0
+		},
+		"receiver_tcp_congestion":	"dctcp-reno"
+	}
+}

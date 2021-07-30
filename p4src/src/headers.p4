@@ -12,19 +12,7 @@ header ethernet_t {
     mac_addr_t  src_addr;
     bit<16>     ether_type;
 }
-header  mdn_int_t {
-    bit<8>   next_hdr;
-    bit<48>  src_enq_timestamp;
-    bit<48>  src_deq_timestamp; // Thie may be also not needed. just for future reference
-    //bit <8> has_ctrl_hdr;
-    bit<2>  rate_control_allowed_for_the_tcp_flow;
-    bit<6>  rate_control_event; // by default this will be 0. non zero value means 2 thing. a) at some point this flow have seen rate control b) las ttime when it have seen rate control.
-    // only a single bit should be good enough for a single packet. Because if we do per packet rate control then single bit is enough. But if we want per flow rate control,
-    //then we need to propagate the info that when a flow have last time seen rate control. Though it is not scalable, but still if someone wants to use that kind of thechnique
-    // we have kept the option open.
-    bit<32>  last_seq_no_with_rate_control;
 
-}
 
 header ipv6_t {
     bit<4>   version;
@@ -197,25 +185,24 @@ struct local_metadata_t {
     bool       is_multicast;
 
     bool is_pkt_rcvd_from_downstream;   //This signifies whether a packet was rcvd from upstream or downstream packet.
-    delay_event_info_t delay_info_hdr;
-    ingress_queue_event_info_t ingress_queue_event_hdr;
     egress_queue_event_info_t egress_queue_event_hdr;
-    ingress_rate_event_info_t ingress_rate_event_hdr;
     egress_rate_event_info_t egress_rate_event_hdr;
     flag_headers_t flag_hdr;
-    mdn_int_t     pkt_timestamp;
     bit<16> flowlet_map_index;
     bit<16> flowlet_id;
     bit<48> flow_inter_packet_gap;
     bit<48> flowlet_last_pkt_seen_time;
     bit<9> flowlet_last_used_path;
 
-
-//    bit<10> range_val_test;
-  //  bit<10> range_val_test_result;
+    bit<2>  rate_control_allowed_for_the_tcp_flow;
+    bit<6>  rate_control_event; // by default this will be 0. non zero value means 2 thing. a) at some point this flow have seen rate control b) las ttime when it have seen rate control.
+    // only a single bit should be good enough for a single packet. Because if we do per packet rate control then single bit is enough. But if we want per flow rate control,
+    //then we need to propagate the info that when a flow have last time seen rate control. Though it is not scalable, but still if someone wants to use that kind of thechnique
+    // we have kept the option open.
+    bit<32>  last_seq_no_with_rate_control;
+    ingress_rate_event_info_t ingress_rate_event_hdr;
     bit<10>  egr_port_rate_value_range ;
     bit<10>  egr_queue_depth_value_range ;
-    bit<10>  delay_value_range;
 
     // TODO : at this moment all level requirements are 1. but in future we are planning for policy based routing on that case this will be required
     bit<10> minimum_group_members_requirement; //this is to handle the empty group problem. If there are 0 members in the high priority group then bmv2 yields. We can not allow that
@@ -225,7 +212,6 @@ struct local_metadata_t {
     //bit<4> path_egr_queue_level_requirement;
 
     // These are the placeholder where the egress ports will be kept after matching.
-    //bit<9> delay_based_path;
     bit<9> egr_queue_based_path;
     bit<9> egr_rate_based_path;
     bit<32> temp; //This will be used for various tempporaty operation in various control blocks. But remeber we can not gues anything about it's initial data
@@ -328,13 +314,7 @@ header packet_out_t {
 
 // Header for sensing peer to peer feedback
 
-header p2p_feedback_t {
-   port_num_t port_id;  //9 bits
-   bit <8> delay_event_type;
-   bit <48> delay_event_data;
-   bit<8> next_hdr;
-   bit<7> padding;
-}
+
 
 // We collect all headers under the same data structure, associated with each
 // packet. The goal of the parser is to populate the fields of this struct.
@@ -345,16 +325,11 @@ struct parsed_headers_t {
     ethernet_t    ethernet;
     ipv4_t        ipv4;
     ipv6_t        ipv6;
-    mdn_int_t     mdn_int;   //this is for peer to peer info passing for a packet
-    p2p_feedback_t p2p_feedback;
     tcp_t         tcp;
     udp_t         udp;
     icmpv6_t      icmpv6;
     ndp_t         ndp;
-    //=================
-    //delay_event_info_t delay_event_feedback;
 
-    //=====
 }
 
 #endif

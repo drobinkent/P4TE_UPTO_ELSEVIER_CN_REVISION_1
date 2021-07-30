@@ -65,6 +65,7 @@ class CPAssistedMultiCriteriaPolicyRoutingAlgorithm:
             self.processEgressQueueDepthEvent(parsedPkt=parsedPkt)
             self.processPathDelayEvent(parsedPkt=parsedPkt)
             self.processEgressRateEvent(parsedPkt=parsedPkt)
+            # print("finished event processing")
         except Exception:
             logger.exception("Exception in Processing contrl Packet")
             exit(1)

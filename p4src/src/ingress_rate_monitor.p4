@@ -73,7 +73,6 @@ control ingress_rate_monitor(inout parsed_headers_t    hdr,
         flow_type_based_ingress_meter_for_upstream.execute_meter((bit<32>)flow_type_based_meter_idx,  local_metadata.ingress_rate_event_hdr.ingress_traffic_color);
         local_metadata.is_pkt_rcvd_from_downstream = false;
         //log_msg("Ingress traffic color is {}", {local_metadata.ingress_rate_event_hdr.ingress_traffic_color});
-        local_metadata.ingress_rate_event_hdr.ingress_rate_event_port =  standard_metadata.ingress_port;
         local_metadata.flag_hdr.is_packet_from_downstream_port = false;
         local_metadata.flag_hdr.is_packet_from_upstream_port = true;
     }
@@ -81,7 +80,6 @@ control ingress_rate_monitor(inout parsed_headers_t    hdr,
         flow_type_based_ingress_meter_for_downstream.execute_meter((bit<32>)flow_type_based_meter_idx,  local_metadata.ingress_rate_event_hdr.ingress_traffic_color);
         local_metadata.is_pkt_rcvd_from_downstream = true;
         //log_msg("Ingress traffic color is {}", {local_metadata.ingress_rate_event_hdr.ingress_traffic_color});
-        local_metadata.ingress_rate_event_hdr.ingress_rate_event_port = standard_metadata.ingress_port;
         local_metadata.flag_hdr.is_packet_from_downstream_port = true;
         local_metadata.flag_hdr.is_packet_from_upstream_port = false;
     }
@@ -102,16 +100,7 @@ control ingress_rate_monitor(inout parsed_headers_t    hdr,
 
     apply{
         flow_type_based_ingress_stats_table.apply();
-        if( local_metadata.ingress_rate_event_hdr.ingress_traffic_color > 0) {
-            local_metadata.flag_hdr.is_control_pkt_from_ing_queue_rate = true;
-             local_metadata.ingress_rate_event_hdr.event_src_type =  EVENT_ORIGINATOR_LOCAL_SWITCH;
-             //TODO, we can move this if-else condition to route selection where we will check the ingress traffic color to select path
-             //log_msg("Ingress queue rate  event. traffic color is {}", { local_metadata.ingress_rate_event_hdr.ingress_traffic_color});
-        }
-        // We basically do this false assignment step in init_packet. Addig extra else llop may require extra stage in RMT. So we are skipping that
-        //else{
-          //  local_metadata.flag_hdr.is_control_pkt_from_ing_queue_rate = false;
-        //}
+
     }
 }
 #endif
