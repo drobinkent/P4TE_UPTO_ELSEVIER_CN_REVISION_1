@@ -30,9 +30,9 @@ control egress_queue_depth_monitor(inout parsed_headers_t    hdr,
             }
             #else
             //bit<19> old_deq_depth = 0;
-            bit<32> port_id = (bit<32>)standard_metadata.egress_spec;
+            //bit<32> port_id = (bit<32>)standard_metadata.egress_spec;
             bit<19> last_updated_deq_depth = 0;
-            port_last_updated_egress_queue_avg_depth.read(last_updated_deq_depth, port_id);
+            port_last_updated_egress_queue_avg_depth.read(last_updated_deq_depth, (bit<32>)standard_metadata.egress_spec);
             local_metadata.egress_queue_event_hdr.egress_queue_event_port =  standard_metadata.egress_port;; //this is common for all kind of evnets. so setting in only one place
             if(standard_metadata.deq_qdepth >= (last_updated_deq_depth + EGRESS_QUEUE_DEPTH_THRESHOLD)){
                 //This means this packet  has seen increased delay through this port.  we need to report it io control plane.
@@ -40,7 +40,7 @@ control egress_queue_depth_monitor(inout parsed_headers_t    hdr,
                 local_metadata.egress_queue_event_hdr.event_src_type =  EVENT_ORIGINATOR_LOCAL_SWITCH;
                 local_metadata.egress_queue_event_hdr.egress_queue_event = EVENT_EGR_QUEUE_INCREASED;
                 local_metadata.egress_queue_event_hdr.egress_queue_event_data = (bit<48>)standard_metadata.deq_qdepth;
-                port_last_updated_egress_queue_avg_depth.write(port_id, standard_metadata.deq_qdepth);
+                port_last_updated_egress_queue_avg_depth.write((bit<32>)standard_metadata.egress_spec, standard_metadata.deq_qdepth);
                 local_metadata.flag_hdr.is_control_pkt_from_egr_queue_depth = true;
                 //log_msg("Egress dequeue depth increase event. old queue depth {} new queue depth {}", {last_updated_deq_depth, standard_metadata.deq_qdepth});
 
@@ -48,7 +48,7 @@ control egress_queue_depth_monitor(inout parsed_headers_t    hdr,
                 local_metadata.egress_queue_event_hdr.event_src_type =  EVENT_ORIGINATOR_LOCAL_SWITCH;
                 local_metadata.egress_queue_event_hdr.egress_queue_event = EVENT_EGR_QUEUE_DECREASED;
                 local_metadata.egress_queue_event_hdr.egress_queue_event_data = (bit<48>) standard_metadata.deq_qdepth;
-                port_last_updated_egress_queue_avg_depth.write(port_id, standard_metadata.deq_qdepth);
+                port_last_updated_egress_queue_avg_depth.write((bit<32>)standard_metadata.egress_spec, standard_metadata.deq_qdepth);
                 local_metadata.flag_hdr.is_control_pkt_from_egr_queue_depth = true;
                 //log_msg("Egress dequeue depth decrease event. old queue depth {} new queue depth {}", {last_updated_deq_depth, standard_metadata.deq_qdepth});
             }else{

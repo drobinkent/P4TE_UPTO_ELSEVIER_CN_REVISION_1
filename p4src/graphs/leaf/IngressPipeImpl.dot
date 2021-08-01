@@ -8,8 +8,7 @@ label="", labeljust=r, style=bold];
 3[label="standard_metadata.egress_spec = hdr.packet_out.egress_port;
 hdr.packet_out.setInvalid();", margin="", shape=rectangle, style=solid];
 4[label="hdr.packet_in.isValid() && standard_metadata.instance_type == 4;", margin="", shape=rectangle, style=solid];
-5[label="local_metadata.flag_hdr.do_l3_l2 = 0;
-...
+5[label="egress_queue_rate_value_map.write((bit<32>)hdr.packet_in.egress_rate_event_port, (bit<4>)local_metadata.egress_rate_event_hdr.egress_traffic_color);
 mark_to_drop(standard_metadata);", margin="", shape=rectangle, style=solid];
 6[label="init_pkt();", margin="", shape=rectangle, style=solid];
 7[label="IngressPipeImpl.ingress_rate_monitor_control_block.flow_type_based_ingress_stats_table", margin="", shape=ellipse, style=solid];

@@ -91,9 +91,9 @@ const bit<32> I2E_CLONE_SESSION_ID = 5;
 const bit<32> E2E_CLONE_SESSION_ID = 11;
 
 //================================= Our own macros
-#define IS_CONTROL_PKT_TO_NEIGHBOUR(local_metadata) (local_metadata.flag_hdr.is_control_pkt_from_delay_proc || (local_metadata.rate_control_event ==RATE_DECREASE_EVENT_NEED_TO_BE_APPLIED_IN_THIS_SWITCH) || (local_metadata.rate_control_event ==RATE_INCREASE_EVENT_NEED_TO_BE_APPLIED_IN_THIS_SWITCH) )
+#define IS_CONTROL_PKT_TO_NEIGHBOUR(local_metadata) ( (local_metadata.rate_control_event ==RATE_DECREASE_EVENT_NEED_TO_BE_APPLIED_IN_THIS_SWITCH) || (local_metadata.rate_control_event ==RATE_INCREASE_EVENT_NEED_TO_BE_APPLIED_IN_THIS_SWITCH) )
 //#define IS_CONTROL_PKT_TO_NEIGHBOUR(local_metadata) (local_metadata.flag_hdr.is_control_pkt_from_delay_proc  )
-#define IS_CONTROL_PKT_TO_CP(local_metadata) (local_metadata.flag_hdr.is_control_pkt_from_ing_queue_rate ||  local_metadata.flag_hdr.is_control_pkt_from_ing_queue_depth || local_metadata.flag_hdr.is_control_pkt_from_egr_queue_depth || local_metadata.flag_hdr.is_control_pkt_from_egr_queue_rate || local_metadata.flag_hdr.is_control_pkt_from_delay_proc)
+#define IS_CONTROL_PKT_TO_CP(local_metadata) ( local_metadata.flag_hdr.is_control_pkt_from_egr_queue_depth || local_metadata.flag_hdr.is_control_pkt_from_egr_queue_rate )
 #define IS_CONTROL_PKT_TO_CP_FOR_INGRESS_EVENTS(local_metadata) (local_metadata.flag_hdr.is_control_pkt_from_ing_queue_rate ||  local_metadata.flag_hdr.is_control_pkt_from_ing_queue_depth  )
 #define IS_CONTROL_PKT_TO_CP_FOR_EGRESS_EVENTS(local_metadata) (local_metadata.flag_hdr.is_control_pkt_from_egr_queue_depth || local_metadata.flag_hdr.is_control_pkt_from_egr_queue_rate   )
 #define IS_RECIRC_NEEDED(local_metadata) (local_metadata.flag_hdr.is_control_pkt_from_egr_queue_depth || local_metadata.flag_hdr.is_control_pkt_from_egr_queue_rate   )
@@ -164,7 +164,7 @@ meter((bit<32>)MAX_PORTS_IN_SWITCH, MeterType.packets) egress_port_meters;
 //=====================================stateful data strucutre for CP-assisted multipath routing algorithm
  @name("egress_queue_depth_value_map")register<bit<48>>(MAX_PORTS_IN_SWITCH) egress_queue_depth_value_map;
  @name("egress_queue_depth_last_update_time_map")register<bit<48>>(MAX_PORTS_IN_SWITCH) egress_queue_depth_last_update_time_map;
- @name("egress_queue_rate_value_map")register<bit<48>>(MAX_PORTS_IN_SWITCH) egress_queue_rate_value_map;
+ @name("egress_queue_rate_value_map")register<bit<4>>(MAX_PORTS_IN_SWITCH) egress_queue_rate_value_map;
  @name("egress_queue_rate_last_update_time_map")register<bit<48>>(MAX_PORTS_IN_SWITCH) egress_queue_rate_last_update_time_map;
  @name("port_to_port_delay_value_map")register<bit<48>>(MAX_PORTS_IN_SWITCH) port_to_port_delay_value_map;
  @name("port_to_port_delay_last_update_time_map")register<bit<48>>(MAX_PORTS_IN_SWITCH) port_to_port_delay_last_update_time_map;

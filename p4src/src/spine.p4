@@ -155,7 +155,7 @@ control IngressPipeImpl (inout parsed_headers_t    hdr,
     }else if (hdr.packet_in.isValid() && IS_RECIRCULATED(standard_metadata)) {  //This means this packet is replicated from egress to setup
         //log_msg("Found a recirculated packet");
         local_metadata.flag_hdr.do_l3_l2 = false; //thie means . this packet doesn;t need normal forwarding processing. It wil only be used for updating the internal routing related information
-        egress_queue_rate_value_map.write((bit<32>)hdr.packet_in.path_delay_event_port, (bit<48>)local_metadata.egress_rate_event_hdr.egress_traffic_color );
+        egress_queue_rate_value_map.write((bit<32>)hdr.packet_in.egress_rate_event_port, (bit<4>)local_metadata.egress_rate_event_hdr.egress_traffic_color );
         mark_to_drop(standard_metadata);
     }else{ //This means these packets are normal packets and they will generate the events
         init_pkt();
@@ -339,17 +339,8 @@ control EgressPipeImpl (inout parsed_headers_t hdr,
 
 
 
-        if(IS_NORMAL(standard_metadata)){
-            egressPortCounter.count((bit<32>)standard_metadata.egress_port);
-            if (standard_metadata.egress_port == PORT_ZERO) {
-                log_msg("A normal packet  is decided to be sent on port 0. Which should not be. Debug it"); //this was happening due to lack of defualt path in policy riouting
-                recirculate<parsed_headers_t>(hdr);
-                mark_to_drop(standard_metadata);
-            }else if (standard_metadata.egress_port == CPU_PORT) {  //not reaching this part
-               log_msg("A normal packet  is decided to be sent on CPU_PORT. Which should not be. Debug it"); //this was happening due to lack of defualt path in policy riouting
-               mark_to_drop(standard_metadata);
-            }
-        }else{ //this is a cloned packet for control events
+        if(!IS_NORMAL(standard_metadata)){
+            //this is a cloned packet for control events
             if (standard_metadata.egress_port == PORT_ZERO) {
                 set_all_header_invalid();
                 hdr.ethernet.setValid();
@@ -363,9 +354,9 @@ control EgressPipeImpl (inout parsed_headers_t hdr,
                 hdr.packet_in.egress_queue_event_data = local_metadata.egress_queue_event_hdr.egress_queue_event_data  ;
                 hdr.packet_in.egress_queue_event_port = local_metadata.egress_queue_event_hdr.egress_queue_event_port;
                 //===
-                hdr.packet_in.ingress_traffic_color = local_metadata.ingress_rate_event_hdr.ingress_traffic_color  ;
-                hdr.packet_in.ingress_rate_event_data = local_metadata.ingress_rate_event_hdr.ingress_rate_event_data  ;
-                hdr.packet_in.ingress_rate_event_port = local_metadata.ingress_rate_event_hdr.ingress_rate_event_port;
+                //hdr.packet_in.ingress_traffic_color = local_metadata.ingress_rate_event_hdr.ingress_traffic_color  ;
+                //hdr.packet_in.ingress_rate_event_data = local_metadata.ingress_rate_event_hdr.ingress_rate_event_data  ;
+                //hdr.packet_in.ingress_rate_event_port = local_metadata.ingress_rate_event_hdr.ingress_rate_event_port;
                 //===
                 hdr.packet_in.egress_traffic_color = local_metadata.egress_rate_event_hdr.egress_traffic_color  ;
                 //log_msg("In cp feedback msg. egress traffic color is {}",{hdr.packet_in.egress_traffic_color});
@@ -386,9 +377,9 @@ control EgressPipeImpl (inout parsed_headers_t hdr,
                 hdr.packet_in.egress_queue_event_data = local_metadata.egress_queue_event_hdr.egress_queue_event_data  ;
                 hdr.packet_in.egress_queue_event_port = local_metadata.egress_queue_event_hdr.egress_queue_event_port;
                 //===
-                hdr.packet_in.ingress_traffic_color = local_metadata.ingress_rate_event_hdr.ingress_traffic_color  ;
-                hdr.packet_in.ingress_rate_event_data = local_metadata.ingress_rate_event_hdr.ingress_rate_event_data  ;
-                hdr.packet_in.ingress_rate_event_port = local_metadata.ingress_rate_event_hdr.ingress_rate_event_port;
+                //hdr.packet_in.ingress_traffic_color = local_metadata.ingress_rate_event_hdr.ingress_traffic_color  ;
+                //hdr.packet_in.ingress_rate_event_data = local_metadata.ingress_rate_event_hdr.ingress_rate_event_data  ;
+                //hdr.packet_in.ingress_rate_event_port = local_metadata.ingress_rate_event_hdr.ingress_rate_event_port;
                 //===
                 hdr.packet_in.egress_traffic_color = local_metadata.egress_rate_event_hdr.egress_traffic_color  ;
                 //log_msg("In cp feedback msg. egress traffic color is {}",{hdr.packet_in.egress_traffic_color});

@@ -69,14 +69,14 @@ control ingress_rate_monitor(inout parsed_headers_t    hdr,
     @name("flow_type_based_ingress_meter_for_upstream") meter(MAX_FLOW_TYPES,MeterType.packets) flow_type_based_ingress_meter_for_upstream;
     @name("flow_type_based_ingress_meter_for_downstream") meter(MAX_FLOW_TYPES, MeterType.packets) flow_type_based_ingress_meter_for_downstream;
 
-    action monitor_incoming_flow_based_on_flow_type_for_pkts_rcvd_from_upstream( bit<9> flow_type_based_meter_idx) {
+    action monitor_incoming_flow_based_on_flow_type_for_pkts_rcvd_from_upstream( bit<32> flow_type_based_meter_idx) {
         flow_type_based_ingress_meter_for_upstream.execute_meter((bit<32>)flow_type_based_meter_idx,  local_metadata.ingress_rate_event_hdr.ingress_traffic_color);
         local_metadata.is_pkt_rcvd_from_downstream = false;
         //log_msg("Ingress traffic color is {}", {local_metadata.ingress_rate_event_hdr.ingress_traffic_color});
         local_metadata.flag_hdr.is_packet_from_downstream_port = false;
         local_metadata.flag_hdr.is_packet_from_upstream_port = true;
     }
-    action monitor_incoming_flow_based_on_flow_type_for_pkts_rcvd_from_downstream(bit<9> flow_type_based_meter_idx) {
+    action monitor_incoming_flow_based_on_flow_type_for_pkts_rcvd_from_downstream(bit<32> flow_type_based_meter_idx) {
         flow_type_based_ingress_meter_for_downstream.execute_meter((bit<32>)flow_type_based_meter_idx,  local_metadata.ingress_rate_event_hdr.ingress_traffic_color);
         local_metadata.is_pkt_rcvd_from_downstream = true;
         //log_msg("Ingress traffic color is {}", {local_metadata.ingress_rate_event_hdr.ingress_traffic_color});

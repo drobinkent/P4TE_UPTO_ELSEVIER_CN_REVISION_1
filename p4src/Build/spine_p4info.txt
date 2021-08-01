@@ -219,7 +219,7 @@ actions {
   params {
     id: 1
     name: "flow_type_based_meter_idx"
-    bitwidth: 9
+    bitwidth: 32
   }
 }
 actions {
@@ -231,7 +231,7 @@ actions {
   params {
     id: 1
     name: "flow_type_based_meter_idx"
-    bitwidth: 9
+    bitwidth: 32
   }
 }
 actions {
@@ -583,88 +583,38 @@ controller_packet_metadata {
   }
   metadata {
     id: 3
-    name: "ingress_queue_event"
-    bitwidth: 8
-  }
-  metadata {
-    id: 4
-    name: "ingress_queue_event_data"
-    bitwidth: 48
-  }
-  metadata {
-    id: 5
-    name: "ingress_queue_event_port"
-    bitwidth: 9
-  }
-  metadata {
-    id: 6
     name: "egress_queue_event"
     bitwidth: 8
   }
   metadata {
-    id: 7
+    id: 4
     name: "egress_queue_event_data"
     bitwidth: 48
   }
   metadata {
-    id: 8
+    id: 5
     name: "egress_queue_event_port"
     bitwidth: 9
   }
   metadata {
-    id: 9
-    name: "ingress_traffic_color"
-    bitwidth: 32
-  }
-  metadata {
-    id: 10
-    name: "ingress_rate_event_data"
-    bitwidth: 48
-  }
-  metadata {
-    id: 11
-    name: "ingress_rate_event_port"
-    bitwidth: 9
-  }
-  metadata {
-    id: 12
+    id: 6
     name: "egress_traffic_color"
     bitwidth: 32
   }
   metadata {
-    id: 13
+    id: 7
     name: "egress_rate_event_data"
     bitwidth: 48
   }
   metadata {
-    id: 14
+    id: 8
     name: "egress_rate_event_port"
     bitwidth: 9
   }
   metadata {
-    id: 15
-    name: "delay_event_src_type"
-    bitwidth: 8
-  }
-  metadata {
-    id: 16
-    name: "path_delay_event_type"
-    bitwidth: 8
-  }
-  metadata {
-    id: 17
-    name: "path_delay_event_data"
-    bitwidth: 48
-  }
-  metadata {
-    id: 18
-    name: "dst_addr"
-    bitwidth: 128
-  }
-  metadata {
-    id: 19
-    name: "path_delay_event_port"
-    bitwidth: 9
+    id: 9
+    name: "pad"
+    bitwidth: 3
   }
 }
 controller_packet_metadata {
@@ -724,7 +674,7 @@ registers {
   type_spec {
     bitstring {
       bit {
-        bitwidth: 48
+        bitwidth: 4
       }
     }
   }

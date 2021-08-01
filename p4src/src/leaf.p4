@@ -130,8 +130,8 @@ control IngressPipeImpl (inout parsed_headers_t    hdr,
        exit;
     }else if (hdr.packet_in.isValid() && IS_RECIRCULATED(standard_metadata)) {  //This means this packet is replicated from egress to setup
         //log_msg("Found a recirculated packet");
-        local_metadata.flag_hdr.do_l3_l2 = false; //thie means . this packet doesn;t need normal forwarding processing. It wil only be used for updating the internal routing related information
-        egress_queue_rate_value_map.write((bit<32>)hdr.packet_in.path_delay_event_port, (bit<48>)local_metadata.egress_rate_event_hdr.egress_traffic_color );
+        //local_metadata.flag_hdr.do_l3_l2 = false; //thie means . this packet doesn;t need normal forwarding processing. It wil only be used for updating the internal routing related information
+        egress_queue_rate_value_map.write((bit<32>)hdr.packet_in.egress_rate_event_port, (bit<4>)local_metadata.egress_rate_event_hdr.egress_traffic_color );
         mark_to_drop(standard_metadata);
    }else{ //This means these packets are normal packets and they will generate the events
         init_pkt();
@@ -304,10 +304,12 @@ control EgressPipeImpl (inout parsed_headers_t hdr,
             if(is_recirculation_needed &&   IS_CONTROL_PKT_TO_NEIGHBOUR(local_metadata) && IS_CONTROL_PKT_TO_CP(local_metadata)){
                 //log_msg("clone to session id  ing_port + Max_port * 2 --> this have both ingress port and CPU port and recirculation port");
                 clone3(CloneType.E2E, (bit<32>)(standard_metadata.ingress_port)+ ((bit<32>)MAX_PORTS_IN_SWITCH * 2), {standard_metadata, local_metadata});
-            }else if(  IS_CONTROL_PKT_TO_NEIGHBOUR(local_metadata) && IS_CONTROL_PKT_TO_CP(local_metadata)){
+            }
+            else if(  IS_CONTROL_PKT_TO_NEIGHBOUR(local_metadata) && IS_CONTROL_PKT_TO_CP(local_metadata)){
                 //log_msg("clone to session id ing_port + Max_port  --> this have both ingress port and CPU port");
                 clone3(CloneType.E2E, (bit<32>)(standard_metadata.ingress_port)+ (bit<32>)MAX_PORTS_IN_SWITCH, {standard_metadata, local_metadata});
-            }else if (IS_CONTROL_PKT_TO_CP(local_metadata)) {
+            }
+            else if (IS_CONTROL_PKT_TO_CP(local_metadata)) {
                 //log_msg("clone to CPU port only");
                 clone3(CloneType.E2E, CPU_CLONE_SESSION_ID, {standard_metadata, local_metadata});
             }else if ( IS_CONTROL_PKT_TO_NEIGHBOUR(local_metadata)) {
@@ -327,21 +329,8 @@ control EgressPipeImpl (inout parsed_headers_t hdr,
   //     if this happens then we do not need to build neighbour hood feedback pkt
 
 
-    if(IS_NORMAL(standard_metadata)){
-        egressPortCounter.count((bit<32>)standard_metadata.egress_port);
-        if(local_metadata.flag_hdr.is_pkt_toward_host){
-            log_msg("Packet toward host so no need to do anything");
-        }else if (standard_metadata.egress_port == PORT_ZERO) {
-             log_msg("A normal packet has been  decided to be sent on port 0. Which should not be. Debug it");
-             recirculate<parsed_headers_t>(hdr);
-             mark_to_drop(standard_metadata);
-        }else if (standard_metadata.egress_port == CPU_PORT) {
-            //log_msg("This is a p2p feedback received from some neighbour switch. and sending it to CP");
-            // Add packet_in header and set relevant fields, such as the
-            // switch ingress port where the packet was received.
-            log_msg("A normal packet has been  decided to be sent on CPU_PORT. Which should not be. Debug it");
-        }
-    }else{ //this is a cloned packet for control events
+    if(!IS_NORMAL(standard_metadata)){
+      //this is a cloned packet for control events
                 // if dp_only_flag-- then recirculate
         if (standard_metadata.egress_port == PORT_ZERO) {
             set_all_header_invalid();
@@ -383,15 +372,17 @@ control EgressPipeImpl (inout parsed_headers_t hdr,
             hdr.packet_in.egress_rate_event_port = local_metadata.egress_rate_event_hdr.egress_rate_event_port;
             //log_msg("In cp feedback msg. egress traffic color is {}",{hdr.packet_in.egress_traffic_color});
 
-            ctrlPktToCPCounter.count((bit<32>)standard_metadata.egress_port);
+            //ctrlPktToCPCounter.count(standard_metadata.egress_port);
             ////log_msg("chceking feedback values{}", {local_metadata});
         }else{
             //log_msg("This is a peer to peer feedback message in cloned part (for fake ack). this means a original packet is being cloned to ingress port. At this moment only add delay feedback and feedback ACK. Later we may add more stuffs");
-            p2pFeedbackCounter.count((bit<32>)standard_metadata.egress_port);
+            //p2pFeedbackCounter.count((bit<32>)standard_metadata.egress_port);
             #ifdef DP_BASED_RATE_CONTROL_ENABLED
 
             if  (local_metadata.rate_control_event  == RATE_INCREASE_EVENT_NEED_TO_BE_APPLIED_IN_THIS_SWITCH){
                 build_fake_ack_only_for_increase();
+            }else if (local_metadata.rate_control_event  == RATE_DECREASE_EVENT_NEED_TO_BE_APPLIED_IN_THIS_SWITCH){
+                  build_fake_ack_only();
             }else{
                 if(local_metadata.flag_hdr.is_packet_from_downstream_port == true){
                     mark_to_drop(standard_metadata);
