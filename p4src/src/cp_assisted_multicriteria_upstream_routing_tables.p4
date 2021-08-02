@@ -142,7 +142,6 @@ control cp_assisted_multicriteria_upstream_routing_tables(inout parsed_headers_t
 
         //delay_based_upstream_path_table.apply();
         egr_queue_depth_based_upstream_path_table.apply();
-        local_metadata.egr_port_rate_value_range  = 1; //This is required to find the port with green color.
         egr_port_rate_based_upstream_path_table.apply();
         //log_msg("Delay based selected path  {}", {local_metadata.delay_based_path});
     }

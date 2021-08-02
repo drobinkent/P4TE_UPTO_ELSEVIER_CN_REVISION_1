@@ -260,11 +260,11 @@ copy-fig-for-paper:
 
 generate-p4c-graphs:
 	p4c-graphs --arch v1model --Wdisable=unsupported p4src/src/spine.p4 -Dports=256  -DENABLE_DEBUG_TABLES -DDP_ALGO_DP_ONLY_POLICY_ROUTING --graphs-dir p4src/graphs/spine
-	dot -Tpng p4src/graphs/spine/EgressPipeImpl.dot > p4src/graphs/spine/Egress.png
-	dot -Tpng p4src/graphs/spine/IngressPipeImpl.dot > p4src/graphs/spine/Ingress.png
+	dot -Tpdf p4src/graphs/spine/EgressPipeImpl.dot > p4src/graphs/spine/Egress.pdf
+	dot -Tpdf p4src/graphs/spine/IngressPipeImpl.dot > p4src/graphs/spine/Ingress.pdf
 	p4c-graphs --arch v1model --Wdisable=unsupported p4src/src/leaf.p4 -Dports=256  -DENABLE_DEBUG_TABLES -DDP_ALGO_DP_ONLY_POLICY_ROUTING --graphs-dir p4src/graphs/leaf
-	dot -Tpng p4src/graphs/leaf/IngressPipeImpl.dot > p4src/graphs/leaf/Ingress.png
-	dot -Tpng p4src/graphs/leaf/EgressPipeImpl.dot > p4src/graphs/leaf/Egress.png
+	dot -Tpdf p4src/graphs/leaf/IngressPipeImpl.dot > p4src/graphs/leaf/Ingress.pdf
+	dot -Tpdf p4src/graphs/leaf/EgressPipeImpl.dot > p4src/graphs/leaf/Egress.pdf
 
 
 process-test:

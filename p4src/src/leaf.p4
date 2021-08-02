@@ -84,6 +84,7 @@ control IngressPipeImpl (inout parsed_headers_t    hdr,
         local_metadata.egr_queue_depth_value_range  = 1;
         local_metadata.egr_port_rate_value_range  = 1;
 
+
         // We will not set these 2 values in spine switches, bcz they will be intitiated from the leaf switches.
         local_metadata.rate_control_allowed_for_the_tcp_flow = RATE_CONTROL_NOT_ALLOWED_FOR_THE_FLOW; // At start rate control is not allowed. we will not set this field in spine packet initialization part
         local_metadata.rate_control_event = RATE_CONTROL_EVENT_NOT_YET_APPLIED ; // Means no rate contrl happned yet
