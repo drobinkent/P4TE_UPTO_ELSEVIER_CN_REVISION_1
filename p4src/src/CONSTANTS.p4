@@ -96,7 +96,7 @@ const bit<32> E2E_CLONE_SESSION_ID = 11;
 #define IS_CONTROL_PKT_TO_CP(local_metadata) ( local_metadata.flag_hdr.is_control_pkt_from_egr_queue_depth || local_metadata.flag_hdr.is_control_pkt_from_egr_queue_rate )
 #define IS_CONTROL_PKT_TO_CP_FOR_INGRESS_EVENTS(local_metadata) (local_metadata.flag_hdr.is_control_pkt_from_ing_queue_rate ||  local_metadata.flag_hdr.is_control_pkt_from_ing_queue_depth  )
 #define IS_CONTROL_PKT_TO_CP_FOR_EGRESS_EVENTS(local_metadata) (local_metadata.flag_hdr.is_control_pkt_from_egr_queue_depth || local_metadata.flag_hdr.is_control_pkt_from_egr_queue_rate   )
-#define IS_RECIRC_NEEDED(local_metadata) (local_metadata.flag_hdr.is_control_pkt_from_egr_queue_depth || local_metadata.flag_hdr.is_control_pkt_from_egr_queue_rate   )
+#define IS_RECIRC_NEEDED(local_metadata) ( local_metadata.flag_hdr.is_control_pkt_from_egr_queue_rate   )
 //#define IS_CONTROL_PKT(local_metadata) (local_metadata.flag_hdr.is_control_pkt_from_delay_proc || local_metadata.flag_hdr.is_control_pkt_from_ing_queue_rate ||  local_metadata.flag_hdr.is_control_pkt_from_ing_queue_depth || local_metadata.flag_hdr.is_control_pkt_from_egr_queue_depth  )
 //#define HAS_VALID_CONTROL_HDR(hdr) ( local_metadata.delay_info_hdr.isValid() ||  local_metadata.ingress_queue_event_hdr.isValid() || hdr.egress_queue_event_hdr.isValid() || local_metadata.ingress_rate_event_hdr.isValid() || local_metadata.egress_rate_event_hdr.isValid() )  // unused
 

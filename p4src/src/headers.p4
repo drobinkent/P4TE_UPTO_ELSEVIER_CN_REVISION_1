@@ -248,36 +248,23 @@ struct standard_metadata_t {
 @controller_header("packet_in")
 header packet_in_t {
     port_num_t  ingress_port;
-    bit<2>      _pad;
+    bit<5>      _pad;
 
- //===
-    //bit<8>     ingress_queue_event;
-   // bit<48>    ingress_queue_event_data;
-   // bit<9>     ingress_queue_event_port;
+
 
     //===
     bit<8>     egress_queue_event;
     bit<48>    egress_queue_event_data;
     bit<9>     egress_queue_event_port;
 
-    //===
-    //bit<32>    ingress_traffic_color;
-   // bit<48>    ingress_rate_event_data;
-   // bit<9>     ingress_rate_event_port;
+
 
     //===
     bit<32>    egress_traffic_color;
     bit<48>    egress_rate_event_data;
     bit<9>     egress_rate_event_port;
 
-    //bit<8> delay_event_src_type;  //This field is for notifying whther an event is hop to hop or came from a hop more than 1 hop distance
-        //Next fields are event data
-        //bit<16>
-    //bit<8>    path_delay_event_type;
-    //bit<48>     path_delay_event_data;
-    //bit<128> dst_addr;   //This is the address for which the switch has found increased or decreased delay
-    //bit<9>     path_delay_event_port;
-    bit<3> pad;
+
 
 }
 

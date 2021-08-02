@@ -63,7 +63,7 @@ class CPAssistedMultiCriteriaPolicyRoutingAlgorithm:
         # self.path_delay_event_port=int.from_bytes(packet.metadata[18].value, byteorder='big', signed=True)
         try:
             self.processEgressQueueDepthEvent(parsedPkt=parsedPkt)
-            self.processPathDelayEvent(parsedPkt=parsedPkt)
+            # self.processPathDelayEvent(parsedPkt=parsedPkt)
             self.processEgressRateEvent(parsedPkt=parsedPkt)
             # print("finished event processing")
         except Exception:

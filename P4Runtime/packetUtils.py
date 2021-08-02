@@ -43,17 +43,18 @@ class ControlPacket:
         # self.ingress_queue_event_data= int.from_bytes(packet.metadata[3].value, byteorder='big', signed=True)
         # self.ingress_queue_event_port=int.from_bytes(packet.metadata[4].value, byteorder='big', signed=True)
 
-        self.egress_queue_event= int.from_bytes(packet.metadata[2].value, byteorder='big', signed=True)
+        # self.egress_queue_event= bytes.from_bytes(packet.metadata[2].value, byteorder='big', signed=True)
+        self.egress_queue_event= packet.metadata[2]
         self.egress_queue_event_data= int.from_bytes(packet.metadata[3].value, byteorder='big', signed=True)
         self.egress_queue_event_port = int.from_bytes(packet.metadata[4].value, byteorder='big', signed=True)
 
-        self.ingress_traffic_color= int.from_bytes(packet.metadata[5].value, byteorder='big', signed=True)
-        self.ingress_rate_event_data= int.from_bytes(packet.metadata[6].value, byteorder='big', signed=True)
-        self.ingress_rate_event_port=int.from_bytes(packet.metadata[7].value, byteorder='big', signed=True)
+        # self.ingress_traffic_color= int.from_bytes(packet.metadata[5].value, byteorder='big', signed=True)
+        # self.ingress_rate_event_data= int.from_bytes(packet.metadata[6].value, byteorder='big', signed=True)
+        # self.ingress_rate_event_port=int.from_bytes(packet.metadata[7].value, byteorder='big', signed=True)
 
-        self.egress_traffic_color= int.from_bytes(packet.metadata[8].value, byteorder='big', signed=True)
-        self.egress_rate_event_data= int.from_bytes(packet.metadata[9].value, byteorder='big', signed=True)
-        self.egress_rate_event_port=int.from_bytes(packet.metadata[10].value, byteorder='big', signed=True)
+        self.egress_traffic_color= int.from_bytes(packet.metadata[5].value, byteorder='big', signed=True)
+        self.egress_rate_event_data= int.from_bytes(packet.metadata[6].value, byteorder='big', signed=True)
+        self.egress_rate_event_port=int.from_bytes(packet.metadata[7].value, byteorder='big', signed=True)
 
         # self.delay_event_src_type= int.from_bytes(packet.metadata[11].value, byteorder='big', signed=True)
         # self.path_delay_event_type= int.from_bytes(packet.metadata[12].value, byteorder='big', signed=True)

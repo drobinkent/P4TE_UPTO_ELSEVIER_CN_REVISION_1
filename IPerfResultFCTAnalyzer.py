@@ -254,3 +254,12 @@ print("\n\n")
 
 
 
+print("Load factor 0.2")
+print("ECMP")
+getAVGFCTByFolder(folderName= "/home/deba/Desktop/P4TE/testAndMeasurement/TEST_RESULTS/WebSearchWorkLoad_load_factor_0.6/client-logs-1")
+print("\n\n")
+
+print("P4TE")
+getAVGFCTByFolder(folderName= "/home/deba/Desktop/P4TE/testAndMeasurement/TEST_RESULTS/WebSearchWorkLoad_load_factor_0.6/client-logs-0")
+print("\n\n")
+

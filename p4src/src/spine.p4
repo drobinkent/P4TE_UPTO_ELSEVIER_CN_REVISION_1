@@ -308,32 +308,13 @@ control EgressPipeImpl (inout parsed_headers_t hdr,
             if (local_metadata.is_multicast == true ) {
                 exit;
             }
-            #ifdef DP_ALGO_CP_ASSISTED_POLICY_ROUTING
-            if(IS_RECIRC_NEEDED(local_metadata)) {
-                is_recirculation_needed = true;
-            }
-            #endif
-
-            //TODO : if everything goes ok. We can convert this if-else to a single MAT
-            if(is_recirculation_needed){
-                //log_msg("is_recirculation_needed value is true");
-            }else{
-                //log_msg("is_recirculation_needed value is false");
-            }
-            if(is_recirculation_needed &&   IS_CONTROL_PKT_TO_NEIGHBOUR(local_metadata) && IS_CONTROL_PKT_TO_CP(local_metadata)){
+            if(local_metadata.flag_hdr.is_control_pkt_from_egr_queue_depth || local_metadata.flag_hdr.is_control_pkt_from_egr_queue_rate  ){
                 //log_msg("clone to session id  ing_port + Max_port * 2 --> this have both ingress port and CPU port and recirculation port");
                 clone3(CloneType.E2E, (bit<32>)(standard_metadata.ingress_port)+ ((bit<32>)MAX_PORTS_IN_SWITCH * 2), {standard_metadata, local_metadata});
-            }else if(  IS_CONTROL_PKT_TO_NEIGHBOUR(local_metadata) && IS_CONTROL_PKT_TO_CP(local_metadata)){
-                //log_msg("clone to session id ing_port + Max_port  --> this have both ingress port and CPU port");
-                clone3(CloneType.E2E, (bit<32>)(standard_metadata.ingress_port)+ (bit<32>)MAX_PORTS_IN_SWITCH, {standard_metadata, local_metadata});
-            }else if (IS_CONTROL_PKT_TO_CP(local_metadata)) {
+            }
+            else if (local_metadata.flag_hdr.is_control_pkt_from_egr_queue_depth ) {
                 //log_msg("clone to CPU port only");
                 clone3(CloneType.E2E, CPU_CLONE_SESSION_ID, {standard_metadata, local_metadata});
-            }else if ( IS_CONTROL_PKT_TO_NEIGHBOUR(local_metadata)) {
-                 //log_msg("clone to ingress port for feedback to neighbour");
-                 clone3(CloneType.E2E, (bit<32>)(standard_metadata.ingress_port), {standard_metadata, local_metadata});
-            }else{
-                //log_msg("Unhandled logic in cloning control block");
             }
         }
 
