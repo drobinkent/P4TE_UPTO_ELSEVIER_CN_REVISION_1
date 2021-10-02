@@ -98,43 +98,13 @@
 
 
 ![img.png](img.png)
-# Lastly if you wan to tun some flows, we have an IPerf based systems
-    -- The basic idea is -- in a json file you give the configuration of a flow . T
+# Lastly if you wan to run some flows, we have an IPerf based systems
+    -- The basic idea is -- in a json file you give the configuration of one or multiple flow . Assume the file path is testAndMeasurement/TestConfigs/MyTest.json
     -- Then you run a python script with passing the file as parameter. This python script will start corresponding flows to the mininent emulated hosts
-    Configurations you need to provide 
-        1)  This project uses IPerf tool for testing performance. IPerf results are saved in json format. You have to provide the location where all the outout of the IPErf tests will be saved
-            In the "ConfigConst.py" file provide the path in follwoing variable 
-                TEST_RESULT_FOLDER = "/home/deba/Desktop/P4TE/testAndMeasurement/TEST_RESULTS"
-        a) There are some sample test configurations provided in directory "testAndMeasurement/TestConfigs"
-            Assume you want to "testAndMeasurement/TestConfigs/MyTest.json" 
-        then open a terminal and move to the project directory and run the follwoing command 
-            python3 TestCaseDeployer.py testAndMeasurement/TestConfigs/MyTest.json
-        There is no automatic way to tell that a flow have been completed. you have to do some testing your own self to understand when a flow have stopped.
-        Yo ucan easily guess that from the IperfOutput files.
-        ---- All the IPerf results used in our P4TE papers are inside folder ""/home/deba/Desktop/P4TE/testAndMeasurement/TEST_RESULTS"
-        
-
-
-
-# Test configurations and results used in our paper are following. For each of the follwing scenarios we have tested both under 
-ECMP and P4TE. The configuration for both the cases are same. only results are saved in different folders to compare the results
-
-    1) Stride pattern low load:
-        a) config  file: testAndMeasurement/TestConfigs/ecmp/l2strideSmallLarge-16k-sc8.json and testAndMeasurement/TestConfigs/P4TE/l2strideSmallLarge-16k-sc8.json
-        b) To use this test configuration make the "STRIDE_COUNT = 8" in ConfigCost.py
-    2) Stride pattern high load:
-        a) config  file: testAndMeasurement/TestConfigs/ecmp/l2strideSmallLarge-16k-sc16.json and testAndMeasurement/TestConfigs/P4TE/l2strideSmallLarge-16k-sc16.json
-        b) To use this test configuration make the "STRIDE_COUNT = 16" in ConfigCost.py
-    3) TCP incast: 
-        a) config file: testAndMeasurement/TestConfigs/ecmp/l2-incast.json and testAndMeasurement/TestConfigs/P4TE/l2-incast.json
-    4) TCP congestion: 
-        a) config file: testAndMeasurement/TestConfigs/ecmp/l2-congestion.json and testAndMeasurement/TestConfigs/P4TE/l2-congestion.json
-    5) Link Utilization Test: 
-        a) config file: testAndMeasurement/TestConfigs/ecmp/linkUtilizationTester.json and testAndMeasurement/TestConfigs/P4TE/linkUtilizationTester.json
- 
-
-## Finally results from  these test cases are processed and  relevant grpahs can be accessed from folder "ProcessedResultImages"
-    This folder also contains a summary result of the test cases in file "Resultsummary.md"
+    Configurations you need to provide. then run the following command 
+       
+      --- $ python3 TestCaseDeployer.py testAndMeasurement/TestConfigs/MyTest.json
+       
 
 ## The Makefile contains commands to run the program for processing the test case results. 
 
