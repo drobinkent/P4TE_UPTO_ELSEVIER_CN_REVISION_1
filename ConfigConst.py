@@ -1,7 +1,7 @@
 ########Bootstrap config constants
 
 from enum import Enum
-
+MAX_TOR_SUBNET = 4
 LEAF_P4_INFO_FILE_PATH = "./p4src/Build/leaf_p4info.txt"
 LEAF_BMV2_JSON_FILE_PATH = "./p4src/Build/leaf.json"
 
