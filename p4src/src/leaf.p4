@@ -143,7 +143,7 @@ control IngressPipeImpl (inout parsed_headers_t    hdr,
     // If this is a packet-out from the controller... we may not need this at this moment
 
 
-    if ((hdr.icmpv6.type == ICMP6_TYPE_NS ) && (hdr.icmpv6.type == ICMP6_TYPE_NS)){
+   if ((hdr.icmpv6.type == ICMP6_TYPE_NS ) && (hdr.icmpv6.type == ICMP6_TYPE_NS)){
        ndp_processing_control_block.apply(hdr, local_metadata, standard_metadata); //This will set the local_metaata.do_l3_l2 field to true if this is a NDP packet
        //log_msg("egress spec is {} and egress port is {}",{standard_metadata.egress_spec , standard_metadata.egress_port});
        //TODO we may need to remove the extra headers if other switches forward these packet
@@ -302,7 +302,7 @@ control EgressPipeImpl (inout parsed_headers_t hdr,
             #endif*/
             //TODO : if everything goes ok. We can convert this if-else to a single MAT
 
-            if(local_metadata.flag_hdr.is_control_pkt_from_egr_queue_depth || local_metadata.flag_hdr.is_control_pkt_from_egr_queue_rate  ){
+        if(local_metadata.flag_hdr.is_control_pkt_from_egr_queue_depth || local_metadata.flag_hdr.is_control_pkt_from_egr_queue_rate  ){
                 //log_msg("clone to session id  ing_port + Max_port * 2 --> this have both ingress port and CPU port and recirculation port");
                 clone3(CloneType.E2E, (bit<32>)(standard_metadata.ingress_port)+ ((bit<32>)MAX_PORTS_IN_SWITCH * 2), {standard_metadata, local_metadata});
             }
@@ -310,6 +310,7 @@ control EgressPipeImpl (inout parsed_headers_t hdr,
                 //log_msg("clone to CPU port only");
                 clone3(CloneType.E2E, CPU_CLONE_SESSION_ID, {standard_metadata, local_metadata});
             }
+
         }
 
 

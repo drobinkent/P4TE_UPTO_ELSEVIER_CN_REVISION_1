@@ -18,7 +18,6 @@ import os
 import shutil
 import sys
 
-import seaborn as sns
 import matplotlib
 import numpy as np
 from copy import copy, deepcopy
